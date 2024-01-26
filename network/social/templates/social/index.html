@@ -1,0 +1,37 @@
+{% extends 'social/base.html' %}
+
+{% block body %}
+
+{% load static %}
+
+
+
+{% for post in posts %}
+{% if not post.creater == user %}
+    {% if not post.creater in user_followings %}
+    <div>
+    <a href = '{% url "subscribe" post.creater.id %}'>Подписаться</a>{{post.creater.username}}</h1>
+    </div>
+    {% else %}
+    <a href = '{% url "unsubscribe" post.creater.id %}'>Отписаться</a>{{post.creater.username}}</h1>
+    {% endif %}
+    <div>
+{% else %}
+<h1>{{post.creater.username}}</h1>
+<img src="bundles/images/post.jpg" class="img-fluid" alt="">
+<img scr="{{post.context_image.url}}" alt = 'Heres your image'>
+</div>
+{% endif %}
+<h2>Likes:{{post.likers.all.count}}</h2>{% if not user in  post.likers.all %}<a href = "{% url 'add_like' post.id %}">Like post!</a>{% else %}<a href = "{% url 'remove_like' post.id %}">Unlike post!</a>{% endif %}
+
+<h2>comments:</h2>
+{% for comment in post.comments.all %}
+<div>
+    {{comment.commenter.name}} {{comment.comment_content}}
+    {{comment.time}}
+</div>
+
+{% endfor %}
+{% endfor %}
+
+{% endblock %}
