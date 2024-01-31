@@ -5,21 +5,30 @@ from .models import User
 
 
 class UserLogin(AuthenticationForm):
+    username = forms.CharField(widget = forms.TextInput(attrs = {'placeholder': 'Username'}))
+    password = forms.CharField(widget = forms.PasswordInput(attrs = {'placeholder': 'Password'}))
+
     class Meta:
         model = User
         fields  = ['username', 'password',]
 
 
 class UserRegistretion(UserCreationForm):
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First name'}))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Last name'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Username'}))
+    email = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password again'}))
+    private = forms.BooleanField(widget=forms.CheckboxInput(attrs={'placeholder': 'Private'}))
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'username','email',  'password1', 'password2',)
+        fields = ('first_name', 'last_name', 'username','email',  'password1', 'password2','private',)
 
 
 
 class UserChange(UserChangeForm):
-    username = forms.CharField(widget = forms.TextInput(attrs = {'readonly': True}))
     email = forms.EmailField(widget = forms.TextInput(attrs= {'readonly': True}))
     class Meta:
         model = User
-        fields = ("first_name", "last_name", "profile_pic", "username", "email",)
+        fields = ("profile_pic",)
