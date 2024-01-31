@@ -152,8 +152,3 @@ def ConfirmRequest(request, pk):
     return HttpResponseRedirect(request.META["HTTP_REFERER"])
 
 
-
-
-
-
-
