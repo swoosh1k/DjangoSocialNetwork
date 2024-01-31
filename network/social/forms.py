@@ -18,8 +18,8 @@ class UserRegistretion(UserCreationForm):
     last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Last name'}))
     username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Username'}))
     email = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password again'}))
+    password1 = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Password'}))
+    password2 = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Password again'}))
     private = forms.BooleanField(widget=forms.CheckboxInput(attrs={'placeholder': 'Private'}))
     class Meta:
         model = User
