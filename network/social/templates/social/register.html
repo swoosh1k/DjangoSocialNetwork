@@ -1,26 +1,55 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{{title}}</title>
+    <link rel="stylesheet" href="{% static 'css/stylelogin.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
-<h1>Registretion</h1>
+<div class = 'login'>
+        <form action = '{% url "register" %}' method = 'post'>
+            {% csrf_token %}
+            <h1>Registretion</h1>
+            <div class = 'input-box'>
+                {{form.first_name}}
+            <i class='bx bxs-user'></i>
+            </div>
+
+            <div class = 'input-box'>
+                {{form.last_name}}
+            <i class='bx bxs-user'></i>
+            </div>
+            <div class = 'input-box'>
+                {{form.username}}
+                <i class='bx bxs-user'></i>
+            </div>
+            <div class = 'input-box'>
+                {{form.email}}
+                <i class='bx bx-envelope'></i>
+            </div>
+            <div class = 'input-box'>
+                {{form.password1}}
+                <i class='bx bxs-lock-alt' ></i>
+            </div>
+            <div class = 'input-box'>
+                {{form.password2}}
+                <i class='bx bxs-lock-alt' ></i>
+            </div>
+            <button type = 'submit>' class = 'btn'>Register</button>
+              <div class = 'register-link'>
+                <p>Have an account?<a href ='{% url "login" %}'> Login</a></p>
 
 
-<form action = "{% url 'register' %}" method = 'post'>
-    {% csrf_token %}
-    {{form.as_p}}
-
-<button type = "submit">Confirm</button>
-</form>
-
-
-
-
-
-
-
-<a href = '{% url  "login" %}'>Registreted yet? Login Here!</a>
+        </form>
+    </div>
 </body>
 </html>
+
+
+
+
+
+
+

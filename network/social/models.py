@@ -2,15 +2,17 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 
+
+'''Класс юзера'''
 class User(AbstractUser):
     bio = models.TextField(max_length = 170, blank = True, null = True )
     profile_pic = models.ImageField(upload_to='profile_pic/')
     cover = models.ImageField(upload_to = 'covers/', blank = True)
-
+    private = models.BooleanField(default=False, blank=True)
 
     def __str__(self):
         return self.username
-
+'''Класс постов'''
 class Post(models.Model):
     creater = models.ForeignKey(User, on_delete=models.CASCADE, related_name = "posts")
     data_created = models.DateTimeField(default = timezone.now)
@@ -31,7 +33,7 @@ class Post(models.Model):
         verbose_name = "Post"
         verbose_name_plural = "Posts"
 
-
+'''Класс комментариев'''
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete= models.CASCADE, related_name='comments')
     commenter = models.ForeignKey(User, on_delete=models.CASCADE, related_name='commenters')
@@ -47,7 +49,7 @@ class Comment(models.Model):
         verbose_name_plural = "Comments"
 
 
-
+'''Класс подписчика'''
 class Follower(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='follower')
     followings = models.ManyToManyField(User, blank = True, related_name = 'followers')
@@ -59,3 +61,9 @@ class Follower(models.Model):
     class Meta:
         verbose_name = "Follower"
         verbose_name_plural = "Followers"
+
+
+'''Класс для запрасов(для частных профилей)'''
+class Request(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_from')
+    requests = models.ManyToManyField(User, blank = True, related_name = 'requests')

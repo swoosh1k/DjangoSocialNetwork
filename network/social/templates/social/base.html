@@ -1,31 +1,88 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>{% block title %} SocialNetwork {% endblock %} </title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Главная страница</title>
+  <script src="https://kit.fontawesome.com/6aae901a73.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/all.css' %}">
 </head>
 <body>
-<h1>SocialNetworkSite</h1>
 
-{% if not user.is_authenticated %}
+  <div class="main-flex-container">
+    <div class="left-flex-container flex-item">
+      <div class="nav-links">
+        <ul>
 
-<a href = '{% url "login" %}'>Login</a>
+          <li class="nav-items current-page"><a href="#"><i class="fas fa-home"></i> Home</a></li>
+          <li class="nav-items"><a href="#"><i class="fas fa-hashtag"></i> Explore</a></li>
+          <li class="nav-items"><a href="#"><i class="far fa-bell"></i> Notifications</a></li>
+          <li class="nav-items"><a href="#"><i class="far fa-envelope"></i> Messages</a></li>
+          <li class="nav-items"><a href="#"><i class="far fa-bookmark"></i> Bookmarks</a></li>
+          <li class="nav-items"><a href="#"><i class="far fa-list-alt"></i> Lists</a></li>
+          <li class="nav-items"><a href="#"><i class="far fa-user"></i> Profile</a></li>
+          <li class="nav-items"><a href="#"><i class="fas fa-ellipsis-h more-icon"></i> More</a></li>
+        </ul>
+      </div>
+      <div class="tweet"><a href="#">Post</a></div>
+      <div class="profile-box">
+        <img src="./img/profile.jpg" alt="profile">
+        <div class="profile-link">
+          <p class="full-name">David Herbert</p>
+          <p class="user-name">@king.david</p>
+        </div>
+        <div class="options-icon"><i class="fas fa-caret-down"></i></div>
+      </div>
+    </div>
 
-{% else %}
-<a href = '{% url "logout" %}'>Logout</a>
-{% endif %}
+    <div class="center-flex-container flex-item">
+      {% block main %}
+      {% endblock main %}
+    </div>
 
 
 
-<a href = '#'>Followings</a>
-<a href = '{% url "index" %}'>All Posts</a>
-<a href = '#'>Profile</a>
-<a href = '#'>Saved</a>
+    <div class="right-flex-container flex-item">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search Social">
+      </div>
+      <!-- You might know -->
+      <div class="trends">
+        <ul>
+          <li class="nav-list header">
+            <h2>You might know</h2>
 
+          <li class="nav-list">
+            <div class="trend-list">
 
+              <p class="main-text">-lzka_<a href = '#'>Follow</a></p>
+              <p class="sub-text">274K followers</p>
+            </div>
 
+          </li>
+        </ul>
+      </div>
+       <!-- End we might know -->
+      <div class="right-footer">
+        <div class="footer-links">
+          <a href="#" class="sub-text">Terms</a>
+          <a href="#" class="sub-text">Privacy policy</a>
+          <a href="#" class="sub-text">Ads info</a>
+          <a href="#" class="sub-text">more</a>
+          <i class="fas fa-chevron-down sub-text"></i>
+        </div>
+        <div class="footer-copyright">
+          <p class="sub-text">&copy; 2020 Twitter, Inc.</p>
+        </div>
 
-{% block body %}
-{% endblock body %}
+      </div>
+
+    </div>
+
+  </div>
+
 </body>
 </html>

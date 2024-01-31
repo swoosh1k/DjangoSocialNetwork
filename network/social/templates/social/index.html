@@ -1,37 +1,158 @@
 {% extends 'social/base.html' %}
 
-{% block body %}
 
-{% load static %}
+{% block main %}
+
+<div class="home">
+        <h1>Home</h1>
+        <i class="fas fa-magic"></i>
+      </div>
+
+      <div class="post-tweet">
+        <form action="">
+          <div class="form-group-1">
+            <img src="./img/profile.jpg" alt="profile-pics">
+            <input type="text" placeholder="What's happening?">
+          </div>
+          <div class="form-group-2">
+            <div class="post-icons">
+              <i class="far fa-image"></i>
+              <i class="far fa-file-image"></i>
+              <i class="fas fa-stream"></i>
+              <i class="far fa-smile"></i>
+              <i class="far fa-calendar-check"></i>
+            </div>
+            <button class="btn" type="submit">Post</button>
+          </div>
+        </form>
+
+      </div>
+      <!-- User Content -->
+        <div class="tweets">
+          <div class="user-pics"><img src="./img/user3.jpg" alt="user3"></div>
+          <div class="user-content-box">
+            <div class="user-names">
+              <hi class="full-name">Olivia Brent</hi>
+              <p class="user-name">@iamolivia</p>
+              <p class="time"> . 58mins</p>
+            </div>
+
+            <div class="user-content">
+              <p>We've gotta send kids back to school so one day they can be doctors and scientists, and everyone can ignore them.</p>
+            </div>
+
+            <div class="content-icons">
+              <i class="far fa-comment blue"> 109</i>
+              <i class="fas fa-retweet green"> 865</i>
+              <i class="far fa-heart red">1.6k</i>
+              <i class="fas fa-chevron-up blue"></i>
+            </div>
+
+          </div>
+        </div>
+        <div class="tweets">
+          <div class="user-pics"><img src="./img/user2.jpg" alt="user2"></div>
+          <div class="user-content-box">
+            <div class="user-names">
+              <hi class="full-name">Carole Chavez</hi>
+              <p class="user-name">@carolechavez</p>
+              <p class="time"> . 1hr</p>
+            </div>
+
+            <div class="user-content">
+              <p>If the whole world was blind, how many people would you impress?
+                <a href="#">#100daysofcode</a> <a href="#">#javascript</a> <a href="#">#womenwhocode</a></p>
+            </div>
+
+            <div class="content-icons">
+              <i class="far fa-comment blue"> 2k</i>
+              <i class="fas fa-retweet green"> 6k</i>
+              <i class="far fa-heart red"> 10k</i>
+              <i class="fas fa-chevron-up blue"></i>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="tweets">
+          <div class="user-pics"><img src="./img/user1.jpg" alt="user1"></div>
+          <div class="user-content-box">
+            <div class="user-names">
+              <hi class="full-name">Eric Alvarez</hi>
+              <p class="user-name">@eric_alvarez</p>
+              <p class="time"> . 2hrs</p>
+            </div>
+
+            <div class="user-content">
+              <p>Eat. Code, Sleep. repeat! <a href="#">#CodeNewbie</a> <a href="#">#100DaysOfCode</a></p>
+              <img src="./img/content1.jpg" alt="content1">
+            </div>
+
+            <div class="content-icons">
+              <i class="far fa-comment blue"> 273</i>
+              <i class="fas fa-retweet green"> 2k</i>
+              <i class="far fa-heart red"> 3k</i>
+              <i class="fas fa-chevron-up blue"></i>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="tweets">
+          <div class="user-pics"><img src="./img/user4.jpg" alt="user4"></div>
+          <div class="user-content-box">
+            <div class="user-names">
+              <hi class="full-name">Harry Wilson</hi>
+              <p class="user-name">@Harrywilson</p>
+              <p class="time"> . 4hrs</p>
+            </div>
+
+            <div class="user-content">
+              <p>There's no clear correlation between your background and what you are going to achieve in life..</p>
+            </div>
+
+            <div class="content-icons">
+              <i class="far fa-comment blue"> 4k</i>
+              <i class="fas fa-retweet green"> 8k</i>
+              <i class="far fa-heart red">13k</i>
+              <i class="fas fa-chevron-up blue"></i>
+            </div>
+
+          </div>
+        </div>
 
 
+        <div class="tweets">
+          <div class="user-pics"><img src="./img/user5.jpg" alt="user5"></div>
+          <div class="user-content-box">
+            <div class="user-names">
+              <hi class="full-name">Nora Chao</hi>
+              <p class="user-name">@chaonora</p>
+              <p class="time"> . 6hrs</p>
+            </div>
 
-{% for post in posts %}
-{% if not post.creater == user %}
-    {% if not post.creater in user_followings %}
-    <div>
-    <a href = '{% url "subscribe" post.creater.id %}'>Подписаться</a>{{post.creater.username}}</h1>
-    </div>
-    {% else %}
-    <a href = '{% url "unsubscribe" post.creater.id %}'>Отписаться</a>{{post.creater.username}}</h1>
-    {% endif %}
-    <div>
-{% else %}
-<h1>{{post.creater.username}}</h1>
-<img src="bundles/images/post.jpg" class="img-fluid" alt="">
-<img scr="{{post.context_image.url}}" alt = 'Heres your image'>
-</div>
-{% endif %}
-<h2>Likes:{{post.likers.all.count}}</h2>{% if not user in  post.likers.all %}<a href = "{% url 'add_like' post.id %}">Like post!</a>{% else %}<a href = "{% url 'remove_like' post.id %}">Unlike post!</a>{% endif %}
+            <div class="user-content">
+              <p>Time to settle down and play my favourite game IN THE WORLD Earth globe europe-africa</p>
 
-<h2>comments:</h2>
-{% for comment in post.comments.all %}
-<div>
-    {{comment.commenter.name}} {{comment.comment_content}}
-    {{comment.time}}
-</div>
+              <p>  Haven’t played for about a month, too busy coding.
+                So tired this evening though.
+                Poker tournament with husband later..</p>
+                <img src="./img/content5.jpg" alt="content5">
+            </div>
 
-{% endfor %}
-{% endfor %}
+            <div class="content-icons">
+              <i class="far fa-comment blue"> 78</i>
+              <i class="fas fa-retweet green"> 265</i>
+              <i class="far fa-heart red"> 934</i>
+              <i class="fas fa-chevron-up blue"></i>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="pagnation">
+          <a href="#">Load more</a>
+        </div>
+
 
 {% endblock %}
