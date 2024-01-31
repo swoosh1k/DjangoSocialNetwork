@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2b1be840-8156-4db4-9b38-13762a90f676" name="Changes" comment="Commit from MAster">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +53,14 @@
       <option name="presentableId" value="Default" />
       <updated>1706635551240</updated>
     </task>
+    <task id="LOCAL-00001" summary="Commit from MAster">
+      <created>1706725291540</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1706725291540</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
