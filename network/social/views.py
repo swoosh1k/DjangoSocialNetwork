@@ -11,9 +11,9 @@ from django.core.paginator import Paginator
 import json
 from .forms import *
 from django.views.generic import CreateView, UpdateView, DetailView
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 from .models import *
-
 
 
 
@@ -39,6 +39,7 @@ def index(request):
             request_user_list = teuqest.requests.all()
         user = request.user
         posts = Post.objects.all()
+
         context = {"posts": posts, 'user': user, 'user_followings': user_followings,
                    'request_user_list': request_user_list}
         return render(request, 'social/index.html', context=context)
@@ -80,15 +81,14 @@ class UserLogin(LoginView):
 
 
 
-class UserProfile(UpdateView):
+class UserProfile(DetailView):
     model = User
     context_object_name = 'user'
-    template_name = 'social/settings.html'
-    form_class = UserChange
+    template_name = 'social/profile.html'
+
     def get_context_data(self,*, object_list = None,  **kwargs):
         context= super().get_context_data(**kwargs)
         context['title'] = f'Profile {self.object}'
-        context['form'] = UserChange
         return context
 
 

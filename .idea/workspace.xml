@@ -4,8 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b1be840-8156-4db4-9b38-13762a90f676" name="Changes" comment="Commit from MAster">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="2b1be840-8156-4db4-9b38-13762a90f676" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/db.sqlite3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/media/covers/1670821523_grizly-club-p-logotip-mersedes-png-43.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/media/posts/05b38181e7c8f527e941719bfd37326e.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/media/posts/05b38181e7c8f527e941719bfd37326e_IAGn0TH.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/media/posts/b1e142e1465e429574e912d108cf2ffc.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/media/posts/drujba-vmeste-kotenok-schenok-ryadom.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/media/posts/q93_ab222073a93c0be2e543347c71b150517c968e768bee61a3a0dd5b9c351c099b.jpg_1.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/social/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/social/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/social/templates/social/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/templates/social/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/social/templates/social/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/templates/social/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/social/templates/social/privet.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/social/templates/social/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/templates/social/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/social/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,10 +37,13 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="lzka" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/network/social/views.py" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -62,6 +79,17 @@
     </task>
     <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Commit from lzka" />
