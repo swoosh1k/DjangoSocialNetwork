@@ -16,13 +16,15 @@
     <div class="left-flex-container flex-item">
       <div class="nav-links">
         <ul>
-          <li class="nav-items current-page"><a href="{% url 'index' %}"><i class="fas fa-home"></i>Home</a></li>
-          <li class="nav-items"><a href="#"><i class="far fa-envelope"></i> Messages</a></li>
-          <li class="nav-items"><a href="#"><i class="far fa-bookmark"></i> Saved</a></li>
-          <li class="nav-items"><a href="{% url 'followings'  %}"><i class="fa-solid fa-people-group"></i>Followings</a></li>
-          <li class="nav-items"><a href="{% url 'user_profile' request.user.id %}"><i class="far fa-user"></i> Profile</a></li>
-          <li class="nav-items"><a href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
 
+          <li class="nav-items current-page"><a href="#"><i class="fas fa-home"></i> Home</a></li>
+          <li class="nav-items"><a href="#"><i class="fas fa-hashtag"></i> Explore</a></li>
+          <li class="nav-items"><a href="#"><i class="far fa-bell"></i> Notifications</a></li>
+          <li class="nav-items"><a href="#"><i class="far fa-envelope"></i> Messages</a></li>
+          <li class="nav-items"><a href="#"><i class="far fa-bookmark"></i> Bookmarks</a></li>
+          <li class="nav-items"><a href="#"><i class="far fa-list-alt"></i> Lists</a></li>
+          <li class="nav-items"><a href="{% url 'user_profile' user.id %}"><i class="far fa-user"></i> Profile</a></li>
+          <li class="nav-items"><a href="#"><i class="fas fa-ellipsis-h more-icon"></i> More</a></li>
         </ul>
       </div>
       <div class="tweet"><a id="openModalBtn">New Post</a></div>
