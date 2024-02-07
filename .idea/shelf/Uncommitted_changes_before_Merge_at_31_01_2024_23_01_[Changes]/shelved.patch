@@ -1,0 +1,484 @@
+Index: network/social/templates/social/base.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n{% load static %}\r\n<html lang=\"en\">\r\n<head>\r\n  <meta charset=\"UTF-8\">\r\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n  <title>Главная страница</title>\r\n  <script src=\"https://kit.fontawesome.com/6aae901a73.js\" crossorigin=\"anonymous\"></script>\r\n  <link rel=\"stylesheet\" href=\"{% static 'css/style.css' %}\">\r\n  <link rel=\"stylesheet\" href=\"{% static 'css/all.css' %}\">\r\n</head>\r\n<body>\r\n\r\n  <div class=\"main-flex-container\">\r\n    <div class=\"left-flex-container flex-item\">\r\n      <div class=\"nav-links\">\r\n        <ul>\r\n\r\n          <li class=\"nav-items current-page\"><a href=\"#\"><i class=\"fas fa-home\"></i> Home</a></li>\r\n          <li class=\"nav-items\"><a href=\"#\"><i class=\"fas fa-hashtag\"></i> Explore</a></li>\r\n          <li class=\"nav-items\"><a href=\"#\"><i class=\"far fa-bell\"></i> Notifications</a></li>\r\n          <li class=\"nav-items\"><a href=\"#\"><i class=\"far fa-envelope\"></i> Messages</a></li>\r\n          <li class=\"nav-items\"><a href=\"#\"><i class=\"far fa-bookmark\"></i> Bookmarks</a></li>\r\n          <li class=\"nav-items\"><a href=\"#\"><i class=\"far fa-list-alt\"></i> Lists</a></li>\r\n          <li class=\"nav-items\"><a href=\"#\"><i class=\"far fa-user\"></i> Profile</a></li>\r\n          <li class=\"nav-items\"><a href=\"#\"><i class=\"fas fa-ellipsis-h more-icon\"></i> More</a></li>\r\n        </ul>\r\n      </div>\r\n      <div class=\"tweet\"><a href=\"#\">Post</a></div>\r\n      <div class=\"profile-box\">\r\n        <img src=\"./img/profile.jpg\" alt=\"profile\">\r\n        <div class=\"profile-link\">\r\n          <p class=\"full-name\">David Herbert</p>\r\n          <p class=\"user-name\">@king.david</p>\r\n        </div>\r\n        <div class=\"options-icon\"><i class=\"fas fa-caret-down\"></i></div>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"center-flex-container flex-item\">\r\n      {% block main %}\r\n      {% endblock main %}\r\n    </div>\r\n\r\n\r\n\r\n    <div class=\"right-flex-container flex-item\">\r\n      <div class=\"search-box\">\r\n        <i class=\"fas fa-search\"></i>\r\n        <input type=\"text\" placeholder=\"Search Social\">\r\n      </div>\r\n      <!-- You might know -->\r\n      <div class=\"trends\">\r\n        <ul>\r\n          <li class=\"nav-list header\">\r\n            <h2>You might know</h2>\r\n\r\n          <li class=\"nav-list\">\r\n            <div class=\"trend-list\">\r\n\r\n              <p class=\"main-text\">-lzka_<a href = '#'>Follow</a></p>\r\n              <p class=\"sub-text\">274K followers</p>\r\n            </div>\r\n\r\n          </li>\r\n        </ul>\r\n      </div>\r\n       <!-- End we might know -->\r\n      <div class=\"right-footer\">\r\n        <div class=\"footer-links\">\r\n          <a href=\"#\" class=\"sub-text\">Terms</a>\r\n          <a href=\"#\" class=\"sub-text\">Privacy policy</a>\r\n          <a href=\"#\" class=\"sub-text\">Ads info</a>\r\n          <a href=\"#\" class=\"sub-text\">more</a>\r\n          <i class=\"fas fa-chevron-down sub-text\"></i>\r\n        </div>\r\n        <div class=\"footer-copyright\">\r\n          <p class=\"sub-text\">&copy; 2020 Twitter, Inc.</p>\r\n        </div>\r\n\r\n      </div>\r\n\r\n    </div>\r\n\r\n  </div>\r\n\r\n</body>\r\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/network/social/templates/social/base.html b/network/social/templates/social/base.html
+--- a/network/social/templates/social/base.html	(revision 03f23b5e0a7133062eb3206068fc4596a6590ffd)
++++ b/network/social/templates/social/base.html	(date 1706730085130)
+@@ -16,22 +16,21 @@
+       <div class="nav-links">
+         <ul>
+ 
+-          <li class="nav-items current-page"><a href="#"><i class="fas fa-home"></i> Home</a></li>
+-          <li class="nav-items"><a href="#"><i class="fas fa-hashtag"></i> Explore</a></li>
+-          <li class="nav-items"><a href="#"><i class="far fa-bell"></i> Notifications</a></li>
++          <li class="nav-items current-page"><a href="#"><i class="fas fa-home"></i>Home</a></li>
+           <li class="nav-items"><a href="#"><i class="far fa-envelope"></i> Messages</a></li>
+-          <li class="nav-items"><a href="#"><i class="far fa-bookmark"></i> Bookmarks</a></li>
+-          <li class="nav-items"><a href="#"><i class="far fa-list-alt"></i> Lists</a></li>
++          <li class="nav-items"><a href="#"><i class="far fa-bookmark"></i> Saved</a></li>
++          <li class="nav-items"><a href="#"><i class="fa-solid fa-people-group"></i>Followings</a></li>
+           <li class="nav-items"><a href="#"><i class="far fa-user"></i> Profile</a></li>
+-          <li class="nav-items"><a href="#"><i class="fas fa-ellipsis-h more-icon"></i> More</a></li>
++          <li class="nav-items"><a href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
++
+         </ul>
+       </div>
+-      <div class="tweet"><a href="#">Post</a></div>
++      <div class="tweet"><a href="#">New Post</a></div>
+       <div class="profile-box">
+-        <img src="./img/profile.jpg" alt="profile">
++        <img src="{{user.profile_pic.url}}" alt="profile">
+         <div class="profile-link">
+-          <p class="full-name">David Herbert</p>
+-          <p class="user-name">@king.david</p>
++          <p class="full-name">{{user.first_name}}</p>
++          <p class="user-name">{{user.username}}</p>
+         </div>
+         <div class="options-icon"><i class="fas fa-caret-down"></i></div>
+       </div>
+@@ -47,7 +46,7 @@
+     <div class="right-flex-container flex-item">
+       <div class="search-box">
+         <i class="fas fa-search"></i>
+-        <input type="text" placeholder="Search Social">
++        <input type="text" placeholder="Search People">
+       </div>
+       <!-- You might know -->
+       <div class="trends">
+Index: network/social/templates/social/register.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n{% load static %}\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <title>{{title}}</title>\r\n    <link rel=\"stylesheet\" href=\"{% static 'css/stylelogin.css' %}\">\r\n    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>\r\n</head>\r\n<body>\r\n<div class = 'login'>\r\n        <form action = '{% url \"register\" %}' method = 'post'>\r\n            {% csrf_token %}\r\n            <h1>Registretion</h1>\r\n            <div class = 'input-box'>\r\n                {{form.first_name}}\r\n            <i class='bx bxs-user'></i>\r\n            </div>\r\n\r\n            <div class = 'input-box'>\r\n                {{form.last_name}}\r\n            <i class='bx bxs-user'></i>\r\n            </div>\r\n            <div class = 'input-box'>\r\n                {{form.username}}\r\n                <i class='bx bxs-user'></i>\r\n            </div>\r\n            <div class = 'input-box'>\r\n                {{form.email}}\r\n                <i class='bx bx-envelope'></i>\r\n            </div>\r\n            <div class = 'input-box'>\r\n                {{form.password1}}\r\n                <i class='bx bxs-lock-alt' ></i>\r\n            </div>\r\n            <div class = 'input-box'>\r\n                {{form.password2}}\r\n                <i class='bx bxs-lock-alt' ></i>\r\n            </div>\r\n            <button type = 'submit>' class = 'btn'>Register</button>\r\n              <div class = 'register-link'>\r\n                <p>Have an account?<a href ='{% url \"login\" %}'> Login</a></p>\r\n\r\n\r\n        </form>\r\n    </div>\r\n</body>\r\n</html>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/network/social/templates/social/register.html b/network/social/templates/social/register.html
+--- a/network/social/templates/social/register.html	(revision 03f23b5e0a7133062eb3206068fc4596a6590ffd)
++++ b/network/social/templates/social/register.html	(date 1706730670854)
+@@ -40,8 +40,6 @@
+             <button type = 'submit>' class = 'btn'>Register</button>
+               <div class = 'register-link'>
+                 <p>Have an account?<a href ='{% url "login" %}'> Login</a></p>
+-
+-
+         </form>
+     </div>
+ </body>
+Index: network/social/templates/social/index.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{% extends 'social/base.html' %}\r\n\r\n\r\n{% block main %}\r\n\r\n<div class=\"home\">\r\n        <h1>Home</h1>\r\n        <i class=\"fas fa-magic\"></i>\r\n      </div>\r\n\r\n      <div class=\"post-tweet\">\r\n        <form action=\"\">\r\n          <div class=\"form-group-1\">\r\n            <img src=\"./img/profile.jpg\" alt=\"profile-pics\">\r\n            <input type=\"text\" placeholder=\"What's happening?\">\r\n          </div>\r\n          <div class=\"form-group-2\">\r\n            <div class=\"post-icons\">\r\n              <i class=\"far fa-image\"></i>\r\n              <i class=\"far fa-file-image\"></i>\r\n              <i class=\"fas fa-stream\"></i>\r\n              <i class=\"far fa-smile\"></i>\r\n              <i class=\"far fa-calendar-check\"></i>\r\n            </div>\r\n            <button class=\"btn\" type=\"submit\">Post</button>\r\n          </div>\r\n        </form>\r\n\r\n      </div>\r\n      <!-- User Content -->\r\n        <div class=\"tweets\">\r\n          <div class=\"user-pics\"><img src=\"./img/user3.jpg\" alt=\"user3\"></div>\r\n          <div class=\"user-content-box\">\r\n            <div class=\"user-names\">\r\n              <hi class=\"full-name\">Olivia Brent</hi>\r\n              <p class=\"user-name\">@iamolivia</p>\r\n              <p class=\"time\"> . 58mins</p>\r\n            </div>\r\n\r\n            <div class=\"user-content\">\r\n              <p>We've gotta send kids back to school so one day they can be doctors and scientists, and everyone can ignore them.</p>\r\n            </div>\r\n\r\n            <div class=\"content-icons\">\r\n              <i class=\"far fa-comment blue\"> 109</i>\r\n              <i class=\"fas fa-retweet green\"> 865</i>\r\n              <i class=\"far fa-heart red\">1.6k</i>\r\n              <i class=\"fas fa-chevron-up blue\"></i>\r\n            </div>\r\n\r\n          </div>\r\n        </div>\r\n        <div class=\"tweets\">\r\n          <div class=\"user-pics\"><img src=\"./img/user2.jpg\" alt=\"user2\"></div>\r\n          <div class=\"user-content-box\">\r\n            <div class=\"user-names\">\r\n              <hi class=\"full-name\">Carole Chavez</hi>\r\n              <p class=\"user-name\">@carolechavez</p>\r\n              <p class=\"time\"> . 1hr</p>\r\n            </div>\r\n\r\n            <div class=\"user-content\">\r\n              <p>If the whole world was blind, how many people would you impress?\r\n                <a href=\"#\">#100daysofcode</a> <a href=\"#\">#javascript</a> <a href=\"#\">#womenwhocode</a></p>\r\n            </div>\r\n\r\n            <div class=\"content-icons\">\r\n              <i class=\"far fa-comment blue\"> 2k</i>\r\n              <i class=\"fas fa-retweet green\"> 6k</i>\r\n              <i class=\"far fa-heart red\"> 10k</i>\r\n              <i class=\"fas fa-chevron-up blue\"></i>\r\n            </div>\r\n\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"tweets\">\r\n          <div class=\"user-pics\"><img src=\"./img/user1.jpg\" alt=\"user1\"></div>\r\n          <div class=\"user-content-box\">\r\n            <div class=\"user-names\">\r\n              <hi class=\"full-name\">Eric Alvarez</hi>\r\n              <p class=\"user-name\">@eric_alvarez</p>\r\n              <p class=\"time\"> . 2hrs</p>\r\n            </div>\r\n\r\n            <div class=\"user-content\">\r\n              <p>Eat. Code, Sleep. repeat! <a href=\"#\">#CodeNewbie</a> <a href=\"#\">#100DaysOfCode</a></p>\r\n              <img src=\"./img/content1.jpg\" alt=\"content1\">\r\n            </div>\r\n\r\n            <div class=\"content-icons\">\r\n              <i class=\"far fa-comment blue\"> 273</i>\r\n              <i class=\"fas fa-retweet green\"> 2k</i>\r\n              <i class=\"far fa-heart red\"> 3k</i>\r\n              <i class=\"fas fa-chevron-up blue\"></i>\r\n            </div>\r\n\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"tweets\">\r\n          <div class=\"user-pics\"><img src=\"./img/user4.jpg\" alt=\"user4\"></div>\r\n          <div class=\"user-content-box\">\r\n            <div class=\"user-names\">\r\n              <hi class=\"full-name\">Harry Wilson</hi>\r\n              <p class=\"user-name\">@Harrywilson</p>\r\n              <p class=\"time\"> . 4hrs</p>\r\n            </div>\r\n\r\n            <div class=\"user-content\">\r\n              <p>There's no clear correlation between your background and what you are going to achieve in life..</p>\r\n            </div>\r\n\r\n            <div class=\"content-icons\">\r\n              <i class=\"far fa-comment blue\"> 4k</i>\r\n              <i class=\"fas fa-retweet green\"> 8k</i>\r\n              <i class=\"far fa-heart red\">13k</i>\r\n              <i class=\"fas fa-chevron-up blue\"></i>\r\n            </div>\r\n\r\n          </div>\r\n        </div>\r\n\r\n\r\n        <div class=\"tweets\">\r\n          <div class=\"user-pics\"><img src=\"./img/user5.jpg\" alt=\"user5\"></div>\r\n          <div class=\"user-content-box\">\r\n            <div class=\"user-names\">\r\n              <hi class=\"full-name\">Nora Chao</hi>\r\n              <p class=\"user-name\">@chaonora</p>\r\n              <p class=\"time\"> . 6hrs</p>\r\n            </div>\r\n\r\n            <div class=\"user-content\">\r\n              <p>Time to settle down and play my favourite game IN THE WORLD Earth globe europe-africa</p>\r\n\r\n              <p>  Haven’t played for about a month, too busy coding.\r\n                So tired this evening though.\r\n                Poker tournament with husband later..</p>\r\n                <img src=\"./img/content5.jpg\" alt=\"content5\">\r\n            </div>\r\n\r\n            <div class=\"content-icons\">\r\n              <i class=\"far fa-comment blue\"> 78</i>\r\n              <i class=\"fas fa-retweet green\"> 265</i>\r\n              <i class=\"far fa-heart red\"> 934</i>\r\n              <i class=\"fas fa-chevron-up blue\"></i>\r\n            </div>\r\n\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"pagnation\">\r\n          <a href=\"#\">Load more</a>\r\n        </div>\r\n\r\n\r\n{% endblock %}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/network/social/templates/social/index.html b/network/social/templates/social/index.html
+--- a/network/social/templates/social/index.html	(revision 03f23b5e0a7133062eb3206068fc4596a6590ffd)
++++ b/network/social/templates/social/index.html	(date 1706731273992)
+@@ -11,7 +11,7 @@
+       <div class="post-tweet">
+         <form action="">
+           <div class="form-group-1">
+-            <img src="./img/profile.jpg" alt="profile-pics">
++            <img src="{{user.profile_pic.url}}" alt="profile-pics">
+             <input type="text" placeholder="What's happening?">
+           </div>
+           <div class="form-group-2">
+@@ -28,128 +28,33 @@
+ 
+       </div>
+       <!-- User Content -->
+-        <div class="tweets">
+-          <div class="user-pics"><img src="./img/user3.jpg" alt="user3"></div>
+-          <div class="user-content-box">
+-            <div class="user-names">
+-              <hi class="full-name">Olivia Brent</hi>
+-              <p class="user-name">@iamolivia</p>
+-              <p class="time"> . 58mins</p>
+-            </div>
+-
+-            <div class="user-content">
+-              <p>We've gotta send kids back to school so one day they can be doctors and scientists, and everyone can ignore them.</p>
+-            </div>
+-
+-            <div class="content-icons">
+-              <i class="far fa-comment blue"> 109</i>
+-              <i class="fas fa-retweet green"> 865</i>
+-              <i class="far fa-heart red">1.6k</i>
+-              <i class="fas fa-chevron-up blue"></i>
+-            </div>
+-
+-          </div>
+-        </div>
+-        <div class="tweets">
+-          <div class="user-pics"><img src="./img/user2.jpg" alt="user2"></div>
+-          <div class="user-content-box">
+-            <div class="user-names">
+-              <hi class="full-name">Carole Chavez</hi>
+-              <p class="user-name">@carolechavez</p>
+-              <p class="time"> . 1hr</p>
+-            </div>
+-
+-            <div class="user-content">
+-              <p>If the whole world was blind, how many people would you impress?
+-                <a href="#">#100daysofcode</a> <a href="#">#javascript</a> <a href="#">#womenwhocode</a></p>
+-            </div>
+-
+-            <div class="content-icons">
+-              <i class="far fa-comment blue"> 2k</i>
+-              <i class="fas fa-retweet green"> 6k</i>
+-              <i class="far fa-heart red"> 10k</i>
+-              <i class="fas fa-chevron-up blue"></i>
+-            </div>
+-
+-          </div>
+-        </div>
+-
+-        <div class="tweets">
+-          <div class="user-pics"><img src="./img/user1.jpg" alt="user1"></div>
+-          <div class="user-content-box">
+-            <div class="user-names">
+-              <hi class="full-name">Eric Alvarez</hi>
+-              <p class="user-name">@eric_alvarez</p>
+-              <p class="time"> . 2hrs</p>
+-            </div>
+-
+-            <div class="user-content">
+-              <p>Eat. Code, Sleep. repeat! <a href="#">#CodeNewbie</a> <a href="#">#100DaysOfCode</a></p>
+-              <img src="./img/content1.jpg" alt="content1">
+-            </div>
+-
+-            <div class="content-icons">
+-              <i class="far fa-comment blue"> 273</i>
+-              <i class="fas fa-retweet green"> 2k</i>
+-              <i class="far fa-heart red"> 3k</i>
+-              <i class="fas fa-chevron-up blue"></i>
+-            </div>
+-
+-          </div>
+-        </div>
+-
++        {% for post in posts %}
+         <div class="tweets">
+-          <div class="user-pics"><img src="./img/user4.jpg" alt="user4"></div>
++
++          <div class="user-pics"><img src="{{post.creater.profile_pic.url}}" alt="user3"></div>
+           <div class="user-content-box">
+             <div class="user-names">
+-              <hi class="full-name">Harry Wilson</hi>
+-              <p class="user-name">@Harrywilson</p>
+-              <p class="time"> . 4hrs</p>
++              <hi class="full-name">{{post.creater.first_name}}</hi>
++              <p class="user-name">{{post.creater.username}}</p>
++              <p class="time">{{post.data_created}}</p>
+             </div>
+ 
++
++
+             <div class="user-content">
+-              <p>There's no clear correlation between your background and what you are going to achieve in life..</p>
++              <p>{{post.context_text}}</p>
++              <img src="{{post.context_image.url}}" alt="content1">
+             </div>
+-
+             <div class="content-icons">
+-              <i class="far fa-comment blue"> 4k</i>
+-              <i class="fas fa-retweet green"> 8k</i>
+-              <i class="far fa-heart red">13k</i>
++              <i class="far fa-comment blue">{{post.comments.all.count}}</i>
++             <i class="fa-regular fa-bookmark"></i>
++              <i class="far fa-heart red">{{post.likers.all.count}}</i>
+               <i class="fas fa-chevron-up blue"></i>
+             </div>
+ 
+           </div>
+         </div>
+-
+-
+-        <div class="tweets">
+-          <div class="user-pics"><img src="./img/user5.jpg" alt="user5"></div>
+-          <div class="user-content-box">
+-            <div class="user-names">
+-              <hi class="full-name">Nora Chao</hi>
+-              <p class="user-name">@chaonora</p>
+-              <p class="time"> . 6hrs</p>
+-            </div>
+-
+-            <div class="user-content">
+-              <p>Time to settle down and play my favourite game IN THE WORLD Earth globe europe-africa</p>
+-
+-              <p>  Haven’t played for about a month, too busy coding.
+-                So tired this evening though.
+-                Poker tournament with husband later..</p>
+-                <img src="./img/content5.jpg" alt="content5">
+-            </div>
+-
+-            <div class="content-icons">
+-              <i class="far fa-comment blue"> 78</i>
+-              <i class="fas fa-retweet green"> 265</i>
+-              <i class="far fa-heart red"> 934</i>
+-              <i class="fas fa-chevron-up blue"></i>
+-            </div>
+-
+-          </div>
+-        </div>
+-
++        {% endfor %}
+         <div class="pagnation">
+           <a href="#">Load more</a>
+         </div>
+Index: network/social/views.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from django.contrib import messages\r\nfrom django.contrib.auth import authenticate, login, logout\r\nfrom django.contrib.auth.views import LoginView\r\nfrom django.db import IntegrityError\r\nfrom django.http import HttpResponse, HttpResponseRedirect, JsonResponse\r\nfrom django.shortcuts import render, redirect\r\nfrom django.urls import reverse, reverse_lazy\r\nfrom django.contrib.auth.decorators import login_required\r\nfrom django.views.decorators.csrf import csrf_exempt\r\nfrom django.core.paginator import Paginator\r\nimport json\r\nfrom .forms import *\r\nfrom django.views.generic import CreateView, UpdateView, DetailView\r\n\r\nfrom .models import *\r\n\r\n\r\n\r\n\r\ndef index(request):\r\n    if not request.user.is_authenticated:\r\n        return redirect('login')\r\n    else:\r\n        followers = Follower.objects.filter(user = request.user)\r\n        Tequest = Request.objects.filter(user = request.user)\r\n        if not followers.exists():\r\n            Follower.objects.create(user = request.user)\r\n            follower = followers.first()\r\n            user_followings = follower.followings.all()\r\n        else:\r\n            follower = followers.first()\r\n            user_followings = follower.followings.all()\r\n        if not Tequest.exists():\r\n            Request.objects.create(user = request.user)\r\n            teuqest = Tequest.first()\r\n            request_user_list = teuqest.requests.all()\r\n        else:\r\n            teuqest = Tequest.first()\r\n            request_user_list = teuqest.requests.all()\r\n        user = request.user\r\n        posts = Post.objects.all()\r\n        context = {\"posts\": posts, 'user': user, 'user_followings': user_followings,\r\n                   'request_user_list': request_user_list}\r\n        return render(request, 'social/index.html', context=context)\r\n\r\n\r\n\r\n\r\nclass RegisterView(CreateView):\r\n    model = User\r\n    form_class = UserRegistretion\r\n    success_url = reverse_lazy('login')\r\n    template_name = 'social/register.html'\r\n\r\n    def get_context_data(self, *, object_list=None, **kwargs):\r\n        context = super().get_context_data(**kwargs)\r\n        context['title'] = 'Registretion'\r\n        return context\r\n\r\n    def form_valid(self, form):\r\n        form.save()\r\n        return super().form_valid(form)\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\nclass UserLogin(LoginView):\r\n    form_class = UserLogin\r\n    template_name = 'social/login.html'\r\n    model = User\r\n\r\n\r\n    def get_context_data(self,*, object_list  = None,**kwargs):\r\n        context = super().get_context_data(**kwargs)\r\n        context['title'] =  'login'\r\n        return context\r\n\r\n\r\n\r\nclass UserProfile(UpdateView):\r\n    model = User\r\n    context_object_name = 'user'\r\n    template_name = 'social/settings.html'\r\n    form_class = UserChange\r\n    def get_context_data(self,*, object_list = None,  **kwargs):\r\n        context= super().get_context_data(**kwargs)\r\n        context['title'] = f'Profile {self.object}'\r\n        context['form'] = UserChange\r\n        return context\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\ndef Subscribe(request, pk):\r\n    user = request.user\r\n    user_get = User.objects.get(id = pk)\r\n    follower = Follower.objects.get(user = user)\r\n    follower.followings.add(user_get)\r\n    return HttpResponseRedirect(request.META[\"HTTP_REFERER\"])\r\n\r\n\r\n\r\n\r\ndef UnSubscribe(request, pk):\r\n    user = request.user\r\n    user_get = User.objects.get(id = pk)\r\n    follower = Follower.objects.get(user= user)\r\n    follower.followings.remove(user_get)\r\n    return HttpResponseRedirect(request.META[\"HTTP_REFERER\"])\r\n\r\n\r\n\r\n\r\ndef AddLike(request, pk):\r\n    post  = Post.objects.get(id = pk)\r\n    post.likers.add(request.user)\r\n    return HttpResponseRedirect(request.META[\"HTTP_REFERER\"])\r\n\r\n\r\n\r\n\r\ndef Remove_like(request, pk):\r\n    post = Post.objects.get(id = pk)\r\n    post.likers.remove(request.user)\r\n    return HttpResponseRedirect(request.META[\"HTTP_REFERER\"])\r\n\r\n\r\n\r\n\r\ndef SendRequest(request, pk):\r\n    user = request.user\r\n    user_request_to = User.objects.get(id = pk)\r\n    Tequest = Request.objects.get(user = user)\r\n    Tequest.requests.add(user_request_to)\r\n    return HttpResponseRedirect(request.META[\"HTTP_REFERER\"])\r\n\r\n\r\n\r\n\r\ndef ConfirmRequest(request, pk):\r\n    user_from = User.objects.get(id = pk)\r\n    Tequest = Request.objects.get(user = user_from)\r\n    Tequest.requests.remove(request.user)\r\n    follow = Follower.objects.get(user = user_from)\r\n    follow.followings.add(request.user)\r\n    return HttpResponseRedirect(request.META[\"HTTP_REFERER\"])\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/network/social/views.py b/network/social/views.py
+--- a/network/social/views.py	(revision 03f23b5e0a7133062eb3206068fc4596a6590ffd)
++++ b/network/social/views.py	(date 1706730843785)
+@@ -11,12 +11,12 @@
+ import json
+ from .forms import *
+ from django.views.generic import CreateView, UpdateView, DetailView
++from django.views.decorators.csrf import ensure_csrf_cookie
+ 
+ from .models import *
+ 
+ 
+ 
+-
+ def index(request):
+     if not request.user.is_authenticated:
+         return redirect('login')
+@@ -39,6 +39,7 @@
+             request_user_list = teuqest.requests.all()
+         user = request.user
+         posts = Post.objects.all()
++
+         context = {"posts": posts, 'user': user, 'user_followings': user_followings,
+                    'request_user_list': request_user_list}
+         return render(request, 'social/index.html', context=context)
+Index: network/social/forms.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from django import forms\r\nfrom django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm\r\nfrom .models import User\r\n\r\n\r\n\r\nclass UserLogin(AuthenticationForm):\r\n    username = forms.CharField(widget = forms.TextInput(attrs = {'placeholder': 'Username'}))\r\n    password = forms.CharField(widget = forms.PasswordInput(attrs = {'placeholder': 'Password'}))\r\n\r\n    class Meta:\r\n        model = User\r\n        fields  = ['username', 'password',]\r\n\r\n\r\nclass UserRegistretion(UserCreationForm):\r\n    first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First name'}))\r\n    last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Last name'}))\r\n    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Username'}))\r\n    email = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}))\r\n    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))\r\n    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password again'}))\r\n    private = forms.BooleanField(widget=forms.CheckboxInput(attrs={'placeholder': 'Private'}))\r\n    class Meta:\r\n        model = User\r\n        fields = ('first_name', 'last_name', 'username','email',  'password1', 'password2','private',)\r\n\r\n\r\n\r\nclass UserChange(UserChangeForm):\r\n    email = forms.EmailField(widget = forms.TextInput(attrs= {'readonly': True}))\r\n    class Meta:\r\n        model = User\r\n        fields = (\"profile_pic\",)\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/network/social/forms.py b/network/social/forms.py
+--- a/network/social/forms.py	(revision 03f23b5e0a7133062eb3206068fc4596a6590ffd)
++++ b/network/social/forms.py	(date 1706730706474)
+@@ -18,8 +18,8 @@
+     last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Last name'}))
+     username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Username'}))
+     email = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
+-    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
+-    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password again'}))
++    password1 = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Password'}))
++    password2 = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Password again'}))
+     private = forms.BooleanField(widget=forms.CheckboxInput(attrs={'placeholder': 'Private'}))
+     class Meta:
+         model = User
+Index: network/social/templates/social/privet.html
+===================================================================
+diff --git a/network/social/templates/social/privet.html b/network/social/templates/social/privet.html
+deleted file mode 100644
+--- a/network/social/templates/social/privet.html	(revision 03f23b5e0a7133062eb3206068fc4596a6590ffd)
++++ /dev/null	(revision 03f23b5e0a7133062eb3206068fc4596a6590ffd)
+@@ -1,10 +0,0 @@
+-<!DOCTYPE html>
+-<html lang="en">
+-<head>
+-    <meta charset="UTF-8">
+-    <title>Title</title>
+-</head>
+-<body>
+-
+-</body>
+-</html>
+\ No newline at end of file
+Index: network/social/migrations/0001_initial.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/network/social/migrations/0001_initial.py b/network/social/migrations/0001_initial.py
+deleted file mode 100644
+--- a/network/social/migrations/0001_initial.py	(revision 03f23b5e0a7133062eb3206068fc4596a6590ffd)
++++ /dev/null	(revision 03f23b5e0a7133062eb3206068fc4596a6590ffd)
+@@ -1,101 +0,0 @@
+-# Generated by Django 4.2.7 on 2024-01-28 09:46
+-
+-from django.conf import settings
+-import django.contrib.auth.models
+-import django.contrib.auth.validators
+-from django.db import migrations, models
+-import django.db.models.deletion
+-import django.utils.timezone
+-
+-
+-class Migration(migrations.Migration):
+-
+-    initial = True
+-
+-    dependencies = [
+-        ('auth', '0012_alter_user_first_name_max_length'),
+-    ]
+-
+-    operations = [
+-        migrations.CreateModel(
+-            name='User',
+-            fields=[
+-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+-                ('password', models.CharField(max_length=128, verbose_name='password')),
+-                ('last_login', models.DateTimeField(blank=True, null=True, verbose_name='last login')),
+-                ('is_superuser', models.BooleanField(default=False, help_text='Designates that this user has all permissions without explicitly assigning them.', verbose_name='superuser status')),
+-                ('username', models.CharField(error_messages={'unique': 'A user with that username already exists.'}, help_text='Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.', max_length=150, unique=True, validators=[django.contrib.auth.validators.UnicodeUsernameValidator()], verbose_name='username')),
+-                ('first_name', models.CharField(blank=True, max_length=150, verbose_name='first name')),
+-                ('last_name', models.CharField(blank=True, max_length=150, verbose_name='last name')),
+-                ('email', models.EmailField(blank=True, max_length=254, verbose_name='email address')),
+-                ('is_staff', models.BooleanField(default=False, help_text='Designates whether the user can log into this admin site.', verbose_name='staff status')),
+-                ('is_active', models.BooleanField(default=True, help_text='Designates whether this user should be treated as active. Unselect this instead of deleting accounts.', verbose_name='active')),
+-                ('date_joined', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date joined')),
+-                ('bio', models.TextField(blank=True, max_length=170, null=True)),
+-                ('profile_pic', models.ImageField(upload_to='profile_pic/')),
+-                ('cover', models.ImageField(blank=True, upload_to='covers/')),
+-                ('private', models.BooleanField(blank=True, default=False)),
+-                ('groups', models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='user', to='auth.group', verbose_name='groups')),
+-                ('user_permissions', models.ManyToManyField(blank=True, help_text='Specific permissions for this user.', related_name='user_set', related_query_name='user', to='auth.permission', verbose_name='user permissions')),
+-            ],
+-            options={
+-                'verbose_name': 'user',
+-                'verbose_name_plural': 'users',
+-                'abstract': False,
+-            },
+-            managers=[
+-                ('objects', django.contrib.auth.models.UserManager()),
+-            ],
+-        ),
+-        migrations.CreateModel(
+-            name='Request',
+-            fields=[
+-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+-                ('requests', models.ManyToManyField(blank=True, related_name='requests', to=settings.AUTH_USER_MODEL)),
+-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='user_from', to=settings.AUTH_USER_MODEL)),
+-            ],
+-        ),
+-        migrations.CreateModel(
+-            name='Post',
+-            fields=[
+-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+-                ('data_created', models.DateTimeField(default=django.utils.timezone.now)),
+-                ('context_text', models.TextField(blank=True, max_length=150)),
+-                ('context_image', models.ImageField(blank=True, upload_to='posts/')),
+-                ('comment_count', models.IntegerField(default=0)),
+-                ('creater', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='posts', to=settings.AUTH_USER_MODEL)),
+-                ('likers', models.ManyToManyField(blank=True, related_name='likes', to=settings.AUTH_USER_MODEL)),
+-                ('savers', models.ManyToManyField(blank=True, related_name='savers', to=settings.AUTH_USER_MODEL)),
+-            ],
+-            options={
+-                'verbose_name': 'Post',
+-                'verbose_name_plural': 'Posts',
+-            },
+-        ),
+-        migrations.CreateModel(
+-            name='Follower',
+-            fields=[
+-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+-                ('followings', models.ManyToManyField(blank=True, related_name='followers', to=settings.AUTH_USER_MODEL)),
+-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='follower', to=settings.AUTH_USER_MODEL)),
+-            ],
+-            options={
+-                'verbose_name': 'Follower',
+-                'verbose_name_plural': 'Followers',
+-            },
+-        ),
+-        migrations.CreateModel(
+-            name='Comment',
+-            fields=[
+-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+-                ('comment_content', models.TextField(max_length=78)),
+-                ('comment_time', models.DateTimeField(default=django.utils.timezone.now)),
+-                ('commenter', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='commenters', to=settings.AUTH_USER_MODEL)),
+-                ('post', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments', to='social.post')),
+-            ],
+-            options={
+-                'verbose_name': 'Comment',
+-                'verbose_name_plural': 'Comments',
+-            },
+-        ),
+-    ]
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"2b1be840-8156-4db4-9b38-13762a90f676\" name=\"Changes\" comment=\"Commit from MAster\">\r\n      <change beforePath=\"$PROJECT_DIR$/.gitignore\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.gitignore\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Python Script\" />\r\n        <option value=\"HTML File\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"lzka\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2bgT76K7zSNR2xO4G3Bx8bM1xaZ\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/User/PycharmProjects/DjangoSocialNetwork&quot;\r\n  }\r\n}</component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"2b1be840-8156-4db4-9b38-13762a90f676\" name=\"Changes\" comment=\"\" />\r\n      <created>1706635551240</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1706635551240</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Commit from MAster\">\r\n      <created>1706725291540</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1706725291540</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"2\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Commit from lzka\" />\r\n    <MESSAGE value=\"Commit from MAster\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Commit from MAster\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 03f23b5e0a7133062eb3206068fc4596a6590ffd)
++++ b/.idea/workspace.xml	(date 1706730857933)
+@@ -4,8 +4,22 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="2b1be840-8156-4db4-9b38-13762a90f676" name="Changes" comment="Commit from MAster">
+-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
++    <list default="true" id="2b1be840-8156-4db4-9b38-13762a90f676" name="Changes" comment="">
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/network/db.sqlite3" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/network/media/covers/1670821523_grizly-club-p-logotip-mersedes-png-43.jpg" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/network/media/posts/05b38181e7c8f527e941719bfd37326e.jpg" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/network/media/posts/05b38181e7c8f527e941719bfd37326e_IAGn0TH.jpg" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/network/media/posts/b1e142e1465e429574e912d108cf2ffc.jpeg" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/network/media/posts/drujba-vmeste-kotenok-schenok-ryadom.jpg" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/network/media/posts/q93_ab222073a93c0be2e543347c71b150517c968e768bee61a3a0dd5b9c351c099b.jpg_1.webp" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/network/social/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/forms.py" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/network/social/migrations/0001_initial.py" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/network/social/templates/social/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/templates/social/base.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/network/social/templates/social/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/templates/social/index.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/network/social/templates/social/privet.html" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/network/social/templates/social/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/templates/social/register.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/network/social/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/views.py" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -23,10 +37,13 @@
+   <component name="Git.Settings">
+     <option name="RECENT_BRANCH_BY_REPOSITORY">
+       <map>
+-        <entry key="$PROJECT_DIR$" value="lzka" />
++        <entry key="$PROJECT_DIR$" value="master" />
+       </map>
+     </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
++  </component>
++  <component name="HighlightingSettingsPerFile">
++    <setting file="file://$PROJECT_DIR$/network/social/views.py" root0="FORCE_HIGHLIGHTING" />
+   </component>
+   <component name="MarkdownSettingsMigration">
+     <option name="stateVersion" value="1" />
+@@ -62,6 +79,17 @@
+     </task>
+     <option name="localTasksCounter" value="2" />
+     <servers />
++  </component>
++  <component name="Vcs.Log.Tabs.Properties">
++    <option name="TAB_STATES">
++      <map>
++        <entry key="MAIN">
++          <value>
++            <State />
++          </value>
++        </entry>
++      </map>
++    </option>
+   </component>
+   <component name="VcsManagerConfiguration">
+     <MESSAGE value="Commit from lzka" />
+diff --git a/network/db.sqlite3 b/network/db.sqlite3
+deleted file mode 100644

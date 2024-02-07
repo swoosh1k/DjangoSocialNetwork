@@ -8,7 +8,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
-<div class = 'login'>
+    <div class = 'login'>
         <form action = '{% url "register" %}' method = 'post'>
             {% csrf_token %}
             <h1>Registretion</h1>
@@ -37,9 +37,11 @@
                 {{form.password2}}
                 <i class='bx bxs-lock-alt' ></i>
             </div>
-            <button type = 'submit>' class = 'btn'>Register</button>
-              <div class = 'register-link'>
+            <button type = "submit" class = 'btn'>Register</button>
+            <div class = 'register-link'>
                 <p>Have an account?<a href ='{% url "login" %}'> Login</a></p>
+
+            </div>
         </form>
     </div>
 </body>
