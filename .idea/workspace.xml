@@ -4,37 +4,42 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-<<<<<<< HEAD
-    <list default="true" id="dc5408bf-9cdf-45dd-ad0a-bc6e53671e65" name="Changes" comment="" />
-=======
-    <list default="true" id="2b1be840-8156-4db4-9b38-13762a90f676" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/network/social/templates/social/privet.html" afterDir="false" />
+    <list default="true" id="2b1be840-8156-4db4-9b38-13762a90f676" name="Changes" comment="Commit 4">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/social/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/social/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/social/templates/social/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/templates/social/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/social/templates/social/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/templates/social/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/social/templates/social/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/templates/social/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/social/templates/social/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/templates/social/profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/social/templates/social/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/templates/social/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/social/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/social/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/network/static/css/style.css" afterDir="false" />
     </list>
->>>>>>> lzka
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-<<<<<<< HEAD
-  <component name="TaskManager">
-=======
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/network/social/views.py" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -49,9 +54,18 @@
     &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/User/PycharmProjects/DjangoSocialNetwork&quot;
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/User/PycharmProjects/DjangoSocialNetwork/network/static&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\User\PycharmProjects\DjangoSocialNetwork\network\static" />
+      <recent name="C:\Users\User\PycharmProjects\DjangoSocialNetwork\network\static\css" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\User\PycharmProjects\DjangoSocialNetwork\network\static\js" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -61,7 +75,45 @@
       <option name="presentableId" value="Default" />
       <updated>1706635551240</updated>
     </task>
->>>>>>> lzka
+    <task id="LOCAL-00001" summary="Commit from MAster">
+      <created>1706725291540</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1706725291540</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Commit from MAster">
+      <created>1706731702575</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1706731702575</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Commit 4">
+      <created>1706731941397</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1706731941397</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Commit from lzka" />
+    <MESSAGE value="Commit from MAster" />
+    <MESSAGE value="Commit 4" />
+    <option name="LAST_COMMIT_MESSAGE" value="Commit 4" />
   </component>
 </project>
