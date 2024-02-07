@@ -22,7 +22,7 @@
           <li class="nav-items"><a href="#"><i class="far fa-envelope"></i> Messages</a></li>
           <li class="nav-items"><a href="#"><i class="far fa-bookmark"></i> Bookmarks</a></li>
           <li class="nav-items"><a href="#"><i class="far fa-list-alt"></i> Lists</a></li>
-          <li class="nav-items"><a href="#"><i class="far fa-user"></i> Profile</a></li>
+          <li class="nav-items"><a href="{% url 'user_profile' user.id %}"><i class="far fa-user"></i> Profile</a></li>
           <li class="nav-items"><a href="#"><i class="fas fa-ellipsis-h more-icon"></i> More</a></li>
         </ul>
       </div>
