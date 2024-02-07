@@ -11,13 +11,18 @@ urlpatterns = [
     path('login/', UserLogin.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name = 'logout'),
     path('register/', RegisterView.as_view(), name = 'register'),
-    path('subscribe/<int:pk>/', Subscribe, name = "subscribe"),
+    path('subscribe/', Subscribe, name = "subscribe"),
     path('unsubscribe/<int:pk>/', UnSubscribe, name = 'unsubscribe'),
-    path('addlike/<int:pk>/', AddLike, name = 'add_like'),
+    path('addlike/', AddLike, name = 'add_like'),
     path('remove_like/<int:pk>/', Remove_like, name  = 'remove_like'),
     path('send_request/<int:pk>/', SendRequest, name = 'send_request'),
     path('profile/<int:pk>/', UserProfile.as_view(), name = 'user_profile'),
     path('confirm_request/<int:pk>/', ConfirmRequest, name = 'request_confirm'),
+    path('followings/', Followings, name = 'followings'),
+    path('post_create_text/',Post_create_contex , name = 'post_context_create'),
+    path('delete_post/', DeletePost, name = 'delete_post'),
+    path('savepost/', Save_post, name = 'save_post'),
+    path('add_comment/<int:pk>/', Add_comment , name = 'add_comment')
 
 ]
 

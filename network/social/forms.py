@@ -32,3 +32,8 @@ class UserChange(UserChangeForm):
     class Meta:
         model = User
         fields = ("profile_pic",)
+
+
+
+
+

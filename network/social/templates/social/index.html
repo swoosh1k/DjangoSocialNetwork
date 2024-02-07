@@ -2,6 +2,8 @@
 
 
 {% block main %}
+<script src="https://kit.fontawesome.com/6aae901a73.js" crossorigin="anonymous"></script>
+
 
 <div class="home">
         <h1>Home</h1>
@@ -9,10 +11,11 @@
       </div>
 
       <div class="post-tweet">
-        <form action="">
+        <form method = 'POST' action = '{% url "post_context_create" %}'>
+            {% csrf_token %}
           <div class="form-group-1">
             <img src="{{user.profile_pic.url}}" alt="profile-pics">
-            <input type="text" placeholder="What's happening?">
+              <input type="text" placeholder="What's happening? Min length 30" name = 'text' minlength=" 30">
           </div>
           <div class="form-group-2">
             <div class="post-icons">
@@ -25,39 +28,57 @@
             <button class="btn" type="submit">Post</button>
           </div>
         </form>
-
       </div>
+ <table id="postTable" class="table table-striped">
       <!-- User Content -->
-        {% for post in posts %}
-        <div class="tweets">
+     {% for post in posts %}
+        <tr id="post{{post.pk}}">
+            <td><div class="tweets">
+                    <div class="user-pics"><img src="{{post.creater.profile_pic.url}}" alt="user3"></div>
+                    <div class="user-content-box">
+                    <div class="user-names">
+                        <hi class="full-name"><a href = "{% url 'user_profile' post.creater.id %}">{{post.creater.first_name}}</a></hi>
+                        <p class="user-name">{{post.creater.username}}</p>
+                        <p class="time">{{post.data_created}}</p>
+                        {% if not post.creater == request.user  %}
+                                <p class="subscribeq">
+                                    <a  id = '{{ post.creater.pk }}' data-url = '{% url "subscribe" %}' class = 'subscribebtnq'><span  id = "btn_textt{{post.creater.pk}}">{% if not post.creater in user_followings %}Follow{% else %}Unfollow{% endif %}</span></a>
+                                </p>
+                        {% endif %}
+                    </div>
 
-          <div class="user-pics"><img src="{{post.creater.profile_pic.url}}" alt="user3"></div>
-          <div class="user-content-box">
-            <div class="user-names">
-              <hi class="full-name">{{post.creater.first_name}}</hi>
-              <p class="user-name">{{post.creater.username}}</p>
-              <p class="time">{{post.data_created}}</p>
-            </div>
 
 
 
-            <div class="user-content">
-              <p>{{post.context_text}}</p>
-              <img src="{{post.context_image.url}}" alt="content1">
-            </div>
-            <div class="content-icons">
-              <i class="far fa-comment blue">{{post.comments.all.count}}</i>
-             <i class="fa-regular fa-bookmark"></i>
-              <i class="far fa-heart red">{{post.likers.all.count}}</i>
-              <i class="fas fa-chevron-up blue"></i>
-            </div>
 
-          </div>
+
+                <div class="user-content" id = "user-content">
+                    <p>{{post.context_text}}</p>
+                    {% if  post.context_image %}
+                    <img src="{{post.context_image.url}}" alt="content1">
+                    {% endif %}
+                </div>
+                    <div class="content-icons">
+                        <a class = 'comment-toggle-btn'><i class="far fa-comment blue">{{post.comments.all.count}}</i></a>
+                        <form class="comment-form"  style="display: none;" action =  '{% url "add_comment" post.id %}' method = 'POST'>
+                            {% csrf_token %}
+                            <textarea name="comment" placeholder="Напишите комментарий" required ></textarea>
+                            <button type="submit">Отправить</button>
+                        </form>
+                        <a id = "{{post.id}}" class = 'savepostbtn' data-url = '{% url "save_post" %}'>{% if not user in post.savers.all %}<i class="fa-regular fa-bookmark"  style="color: #FFD43B;"></i>{% else %}<i class="fa-solid fa-bookmark" style="color: #FFD43B;"></i>{% endif %}</a>
+                        <a id = '{{ post.pk }}' data-url  = '{% url "add_like" %}' class ='likebtn'><i  {% if not user in post.likers.all %} class = 'fa-regular fa-heart' style = "color: #ff0000;" {% else %} class = 'fa-solid fa-heart ' style = "color: #ff0000;" {% endif %}></i> <span   id = "like_count{{post.pk}}"  >{{post.total_likes}}</span></a>
+                        {% if post.creater == request.user %}
+                        <a  onClick="deletePost({{post.pk}})"><i class="fa-solid fa-trash-can"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+
         </div>
-        {% endfor %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
         <div class="pagnation">
           <a href="#">Load more</a>
         </div>
-
-
 {% endblock %}

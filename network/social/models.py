@@ -10,6 +10,12 @@ class User(AbstractUser):
     cover = models.ImageField(upload_to = 'covers/', blank = True)
     private = models.BooleanField(default=False, blank=True)
 
+
+
+
+
+
+
     def __str__(self):
         return self.username
 '''Класс постов'''
@@ -32,6 +38,17 @@ class Post(models.Model):
     class Meta:
         verbose_name = "Post"
         verbose_name_plural = "Posts"
+
+
+
+
+    @property
+    def total_likes(self):
+        return self.likers.count()
+
+
+
+
 
 '''Класс комментариев'''
 class Comment(models.Model):
