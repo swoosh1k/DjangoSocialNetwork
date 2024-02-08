@@ -10,7 +10,7 @@ urlpatterns = [
     path('', index, name = 'index'),
     path('login/', UserLogin.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name = 'logout'),
-    path('register/', RegisterView.as_view(), name = 'register'),
+    path('register/', register, name = 'register'),
     path('subscribe/', Subscribe, name = "subscribe"),
     path('unsubscribe/<int:pk>/', UnSubscribe, name = 'unsubscribe'),
     path('addlike/', AddLike, name = 'add_like'),
@@ -22,7 +22,11 @@ urlpatterns = [
     path('post_create_text/',Post_create_contex , name = 'post_context_create'),
     path('delete_post/', DeletePost, name = 'delete_post'),
     path('savepost/', Save_post, name = 'save_post'),
-    path('add_comment/<int:pk>/', Add_comment , name = 'add_comment')
+    path('add_comment/<int:pk>/', Add_comment , name = 'add_comment'),
+    path('save_post_with_image/', Save_post_with_image, name = 'save_post_with_image'),
+    path('likes/', Likes, name =  'likes'),
+    path('saves/', Bookmarks, name = 'saves'),
+    path('activate/<uidb64>/<token>', views.activate, name='activate'),
 
 ]
 

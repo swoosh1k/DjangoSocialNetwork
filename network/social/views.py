@@ -1,11 +1,16 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.views import LoginView
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.template.loader import render_to_string
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
 import json
@@ -14,7 +19,7 @@ from django.views.generic import CreateView, UpdateView, DetailView
 from django.views.decorators.csrf import ensure_csrf_cookie
 
 from .models import *
-
+from .tokens import account_activation_token
 
 
 def index(request):
@@ -40,7 +45,6 @@ def index(request):
 
         user = request.user
         posts = Post.objects.all()
-        my_list = []
         you_might_know = User.objects.exclude(id__in = user_followings)
         context = {"posts": posts, 'user': user, 'user_followings': user_followings,
                    'request_user_list': request_user_list, 'you_might_know': you_might_know}
@@ -48,16 +52,57 @@ def index(request):
 
 
 
-class RegisterView(CreateView):
-    success_url = reverse_lazy('login')
-    model = User
-    form_class = UserRegistretion
-    template_name =  'social/register.html'
 
-    def get_context_data(self,*, object_list = None , **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Rgistretion'
-        return context
+
+
+
+def activate(request, uidb64, token):
+    User = get_user_model()
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+
+        messages.success(request, 'Thank you for your email confirmation. Now you can login your account.')
+        return redirect('login')
+    else:
+        messages.error(request, 'Activation link is invalid!')
+
+    return redirect('index')
+
+def activateEmail(request, user, to_email):
+    mail_subject = 'Activate your user account.'
+    message = render_to_string('social/template_activate_account.html', {
+        'user': user.username,
+        'domain': get_current_site(request).domain,
+        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        'token': account_activation_token.make_token(user),
+        'protocol': 'https' if request.is_secure() else 'http'
+    })
+    email = EmailMessage(mail_subject, message, to=[to_email])
+    if email.send():
+        messages.success(request, f'Dear {user}, please go to you email {to_email} inbox and click on \
+                received activation link to confirm and complete the registration. Note: Check your spam folder.')
+    else:
+        messages.error(request, f'Problem sending confirmation email to {to_email}, check if you typed it correctly.')
+
+def register(request):
+    if request.method == 'POST':
+        form =  UserRegistretion(request.POST)
+        if form.is_valid():
+            user = form.save(commit = False)
+            user.is_active=False
+            user.save()
+            activateEmail(request, user, form.cleaned_data.get('email'))
+            login(request, user)
+    else:
+        form  = UserRegistretion()
+    return render(request, 'social/register.html', context = {'form': form})
 
 
 
@@ -236,11 +281,6 @@ def Post_create_contex(request):
 
 
 
-
-
-
-
-
 def Add_comment(request, pk):
     Comment.objects.create(post = Post.objects.get(id = pk), commenter = request.user,comment_content = request.POST.get('comment'))
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
@@ -248,3 +288,35 @@ def Add_comment(request, pk):
 
 
 
+def Save_post_with_image(request):
+    image = request.FILES['image']
+    Post.objects.create(context_image =  image, creater = request.user, context_text = request.POST.get('text'))
+    return redirect('index')
+
+
+
+
+
+def Likes(request):
+    posts = request.user.likes.all()
+    user = request.user
+    follower = Follower.objects.get(user = user)
+    user_followings = follower.followings.all()
+    you_might_know = User.objects.exclude(id__in = user_followings)
+    context = {"posts": posts, 'user': user, 'user_followings': user_followings,
+               'you_might_know': you_might_know}
+
+    return render(request, 'social/index.html', context = context)
+
+
+
+def Bookmarks(request):
+    posts = request.user.savers.all()
+    user = request.user
+    follower = Follower.objects.get(user = user)
+    user_followings = follower.followings.all()
+    you_might_know = User.objects.exclude(id__in = user_followings)
+    context = {"posts": posts, 'user': user, 'user_followings': user_followings,
+               'you_might_know': you_might_know}
+
+    return render(request, 'social/index.html', context = context)

@@ -65,7 +65,7 @@ ul {
 
 /* Left Navigation */
 .logo i{
-  color: #1da1f2;
+  color: #228B22;
   font-size: 2rem;
   padding: 1rem;
 }
@@ -80,11 +80,11 @@ ul {
   padding: 10px 15px;
 }
 
-.current-page a { color: rgba(29,161,242,1.00);}
+.current-page a { color: #228B22;}
 
 .nav-links a:hover {
   background: rgba(29, 161, 242, 0.1);
-  color: #1da1f2;
+  color: #228B22;
   padding: 10px 15px;
   border-radius: 25px;
 }
@@ -104,7 +104,7 @@ ul {
   margin: auto;
   width: 100%;
   color: #fff;
-  background: #1da1f2;
+  background: #228B22;
   font-size: 1rem;
   font-weight: 700;
   padding: 10px 5rem;
@@ -113,7 +113,7 @@ ul {
 
 .tweet a:hover {
   color: #fff;
-  background: #198ed6;
+  background:#228B22;
 }
 
 .profile-box {
@@ -146,7 +146,7 @@ ul {
 }
 
 .profile-box .options-icon {
-  color: #39393a;
+  color: #228B22;
   margin-left: 1rem;
 }
 
@@ -175,7 +175,7 @@ ul {
 }
 .home i {
   font-size: 1.4rem;
-  color: rgba(29,161,242,1.00);
+  color: #228B22;
   background: #fff;
   padding: 0.5rem;
   border-radius: 50%
@@ -231,7 +231,7 @@ ul {
 
 .post-icons {
   padding-left: 4rem;
-  color: #1da1f2;
+  color: #228B22;
 }
 .post-icons i {
   padding-right: 10px;
@@ -242,17 +242,18 @@ ul {
   cursor: pointer;
 }
 .form-group-2 .btn {
+  width: 100px;
   border: none;
   font-weight: 600;
   font-size: 1rem;
-  padding: 0.7rem 1rem;
-  background: #8ed0f9;
+  padding: 0.5rem 0.8rem;
+  background:#228B22;
   color: #fff;
   border-radius: 25px;
   margin-right: 1rem;
 }
 .form-group-2 .btn:hover {
-  background: #1da1f2;
+  background: ;
   cursor: pointer;
 
 }
@@ -300,7 +301,7 @@ ul {
   line-height: 1.5;
 }
 .user-content a {
-  color: rgb(27, 149, 224);
+  color: #228B22;
 }
 
 .user-content-box {
@@ -354,16 +355,16 @@ ul {
 
 .content-icons .blue:hover {
 
-  color: rgba(29, 161,242,1.00);
+  color: #228B22;
 }
 .content-icons .green:hover {
-  color: rgb(23 191 99);
+  color:  #228B22;
 }
 .content-icons .red:hover {
-  color: rgb(224, 36, 94);
+  color:  #228B22;
 }
 .content-icons .blue:hover {
-  color: rgba(29, 161,242,1.00);
+  color:  #228B22;
 }
 
 /* Right Navbar */
@@ -580,7 +581,7 @@ ul {
 
 .follow-btn a{
   font-weight: bold;
-  color: rgb(29,161,242);
+  color:  #228B22;
   background: #fff;
   padding: 0.3rem 1.1rem;
   border: 1px solid rgba(29,161,242,1.00);
@@ -588,7 +589,7 @@ ul {
 }
 
 .follow-btn a:hover {
-  background:  rgba(29, 161, 242, 0.1);;
+  background:  rgba(29, 161, 242, 0.1);
 }
 
 .follow-footer {
@@ -611,13 +612,13 @@ ul {
 }
 .pagnation a {
   color: #fff;
-  background: #1da1f2;
+  background:  #228B22;
   padding: 0.3rem 1rem;
   border-radius: 25px;
   font-size: 1rem;
 }
 .pagnation a:hover {
-  background: #198ed6;
+  background:  #228B22;
 }
 
 
@@ -630,22 +631,12 @@ ul {
   color: rgb(29,161,242);
   background: #fff;
   padding: 0.01rem 0.6rem;
-  border: 1px solid rgba(29,161,242,1.00);
+  border:  #228B22;
   border-radius: 20px;
 }
 
 
 
-.subscribeq a{
-  margin-left: 100px;
-  font-weight: bold;
-  color: rgb(29,161,242);
-  background: #fff;
-  padding: 0.3rem 1.1rem;
-  border: 1px solid rgba(29,161,242,1.00);
-  border-radius: 25px;
-  cursor: pointer;
-}
 
 
 
@@ -659,11 +650,11 @@ ul {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color:  #228B22;
 }
 
 .modal-content {
-    background-color: #fefefe;
+    background-color:  #228B22;
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
@@ -684,3 +675,80 @@ ul {
     text-decoration: none;
     cursor: pointer;
 }
+
+
+
+
+
+
+
+
+
+.modal-content .text {
+
+
+    width: 100%;
+    border-radius: 10px;
+    display: flex;
+
+}
+
+.modal-content .text input {
+  width: 100%;
+  height: 40px;
+  border-radius: 6px;
+
+
+}
+
+.image {
+    display: block;
+
+}
+
+.display-img {
+    width: 700px;
+    height: 400px;
+    border: 0px solid black;
+
+}
+
+
+
+.subscribeq {
+  padding-top: 10px;
+  padding-right: 35px;
+  align-items: center;
+  display: block;
+
+
+
+
+}
+
+
+.subscribeq .subscribebtnq {
+
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 18px;
+  border-radius: 10px;
+  color: white;
+  font-weight: 600;
+  background: #228B22
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

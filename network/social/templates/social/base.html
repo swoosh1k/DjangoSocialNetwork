@@ -17,17 +17,19 @@
       <div class="nav-links">
         <ul>
 
-          <li class="nav-items current-page"><a href="#"><i class="fas fa-home"></i> Home</a></li>
-          <li class="nav-items"><a href="#"><i class="fas fa-hashtag"></i> Explore</a></li>
-          <li class="nav-items"><a href="#"><i class="far fa-bell"></i> Notifications</a></li>
-          <li class="nav-items"><a href="#"><i class="far fa-envelope"></i> Messages</a></li>
-          <li class="nav-items"><a href="#"><i class="far fa-bookmark"></i> Bookmarks</a></li>
-          <li class="nav-items"><a href="#"><i class="far fa-list-alt"></i> Lists</a></li>
+
+          <li class="nav-items current-page"><a href="{% url 'index' %}"><i class="fas fa-home"></i> Home</a></li>
+          <li class="nav-items"><a href="{% url 'saves' %}"><i class="far fa-bookmark"></i> Bookmarks</a></li>
+          <li class="nav-items"><a href="{% url 'likes' %}"><i class="fa-solid fa-heart"></i>Likes</a></li>
           <li class="nav-items"><a href="{% url 'user_profile' user.id %}"><i class="far fa-user"></i> Profile</a></li>
-          <li class="nav-items"><a href="#"><i class="fas fa-ellipsis-h more-icon"></i> More</a></li>
+          <li class="nav-items"><a id="openModalBtn"><i class="fa-solid fa-note-sticky"></i>New Post</a></li>
+          <li class="nav-items"><a href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
+
+
+         
         </ul>
       </div>
-      <div class="tweet"><a id="openModalBtn">New Post</a></div>
+
 
 
 
@@ -39,7 +41,6 @@
           <p class="full-name">{{request.user.first_name}}</p>
           <p class="user-name">{{request.user.username}}</p>
         </div>
-        <div class="options-icon"><i class="fas fa-caret-down"></i></div>
       </div>
     </div>
 
@@ -57,8 +58,29 @@
         <input type="text" placeholder="Search People">
       </div>
       <!-- You might know -->
+
       <div class="trends">
         <ul>
+          <li class="nav-list header">
+            <h2>You might know</h2>
+          {% for user in you_might_know %}
+          {% if user != request.user %}
+          <li class="nav-list">
+
+            <div class="trend-list">
+              <p class="sub-text">Here from: {{user.date_joined}}</p>
+              <p class="main-text">{{user.username}}</p>
+              <p class="sub-text">Followers: {{user.followers.all.count}}</p>
+            </div>
+            <div class="trend-icon">
+            </div>
+             <div class="subscribeq"><a  id = '{{ user.pk }}' data-url = '{% url "subscribe" %}' class = 'subscribebtnq'><span  id = "btn_textt{{user.pk}}">Follow</span></a></div>
+          </li>
+          {% endif %}
+          {% endfor %}
+
+        </ul>
+      </div>
 
 
       <div class="right-footer">
@@ -67,7 +89,6 @@
           <a href="#" class="sub-text">Privacy policy</a>
           <a href="#" class="sub-text">Ads info</a>
           <a href="#" class="sub-text">more</a>
-          <i class="fas fa-chevron-down sub-text"></i>
         </div>
         <div class="footer-copyright">
           <p class="sub-text"></p>
@@ -83,8 +104,15 @@
 <div id="myModal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
-    <h2>Modal Header</h2>
-    <p>This is a sample modal window.</p>
+    <h2>Новый пост</h2>
+    <p>
+    <form action = '{% url "save_post_with_image" %}' method  = 'POST' enctype="multipart/form-data">
+    {% csrf_token %}
+      <div class = 'image'><input type="file" accept="image" id="img-input" name = 'image' ><img class= 'display-img' id="display-img" /></div>
+      <div class = 'text'><input type = 'text' placeholder="Введите текст вашего поста" maxlength="20" required name = 'text'></div>
+      <button type = 'submit'>Save Post</button>
+    </form>
+    </p>
   </div>
 </div>
 
@@ -239,8 +267,8 @@ function deletePost(pk) {
 
 }
 .comment-form textarea {
-  border-color: #3CB371;
-  border: 1px solid pink;
+  border-color:  #228B22;
+  border: 2px solid  ;
   width: 100%;
   border-radius: 8px;
   height: 60px;
@@ -254,10 +282,10 @@ function deletePost(pk) {
 
 .comment-form button {
     font-weight: bold;
-    color: rgb(29,161,242);
-    background: #fff;
+    color: white;
+    background: #228B22;
     padding: 0.1rem 0.09rem;
-    border: 1px solid rgba(29,161,242,1.00);
+    border: 1px solid #228B22;
     border-radius: 25px;
     cursor: pointer;
 }
@@ -326,20 +354,24 @@ document.addEventListener('DOMContentLoaded', function() {
     position: fixed;
     z-index: 1;
     left: 0;
-    top: 0;
+    top: 0px;
     width: 100%;
     height: 100%;
     overflow: auto; /* Добавляет прокрутку, если контент выходит за пределы окна */
     background-color: rgba(0,0,0,0.4); /* Затемненный фон */
   }
 
+
+
+
+
   /* Контент модального окна */
   .modal-content {
-    background-color: #fefefe;
+    background-color: white;
     margin: 15% auto; /* 15% от верхнего и нижнего края экрана, автоматически отступ от других сторон */
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Ширина контента */
+    width: 40%; /* Ширина контента */
   }
 
   /* Закрывающая кнопка */
@@ -390,10 +422,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+<script>
+  const imgInput = document.querySelector("#img-input")
+  const displayImg = document.querySelector("#display-img")
+  imgInput.addEventListener('change',
+  (event)=>{
+    const imgObject = event.target.files[0]
+    displayImg.src = URL.createObjectURL(imgObject)})
 
-
-
-
-
+</script>
 </body>
 </html>
