@@ -1,60 +1,82 @@
+
 {% extends 'social/base.html' %}
+{% load static %}
 
 {% block main %}
   <div class="profile-container">
     <div class="profile-info">
-      <h1>{{ user.username }}</h1>
-      {% if user.profile_pic %}
-        <img src="{{ user.profile_pic.url }}" alt="Profile Picture">
-      {% else %}
-        <p>Изображение профиля не загружено</p>
-      {% endif %}
+      {% if user.cover %}
+        <div class="cover-container" style="background-image: url('{{ user.cover.url }}');">
+          {% else %}
+            <div class="cover-container">
+              {% endif %}
+                <h1 >{{ user.username }}</h1>
+              {% if user.profile_pic %}
+                <div class="profile-pic-container">
+                  <img src="{{ user.profile_pic.url }}" alt="Profile Picture" class="profile-pic">
+                </div>
+              {% else %}
+                <p>Изображение профиля не загружено</p>
+              {% endif %}
+            </div>
+            <div>
+              <h4>Имя: <span style="color: #1da1f2;">{{ user.first_name }}</span></h4>
+              <h4>Фамилия: <span style="color: #1da1f2;">{{ user.last_name }}</span></h4>
+              <h4>Email: <span style="color: #1da1f2;">{{ user.email }}</span></h4>
+              <p><span style="color: #1da1f2;">Биография:</span> {{ user.bio }}</p>
+              <p><span style="color: #1da1f2;">Приватность:</span> {% if user.private %} Приватный аккаунт {% else %} Публичный аккаунт {% endif %}</p>
+              <p><span style="color: #1da1f2;">Подписчики:</span> {{ user.follower.count }}</p>
 
-      <p>Изменить изображение профиля</p>
-      <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="file" name="profile_pic">
-        <button type="submit">Изменить изображение</button>
-      </form>
+              <p><span style="color: #1da1f2;">Подписки:</span></p>
+              <ul>
+                {% for following in user.follower.first.followings.all %}
+                  <li>{{ following.username }}</li>
+                {% empty %}
+                  <li>Нет подписок</li>
+                {% endfor %}
+              </ul>
+                <br>
+              <div>
+                <a href="#">Изменить профиль</a>
+                <a href="{% url 'delete_profile' user.id %}">Удалить профиль</a>
+              </div>
+              <br>
+            </div>
+        </div>
+    </div>
+  <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 
-      <p>Имя: <span id="first_name">{{ user.first_name }}</span> <button onclick="editField('first_name')">Изменить</button></p>
-      <div id="first_name_edit" style="display: none;">
-        <input type="text" id="first_name_input">
-        <button onclick="saveField('first_name')">Сохранить</button>
-        <button onclick="cancelEdit('first_name')">Отмена</button>
-      </div>
-      <p>Фамилия: <span id="last_name">{{ user.last_name }}</span> <button onclick="editField('last_name')">Изменить</button></p>
-      <div id="last_name_edit" style="display: none;">
-        <input type="text" id="last_name_input">
-        <button onclick="saveField('last_name')">Сохранить</button>
-        <button onclick="cancelEdit('last_name')">Отмена</button>
-      </div>
-      <p>Email: <span id="email">{{ user.email }}</span> <button onclick="editField('email')">Изменить</button></p>
-      <div id="email_edit" style="display: none;">
-        <input type="email" id="email_input">
-        <button onclick="saveField('email')">Сохранить</button>
-        <button onclick="cancelEdit('email')">Отмена</button>
-      </div>
-      <p>Подписчики: {{ user.follower.count }}</p>
-    </div>
-    <div class="profile-edit">
-      <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
+  <div class="post-section">
+    <h2>Посты пользователя</h2>
+    {% for post in posts %}
+      <div class="post">
+        <p>{{ post.context_text }}</p>
+        {% if post.context_image %}
+          <img src="{{ post.context_image.url }}" alt="Post Image">
+        {% endif %}
+        <p>Дата создания: {{ post.data_created }}</p>
+        <p>Количество лайков: {{ post.likers.count }}</p>
+        <p>Количество комментариев: {{ post.comments.count }}</p>
 
-        <button type="submit">Сохранить изменения</button>
-      </form>
-    </div>
-    <div class="following-list">
-      <h2>Подписки</h2>
-      <ul>
-        {% for following in user.follower.first.followings.all %}
-          <li>{{ following.username }}</li>
-        {% empty %}
-          <li>Нет подписок</li>
-        {% endfor %}
-      </ul>
-    </div>
+
+
+        <div class="comments-section">
+          <h3>Комментарии</h3>
+          {% for comment in post.comments.all %}
+            <div class="comment">
+              <p>{{ comment.comment_content }}</p>
+              <p>Автор: {{ comment.commenter.username }}</p>
+              <p>Дата комментария: {{ comment.comment_time }}</p>
+            </div>
+          {% empty %}
+            <p>Нет комментариев</p>
+          {% endfor %}
+        </div>
+
+
+      </div>
+    {% empty %}
+      <p>Пользователь еще не опубликовал постов</p>
+    {% endfor %}
   </div>
-
-
 {% endblock %}

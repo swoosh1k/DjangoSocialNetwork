@@ -28,6 +28,8 @@ urlpatterns = [
     path('saves/', Bookmarks, name = 'saves'),
     path('activate/<uidb64>/<token>', views.activate, name='activate'),
 
+    path('delete_profile/<int:user_id>/', delete_profile, name='delete_profile'),
+
 ]
 
 

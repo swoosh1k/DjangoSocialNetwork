@@ -1,0 +1,10 @@
+{% extends 'social/base.html' %}
+
+{% block main %}
+  <p>Вы уверены, что хотите удалить "{{ user.username }}"?</p>
+  <form method="post" action="{% url 'delete_profile' user.id %}">
+    {% csrf_token %}
+    <button type="submit">Удалить</button>
+  </form>
+
+{% endblock %}
