@@ -14,16 +14,14 @@
         <form method = 'POST' action = '{% url "post_context_create" %}'>
             {% csrf_token %}
           <div class="form-group-1">
+            {% if user.profile_pic %}
             <img src="{{user.profile_pic.url}}" alt="profile-pics">
-              <input type="text" placeholder="What's happening? Min length 30" name = 'text' minlength=" 30">
+             {% endif %}
+              <input type="text" placeholder="What's happening? Min length 30" name = 'text' minlength=" 30" required>
           </div>
           <div class="form-group-2">
             <div class="post-icons">
-              <i class="far fa-image"></i>
-              <i class="far fa-file-image"></i>
-              <i class="fas fa-stream"></i>
-              <i class="far fa-smile"></i>
-              <i class="far fa-calendar-check"></i>
+
             </div>
             <button class="btn" type="submit">Post</button>
           </div>
@@ -34,20 +32,15 @@
      {% for post in posts %}
         <tr id="post{{post.pk}}">
             <td><div class="tweets">
-                    <div class="user-pics"><img src="{{post.creater.profile_pic.url}}" alt="user3"></div>
+
+                    {% if user.profile_pic %}<a href = "{% url 'user_profile' post.creater.id %}"><div class="user-pics"><img src="{{post.creater.profile_pic.url}}" alt="user3"></div></a>{% endif %}
                     <div class="user-content-box">
                     <div class="user-names">
-                        <hi class="full-name"><a href = "{% url 'user_profile' post.creater.id %}">{{post.creater.first_name}}</a></hi>
+                        <a href = "{% url 'user_profile' post.creater.id %}"><hi class="full-name">{{post.creater.first_name}}</hi></a>
                         <p class="user-name">{{post.creater.username}}</p>
                         <p class="time">{{post.data_created}}</p>
-                        {% if not post.creater == request.user  %}
-                                <p class="subscribeq">
-                                    <a  id = '{{ post.creater.pk }}' data-url = '{% url "subscribe" %}' class = 'subscribebtnq'><span  id = "btn_textt{{post.creater.pk}}">{% if not post.creater in user_followings %}Follow{% else %}Unfollow{% endif %}</span></a>
-                                </p>
-                        {% endif %}
+
                     </div>
-
-
 
 
 
@@ -72,7 +65,6 @@
                         {% endif %}
                     </div>
                 </div>
-
         </div>
         </td>
     </tr>
