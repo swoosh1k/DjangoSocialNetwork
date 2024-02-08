@@ -123,17 +123,13 @@ class UserProfile(DetailView):
     model = User
     context_object_name = 'user'
     template_name = 'social/profile.html'
-
+    form_class = UserChange
     def get_context_data(self,*, object_list = None,  **kwargs):
         context= super().get_context_data(**kwargs)
         context['title'] = f'Profile {self.object}'
         return context
-
-
-
-
-
-
+      
+    
 
 def Subscribe(request, pk):
     user = request.user
