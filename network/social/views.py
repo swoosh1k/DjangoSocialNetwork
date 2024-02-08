@@ -20,7 +20,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 
 from .models import *
 from .tokens import account_activation_token
-
+from django.shortcuts import get_object_or_404
 
 def index(request):
     if not request.user.is_authenticated:
@@ -320,3 +320,13 @@ def Bookmarks(request):
                'you_might_know': you_might_know}
 
     return render(request, 'social/index.html', context = context)
+
+
+def delete_profile(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+
+    if request.method == 'POST':
+        user.delete()
+        return redirect('index')
+
+    return render(request, 'social/delete_profile.html', {'user': user})
