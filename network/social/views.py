@@ -330,3 +330,16 @@ def delete_profile(request, user_id):
         return redirect('index')
 
     return render(request, 'social/delete_profile.html', {'user': user})
+
+def edit_profile(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+
+    if request.method == 'POST':
+        form = UserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+        form = UserForm(instance=user)
+
+    return render(request, 'social/edit_profile.html', {'form': form, 'user': user})
