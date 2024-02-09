@@ -1,0 +1,102 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"2b1be840-8156-4db4-9b38-13762a90f676\" name=\"Changes\" comment=\"Добавил много ajax функций(на лайк, на сохранить, подписаться, удалить пост, комментарий), Добавиль модальное окно, которое буду дальше дорабатывать\">\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_31_01_2024_20_55__Changes_.xml\" beforeDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_31_01_2024_22_02_[Changes]/shelved.patch\" beforeDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_31_01_2024_22_02__Changes_.xml\" beforeDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_31_01_2024_23_01_[Changes]/shelved.patch\" beforeDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_31_01_2024_23_01__Changes_.xml\" beforeDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/network/db.sqlite3\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/network/db.sqlite3\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/network/media/posts/1646915968_49-sportishka-com-p-ozero-baikal-v-fevrale-turizm-krasivo-foto-52_IbxJJLe.jpg\" beforeDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/network/network/settings.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/network/network/settings.py\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/network/social/forms.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/network/social/forms.py\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/network/social/templates/social/base.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/network/social/templates/social/base.html\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/network/social/templates/social/index.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/network/social/templates/social/index.html\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/network/social/templates/social/login.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/network/social/templates/social/login.html\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/network/social/templates/social/profile.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/network/social/templates/social/profile.html\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/network/social/templates/social/register.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/network/social/templates/social/register.html\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/network/social/urls.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/network/social/urls.py\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/network/social/views.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/network/social/views.py\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/network/static/css/style.css\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/network/static/css/style.css\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/network/static/css/stylelogin.css\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/network/static/css/stylelogin.css\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"FileTemplateManagerImpl\">\n    <option name=\"RECENT_TEMPLATES\">\n      <list>\n        <option value=\"Python Script\" />\n        <option value=\"HTML File\" />\n      </list>\n    </option>\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\n      <map>\n        <entry key=\"$PROJECT_DIR$\" value=\"master\" />\n      </map>\n    </option>\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"HighlightingSettingsPerFile\">\n    <setting file=\"file://$PROJECT_DIR$/network/social/templates/social/base.html\" root0=\"FORCE_HIGHLIGHTING\" />\n    <setting file=\"file://$PROJECT_DIR$/network/social/views.py\" root0=\"FORCE_HIGHLIGHTING\" />\n  </component>\n  <component name=\"MarkdownSettingsMigration\">\n    <option name=\"stateVersion\" value=\"1\" />\n  </component>\n  <component name=\"ProjectId\" id=\"2bgT76K7zSNR2xO4G3Bx8bM1xaZ\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\">{\n  &quot;keyToString&quot;: {\n    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/User/PycharmProjects/DjangoSocialNetwork/network/static/css&quot;\n  }\n}</component>\n  <component name=\"RecentsManager\">\n    <key name=\"CopyFile.RECENT_KEYS\">\n      <recent name=\"C:\\Users\\User\\PycharmProjects\\DjangoSocialNetwork\\network\\static\\css\" />\n      <recent name=\"C:\\Users\\User\\PycharmProjects\\DjangoSocialNetwork\\network\\media\\posts\" />\n      <recent name=\"C:\\Users\\User\\PycharmProjects\\DjangoSocialNetwork\\network\\static\" />\n    </key>\n    <key name=\"MoveFile.RECENT_KEYS\">\n      <recent name=\"C:\\Users\\User\\PycharmProjects\\DjangoSocialNetwork\\network\\media\\profile_pic\" />\n      <recent name=\"C:\\Users\\User\\PycharmProjects\\DjangoSocialNetwork\\network\\static\\images\" />\n      <recent name=\"C:\\Users\\User\\PycharmProjects\\DjangoSocialNetwork\\network\\static\\images \" />\n      <recent name=\"C:\\Users\\User\\PycharmProjects\\DjangoSocialNetwork\\network\\static\\js\" />\n    </key>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"2b1be840-8156-4db4-9b38-13762a90f676\" name=\"Changes\" comment=\"\" />\n      <created>1706635551240</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1706635551240</updated>\n    </task>\n    <task id=\"LOCAL-00001\" summary=\"Commit from MAster\">\n      <created>1706725291540</created>\n      <option name=\"number\" value=\"00001\" />\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1706725291540</updated>\n    </task>\n    <task id=\"LOCAL-00002\" summary=\"Commit from MAster\">\n      <created>1706731702575</created>\n      <option name=\"number\" value=\"00002\" />\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1706731702575</updated>\n    </task>\n    <task id=\"LOCAL-00003\" summary=\"Commit 4\">\n      <created>1706731941397</created>\n      <option name=\"number\" value=\"00003\" />\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1706731941397</updated>\n    </task>\n    <option name=\"localTasksCounter\" value=\"4\" />\n    <servers />\n  </component>\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State />\n          </value>\n        </entry>\n      </map>\n    </option>\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <MESSAGE value=\"Commit from lzka\" />\n    <MESSAGE value=\"Commit from MAster\" />\n    <MESSAGE value=\"Commit 4\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 0c1d745f4a4074fa54685d9ff87687e63bbccdae)
++++ b/.idea/workspace.xml	(date 1707430606635)
+@@ -4,27 +4,7 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="2b1be840-8156-4db4-9b38-13762a90f676" name="Changes" comment="Добавил много ajax функций(на лайк, на сохранить, подписаться, удалить пост, комментарий), Добавиль модальное окно, которое буду дальше дорабатывать">
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_31_01_2024_20_55__Changes_.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_31_01_2024_22_02_[Changes]/shelved.patch" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_31_01_2024_22_02__Changes_.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_31_01_2024_23_01_[Changes]/shelved.patch" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_31_01_2024_23_01__Changes_.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/network/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/network/db.sqlite3" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/network/media/posts/1646915968_49-sportishka-com-p-ozero-baikal-v-fevrale-turizm-krasivo-foto-52_IbxJJLe.jpg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/network/network/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/network/network/settings.py" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/network/social/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/forms.py" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/network/social/templates/social/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/templates/social/base.html" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/network/social/templates/social/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/templates/social/index.html" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/network/social/templates/social/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/templates/social/login.html" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/network/social/templates/social/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/templates/social/profile.html" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/network/social/templates/social/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/templates/social/register.html" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/network/social/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/urls.py" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/network/social/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/views.py" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/network/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/network/static/css/style.css" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/network/static/css/stylelogin.css" beforeDir="false" afterPath="$PROJECT_DIR$/network/static/css/stylelogin.css" afterDir="false" />
+-    </list>
++    <list default="true" id="2b1be840-8156-4db4-9b38-13762a90f676" name="Changes" comment="Commit 6 new_branch" />
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -41,7 +21,7 @@
+   <component name="Git.Settings">
+     <option name="RECENT_BRANCH_BY_REPOSITORY">
+       <map>
+-        <entry key="$PROJECT_DIR$" value="master" />
++        <entry key="$PROJECT_DIR$" value="nas2" />
+       </map>
+     </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+@@ -58,16 +38,19 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent">{
+-  &quot;keyToString&quot;: {
+-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+-    &quot;last_opened_file_path&quot;: &quot;C:/Users/User/PycharmProjects/DjangoSocialNetwork/network/static/css&quot;
++  <component name="PropertiesComponent"><![CDATA[{
++  "keyToString": {
++    "DefaultHtmlFileTemplate": "HTML File",
++    "RunOnceActivity.OpenProjectViewOnStart": "true",
++    "RunOnceActivity.ShowReadmeOnStart": "true",
++    "git-widget-placeholder": "master",
++    "last_opened_file_path": "/home/anastasiya/DjangoSocialNetwork/network/static/css"
+   }
+-}</component>
++}]]></component>
+   <component name="RecentsManager">
+     <key name="CopyFile.RECENT_KEYS">
++      <recent name="$PROJECT_DIR$/network/static/css" />
++      <recent name="$PROJECT_DIR$/network/social/templates/social" />
+       <recent name="C:\Users\User\PycharmProjects\DjangoSocialNetwork\network\static\css" />
+       <recent name="C:\Users\User\PycharmProjects\DjangoSocialNetwork\network\media\posts" />
+       <recent name="C:\Users\User\PycharmProjects\DjangoSocialNetwork\network\static" />
+@@ -109,7 +92,15 @@
+       <option name="project" value="LOCAL" />
+       <updated>1706731941397</updated>
+     </task>
+-    <option name="localTasksCounter" value="4" />
++    <task id="LOCAL-00004" summary="Commit 6 new_branch">
++      <option name="closed" value="true" />
++      <created>1707430215550</created>
++      <option name="number" value="00004" />
++      <option name="presentableId" value="LOCAL-00004" />
++      <option name="project" value="LOCAL" />
++      <updated>1707430215550</updated>
++    </task>
++    <option name="localTasksCounter" value="5" />
+     <servers />
+   </component>
+   <component name="Vcs.Log.Tabs.Properties">
+@@ -127,6 +118,7 @@
+     <MESSAGE value="Commit from lzka" />
+     <MESSAGE value="Commit from MAster" />
+     <MESSAGE value="Commit 4" />
+-    <option name="LAST_COMMIT_MESSAGE" value="" />
++    <MESSAGE value="Commit 6 new_branch" />
++    <option name="LAST_COMMIT_MESSAGE" value="Commit 6 new_branch" />
+   </component>
+ </project>
+\ No newline at end of file

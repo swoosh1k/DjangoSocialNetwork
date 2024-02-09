@@ -1,0 +1,24 @@
+.delete-button {
+    font-weight: 700;
+    font-size: 16px; /* Размер шрифта для кнопки удалить */
+    margin-right: 20px; /* Отступ между кнопками */
+    padding: 15px 30px; /* Параметры отступа внутри кнопки */
+    border-radius: 50px;
+    background-color: #228B22;
+    color: white;
+    text-decoration: none;
+}
+
+.back-button {
+    font-weight: 700;
+    font-size: 16px; /* Размер шрифта для кнопки назад */
+    padding: 15px 30px; /* Параметры отступа внутри кнопки */
+    border-radius: 50px;
+    background-color: #228B22;
+    color: white;
+    text-decoration: none;
+}
+
+.buttons-container {
+    text-align: center; /* Центрирование кнопок */
+}

@@ -1,10 +1,16 @@
 {% extends 'social/base.html' %}
+{% load static %}
 
 {% block main %}
-  <p>Вы уверены, что хотите удалить "{{ user.username }}"?</p>
+<div class="buttons-container">
+  <img src="{% static 'images/stop.jpg' %}" alt="STOP" width="200">
+  <p>{{ user.first_name }}, Вы уверены, что хотите удалить свой аккаунт"{{ user.username }}"?. Действие необратимо.</p>
   <form method="post" action="{% url 'delete_profile' user.id %}">
     {% csrf_token %}
-    <button type="submit">Удалить</button>
+    <button type="submit" class="delete-button back-button">Удалить</button>
+    <a href="{% url 'user_profile' user.id %}" class="back-button">Назад</a>
   </form>
+</div>
 
+<link rel="stylesheet" href="{% static 'css/delete_profile.css' %}">
 {% endblock %}
