@@ -1,7 +1,7 @@
-.delete-button {
+.edit-button {
     font-weight: 700;
     font-size: 16px; /* Размер шрифта для кнопки удалить */
-    margin-right: 20px; /* Отступ между кнопками */
+    margin-right: 30px; /* Отступ между кнопками */
     padding: 15px 30px; /* Параметры отступа внутри кнопки */
     border-radius: 50px;
     background-color: #228B22;
@@ -9,7 +9,8 @@
     text-decoration: none;
 }
 
-.delete-button:hover {
+
+.edit-button:hover {
   cursor: pointer;
 }
 
