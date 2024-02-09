@@ -2,13 +2,23 @@
     width: 300px;
     height: 300px;
     overflow: hidden;
-    border: 2px solid #1da1f2; /* Синяя рамка вокруг изображения */
+    border: 2px solid #228B22; /* рамка вокруг изображения */
     padding: 10px; /* Добавляем отступ вокруг изображения */
     border-radius: 15px; /* Скругляем углы рамки */
 }
 
 .profile-pic {
     width: 100%;
+    height: auto;
+    border-radius: 15px; /* Скругляем углы изображения */
+}
+
+.profile-no-pic {
+    overflow: hidden;
+    border: 2px solid #228B22;
+    padding: 10px; /* Добавляем отступ вокруг изображения */
+    border-radius: 15px; /* Скругляем углы рамки */
+    width: 45%;
     height: auto;
     border-radius: 15px; /* Скругляем углы изображения */
 }
@@ -24,11 +34,6 @@
     {% endif %}
 }
 
-.profile-container {
-    display: flex;
-    justify-content: center;
-}
-
 .profile-info a {
 
     font-weight: 700;
@@ -36,14 +41,19 @@
     margin-right: 100px;
     padding: 8px 15px;
     border-radius:50px;
-    background-color: #1da1f2; /* Фон кнопок синего цвета */
+    background-color: #228B22; /* Фон кнопок зеленого цвета */
     color: white; /* Белый цвет текста */
     text-decoration: none; /* Убираем подчеркивание */
 }
 
 .profile-info a:hover {
   color: #fff;
-  background: #198ed6;
+  background: #228B22;
+}
+
+
+.no-cover {
+    background-image: url('{% static 'images/no_covers.jpg' %}');
 }
 
 

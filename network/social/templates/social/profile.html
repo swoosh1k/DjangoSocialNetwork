@@ -1,4 +1,3 @@
-
 {% extends 'social/base.html' %}
 {% load static %}
 
@@ -8,26 +7,32 @@
       {% if user.cover %}
         <div class="cover-container" style="background-image: url('{{ user.cover.url }}');">
           {% else %}
-            <div class="cover-container">
-              {% endif %}
-                <h1 >{{ user.username }}</h1>
-              {% if user.profile_pic %}
-                <div class="profile-pic-container">
-                  <img src="{{ user.profile_pic.url }}" alt="Profile Picture" class="profile-pic">
-                </div>
-              {% else %}
-                <p>Изображение профиля не загружено</p>
-              {% endif %}
-            </div>
-            <div>
-              <h4>Имя: <span style="color: #1da1f2;">{{ user.first_name }}</span></h4>
-              <h4>Фамилия: <span style="color: #1da1f2;">{{ user.last_name }}</span></h4>
-              <h4>Email: <span style="color: #1da1f2;">{{ user.email }}</span></h4>
-              <p><span style="color: #1da1f2;">Биография:</span> {{ user.bio }}</p>
-              <p><span style="color: #1da1f2;">Приватность:</span> {% if user.private %} Приватный аккаунт {% else %} Публичный аккаунт {% endif %}</p>
-              <p><span style="color: #1da1f2;">Подписчики:</span> {{ user.follower.count }}</p>
+            <div class="cover-container" style="background-image: url('{% static 'images/no-covers.jpg' %}');">
 
-              <p><span style="color: #1da1f2;">Подписки:</span></p>
+              {% endif %}
+
+                <h1 >{{ user.username }}</h1>
+                {% if user.profile_pic %}
+
+                  <div class="profile-pic-container">
+                    <img src="{{ user.profile_pic.url }}" alt="Profile Picture" class="profile-pic">
+                  </div>
+
+              {% else %}
+              <img src="{% static 'images/no_photo.jpg' %}" alt="Изображение профиля не загружено" class="profile-no-pic">
+              {% endif %}
+
+            </div>
+
+            <div>
+              <h4>Имя: <span style="color: #228B22;">{{ user.first_name }}</span></h4>
+              <h4>Фамилия: <span style="color: #228B22;">{{ user.last_name }}</span></h4>
+              <h4>Email: <span style="color: #228B22;">{{ user.email }}</span></h4>
+              <p><span style="color: #228B22;">Биография:</span> {{ user.bio }}</p>
+              <p><span style="color: #228B22;">Приватность:</span> {% if user.private %} Приватный аккаунт {% else %} Публичный аккаунт {% endif %}</p>
+              <p><span style="color: #228B22;">Подписчики:</span> {{ user.follower.count }}</p>
+
+              <p><span style="color: #228B22;">Подписки:</span></p>
               <ul>
                 {% for following in user.follower.first.followings.all %}
                   <li>{{ following.username }}</li>
@@ -36,47 +41,45 @@
                 {% endfor %}
               </ul>
                 <br>
-              <div>
-                <a href="#">Изменить профиль</a>
-                <a href="{% url 'delete_profile' user.id %}">Удалить профиль</a>
-              </div>
+                  <div>
+                    <a href="#">Изменить профиль</a>
+                    <a href="{% url 'delete_profile' user.id %}">Удалить профиль</a>
+                  </div>
               <br>
             </div>
         </div>
     </div>
-  <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 
-  <div class="post-section">
-    <h2>Посты пользователя</h2>
-    {% for post in posts %}
-      <div class="post">
-        <p>{{ post.context_text }}</p>
-        {% if post.context_image %}
-          <img src="{{ post.context_image.url }}" alt="Post Image">
-        {% endif %}
-        <p>Дата создания: {{ post.data_created }}</p>
-        <p>Количество лайков: {{ post.likers.count }}</p>
-        <p>Количество комментариев: {{ post.comments.count }}</p>
+    <div class="post-section">
+      <h2>Посты пользователя</h2>
+      {% for post in posts %}
+        <div class="post">
+          <p>{{ post.context_text }}</p>
+          {% if post.context_image %}
+            <img src="{{ post.context_image.url }}" alt="Post Image">
+          {% endif %}
+          <p>Дата создания: {{ post.data_created }}</p>
+          <p>Количество лайков: {{ post.likers.count }}</p>
+          <p>Количество комментариев: {{ post.comments.count }}</p>
 
-
-
-        <div class="comments-section">
-          <h3>Комментарии</h3>
-          {% for comment in post.comments.all %}
+          <div class="comments-section">
+            <h3>Комментарии</h3>
+            {% for comment in post.comments.all %}
             <div class="comment">
               <p>{{ comment.comment_content }}</p>
               <p>Автор: {{ comment.commenter.username }}</p>
               <p>Дата комментария: {{ comment.comment_time }}</p>
             </div>
-          {% empty %}
+            {% empty %}
             <p>Нет комментариев</p>
           {% endfor %}
         </div>
 
-
       </div>
-    {% empty %}
-      <p>Пользователь еще не опубликовал постов</p>
-    {% endfor %}
+      {% empty %}
+        <p>Пользователь еще не опубликовал постов</p>
+      {% endfor %}
   </div>
+
 {% endblock %}
