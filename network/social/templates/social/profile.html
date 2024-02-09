@@ -42,7 +42,7 @@
               </ul>
                 <br>
                   <div>
-                    <a href="#">Изменить профиль</a>
+                    <a href="{% url 'edit_profile' user.id %}">Изменить профиль</a>
                     <a href="{% url 'delete_profile' user.id %}">Удалить профиль</a>
                   </div>
               <br>

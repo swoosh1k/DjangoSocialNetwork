@@ -1,0 +1,15 @@
+{% extends 'social/base.html' %}
+{% load static %}
+
+{% block main %}
+  <h1>Редактировать профиль</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+      <button type="submit" class="edit-button">Сохранить изменения</button>
+      <a href="{% url 'user_profile' user.id %}" class="back-button">Назад</a>
+  </form>
+
+<link rel="stylesheet" href="{% static 'css/edit_profile.css' %}">
+{% endblock %}
