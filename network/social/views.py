@@ -22,6 +22,9 @@ from .models import *
 from .tokens import account_activation_token
 from django.shortcuts import get_object_or_404
 
+from django.urls import reverse
+from django.http import HttpResponseRedirect
+
 def index(request):
     if not request.user.is_authenticated:
         return redirect('login')
@@ -338,7 +341,7 @@ def edit_profile(request, user_id):
         form = UserForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-            return redirect('index')
+            return HttpResponseRedirect(reverse('user_profile', kwargs={'pk': user_id}))
     else:
         form = UserForm(instance=user)
 

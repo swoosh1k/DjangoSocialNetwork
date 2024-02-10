@@ -1,30 +1,65 @@
-.edit-button {
+/* edit_profile.css */
+
+/* Стили для формы */
+form {
+    border: 2px solid #228B22; /* Цвет рамки формы */
+    padding: 20px; /* Отступ внутри формы */
+    border-radius: 15px; /* Скругление углов формы */
+}
+
+/* Стили для текстовых полей */
+input[type="text"],
+input[type="email"] {
+    border: 2px solid #228B22; /* Цвет рамки полей */
+    border-radius: 10px; /* Скругление углов полей */
+    padding: 10px; /* Отступ внутри полей */
+    margin-bottom: 15px; /* Отступ между полями */
+    width: 100%; /* Ширина полей, чтобы они занимали всю доступную ширину */
+}
+
+/* Стили для поля Bio */
+textarea[name="bio"] {
+    border: 2px solid #228B22; /* Цвет рамки поля */
+    border-radius: 10px; /* Скругление углов поля */
+    padding: 10px; /* Отступ внутри поля */
+    margin-bottom: 15px; /* Отступ между полями */
+    width: 100%; /* Ширина поля, чтобы оно занимало всю доступную ширину */
+    resize: vertical; /* Позволяет изменять размеры только по вертикали */
+}
+
+/* Стили для меток полей */
+label {
+    font-weight: bold; /* Задаем жирный текст */
+    color: #228B22; /* Задаем цвет текста */
+}
+
+
+/* Стили для кнопок "Сохранить изменения", "Назад" и "Выберите файл" */
+.edit-button,
+.back-button,
+input[type="file"]::-webkit-file-upload-button {
     font-weight: 700;
-    font-size: 16px; /* Размер шрифта для кнопки удалить */
-    margin-right: 30px; /* Отступ между кнопками */
-    padding: 15px 30px; /* Параметры отступа внутри кнопки */
+    font-size: 18px; /* Размер шрифта для кнопок */
+    padding: 10px 30px; /* Параметры отступа внутри кнопок */
     border-radius: 50px;
     background-color: #228B22;
     color: white;
+    margin-bottom: 15px; /* Отступ между полями */
     text-decoration: none;
+    border: none; /* Убираем границу у кнопок */
+    cursor: pointer;
+    display: inline-block; /* Для кнопки выбора файла */
 }
 
-
-.edit-button:hover {
-  cursor: pointer;
+/* Стили при наведении на кнопки "Сохранить изменения", "Назад" и "Выберите файл" */
+.edit-button:hover,
+.back-button:hover,
+input[type="file"]::-webkit-file-upload-button:hover {
+    background-color: #3CB371; /* Цвет кнопок при наведении */
 }
 
-
+.edit-button,
 .back-button {
-    font-weight: 700;
-    font-size: 16px; /* Размер шрифта для кнопки назад */
-    padding: 15px 30px; /* Параметры отступа внутри кнопки */
-    border-radius: 50px;
-    background-color: #228B22;
-    color: white;
-    text-decoration: none;
-}
 
-.buttons-container {
-    text-align: center; /* Центрирование кнопок */
+    margin-right:101px; /* Отступ между кнопками "Сохранить изменения" и "Назад"*/
 }
