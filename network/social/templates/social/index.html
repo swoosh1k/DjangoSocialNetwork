@@ -53,8 +53,14 @@
                 </div>
                     <div class="content-icons">
                         <a class = 'comment-toggle-btn'><i class="far fa-comment blue">{{post.comments.all.count}}</i></a>
+
                         <form class="comment-form"  style="display: none;" action =  '{% url "add_comment" post.id %}' method = 'POST'>
                             {% csrf_token %}
+                             <div class="comments-container">
+                                {% for comment in post.comments.all %}
+                                    <div class="comment">{{ comment.comment_content }}</div>
+                                {% endfor %}
+                            </div>
                             <textarea name="comment" placeholder="Напишите комментарий" required ></textarea>
                             <button type="submit">Отправить</button>
                         </form>

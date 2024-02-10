@@ -109,7 +109,7 @@
     <form action = '{% url "save_post_with_image" %}' method  = 'POST' enctype="multipart/form-data">
     {% csrf_token %}
       <div class = 'image'><input type="file" accept="image" id="img-input" name = 'image' ><img class= 'display-img' id="display-img" /></div>
-      <div class = 'text'><input type = 'text' placeholder="Введите текст вашего поста" maxlength="20" required name = 'text'></div>
+      <div class = 'text'><input type = 'text' placeholder="Введите текст вашего поста" maxlength="400" required name = 'text'></div>
       <button type = 'submit'>Save Post</button>
     </form>
     </p>
@@ -262,6 +262,7 @@ function deletePost(pk) {
 
 <style>
 .comment-form  {
+  margin-top: 10px;
   margin-left: 20px;
   width: 100%;
 
@@ -289,35 +290,38 @@ function deletePost(pk) {
     border-radius: 25px;
     cursor: pointer;
 }
-</style>
 
+.comments-container {
+    border: 2px black;
+    order: -1; /* Меняем порядок элементов: контейнер комментариев становится первым */
+    margin-bottom: 10px; /* Добавляем отступ снизу контейнеру комментариев */
+}
+</style>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Находим все кнопки комментировать
     var commentToggleButtons = document.querySelectorAll('.comment-toggle-btn');
 
     commentToggleButtons.forEach(function(button) {
-        // Добавляем обработчик события на каждую кнопку
         button.addEventListener('click', function() {
-            // Находим форму комментария для текущего поста
             var commentForm = this.nextElementSibling;
+            var commentsContainer = commentForm.nextElementSibling;
+            var likeButton = this.parentElement.querySelector('.likebtn');
+            var saveButton = this.parentElement.querySelector('.savepostbtn');
 
-            // Переключаем видимость формы комментария с плавным эффектом
             if (commentForm.style.display === 'none') {
                 fadeIn(commentForm);
-                // Скрываем кнопки лайк и сохранить
-                this.parentElement.querySelector('.likebtn').style.display = 'none';
-                this.parentElement.querySelector('.savepostbtn').style.display = 'none';
+
+                likeButton.style.display = 'none'; // Скрыть кнопку лайка
+                saveButton.style.display = 'none'; // Скрыть кнопку сохранения
             } else {
                 fadeOut(commentForm);
-                // Показываем кнопки лайк и сохранить
-                this.parentElement.querySelector('.likebtn').style.display = 'inline-block';
-                this.parentElement.querySelector('.savepostbtn').style.display = 'inline-block';
+
+                likeButton.style.display = 'inline-block'; // Показать кнопку лайка
+                saveButton.style.display = 'inline-block'; // Показать кнопку сохранения
             }
         });
     });
 
-    // Функция для плавного появления элемента
     function fadeIn(element) {
         var opacity = 0;
         var timer = setInterval(function() {
@@ -330,7 +334,6 @@ document.addEventListener('DOMContentLoaded', function() {
         element.style.display = 'block';
     }
 
-    // Функция для плавного исчезновения элемента
     function fadeOut(element) {
         var opacity = 0;
         var timer = setInterval(function() {
@@ -344,8 +347,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
-
-
 
 <style>
   /* Стили для модального окна */
