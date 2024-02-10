@@ -109,7 +109,7 @@
     <form action = '{% url "save_post_with_image" %}' method  = 'POST' enctype="multipart/form-data">
     {% csrf_token %}
       <div class = 'image'><input type="file" accept="image" id="img-input" name = 'image' ><img class= 'display-img' id="display-img" /></div>
-      <div class = 'text'><input type = 'text' placeholder="Введите текст вашего поста" maxlength="20" required name = 'text'></div>
+      <div class = 'text'><input type = 'text' placeholder="Введите текст вашего поста" maxlength="300" required name = 'text'></div>
       <button type = 'submit'>Save Post</button>
     </form>
     </p>
@@ -289,6 +289,17 @@ function deletePost(pk) {
     border-radius: 25px;
     cursor: pointer;
 }
+
+
+.comments-container {
+    border-radius: 8px;
+    border: 2px solid ;
+    width: 100%;
+    border-color: black'
+    margin-bottom: 30px; /* Добавляем отступ снизу контейнеру комментариев */
+}
+
+
 </style>
 
 <script>
