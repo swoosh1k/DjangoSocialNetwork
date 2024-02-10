@@ -4,8 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b1be840-8156-4db4-9b38-13762a90f676" name="Changes" comment="Работаю над системой комментариев">
-      <change beforePath="$PROJECT_DIR$/network/db.sqlite3" beforeDir="false" />
+    <list default="true" id="2b1be840-8156-4db4-9b38-13762a90f676" name="Changes" comment="Добавил много ajax функций(на лайк, на сохранить, подписаться, удалить пост, комментарий), Добавиль модальное окно, которое буду дальше дорабатывать">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_9_02_24__00_42__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_9_02_24__00_42__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_9_02_24__00_43__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_9_02_24__00_43__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_02_24__00_19__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_02_24__00_19__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/network/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/social/templates/social/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/templates/social/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/social/templates/social/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/templates/social/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
