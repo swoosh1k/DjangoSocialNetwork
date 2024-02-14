@@ -338,7 +338,7 @@ def edit_profile(request, user_id):
     user = get_object_or_404(User, id=user_id)
 
     if request.method == 'POST':
-        form = UserForm(request.POST, instance=user)
+        form = UserForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('user_profile', kwargs={'pk': user_id}))
