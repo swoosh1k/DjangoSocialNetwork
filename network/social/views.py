@@ -346,3 +346,5 @@ def edit_profile(request, user_id):
         form = UserForm(instance=user)
 
     return render(request, 'social/edit_profile.html', {'form': form, 'user': user})
+
+# просто комментарий
