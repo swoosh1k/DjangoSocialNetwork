@@ -61,5 +61,5 @@ input[type="file"]::-webkit-file-upload-button:hover {
 .edit-button,
 .back-button {
 
-    margin-right:101px; /* Отступ между кнопками "Сохранить изменения" и "Назад"*/
+    margin-right:101px;
 }

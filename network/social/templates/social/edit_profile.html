@@ -1,6 +1,8 @@
 {% extends 'social/base.html' %}
 {% load static %}
 
+  <link rel="stylesheet" href="{% static 'css/edit_profile.css' %}">
+
 {% block main %}
   <h1>Изменить профиль</h1>
   <form method="post" enctype="multipart/form-data">
@@ -11,7 +13,5 @@
     <a href="{% url 'user_profile' user.id %}" class="back-button">Назад</a>
   </form>
 
-
-  <link rel="stylesheet" href="{% static 'css/edit_profile.css' %}">
 
 {% endblock %}
