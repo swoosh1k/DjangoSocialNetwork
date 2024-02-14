@@ -37,8 +37,29 @@ class UserChange(UserChangeForm):
 
 
 class UserForm(forms.ModelForm):
+    delete_profile_pic = forms.BooleanField(required=False)
+    delete_cover = forms.BooleanField(required=False)
+
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email', 'bio', 'private', 'profile_pic', 'cover']
+        widgets = {
+            'profile_pic': forms.ClearableFileInput(attrs={'multiple': False}),
+            'cover': forms.ClearableFileInput(attrs={'multiple': False}),
+        }
 
+    def save(self, commit=True):
+        instance = super().save(commit=False)
 
+        if self.cleaned_data['delete_profile_pic']:
+            instance.profile_pic.delete()
+            instance.profile_pic = None
+
+        if self.cleaned_data['delete_cover']:
+            instance.cover.delete()
+            instance.cover = None
+
+        if commit:
+            instance.save()
+
+        return instance
