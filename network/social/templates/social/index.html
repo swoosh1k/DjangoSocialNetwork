@@ -29,11 +29,12 @@
       </div>
  <table id="postTable" class="table table-striped">
       <!-- User Content -->
-     {% for post in posts %}
+
+     {% for post in page_obj %}
         <tr id="post{{post.pk}}">
             <td><div class="tweets">
 
-                    {% if user.profile_pic %}<a href = "{% url 'user_profile' post.creater.id %}"><div class="user-pics"><img src="{{post.creater.profile_pic.url}}" alt="user3"></div></a>{% endif %}
+                    {% if post.creater.profile_pic %}<a href = "{% url 'user_profile' post.creater.id %}"><div class="user-pics"><img src="{{post.creater.profile_pic.url}}" alt="user3"></div></a>{% endif %}
                     <div class="user-content-box">
                     <div class="user-names">
                         <a href = "{% url 'user_profile' post.creater.id %}"><hi class="full-name">{{post.creater.first_name}}</hi></a>
@@ -48,7 +49,7 @@
                 <div class="user-content" id = "user-content">
                     <p>{{post.context_text}}</p>
                     {% if  post.context_image %}
-                    <img src="{{post.context_image.url}}" alt="content1">
+                    <img src="{{post.context_image.url}}" width = '900px'  alt="content1">
                     {% endif %}
                 </div>
                     <div class="content-icons">
@@ -76,6 +77,12 @@
     {% endfor %}
 </table>
         <div class="pagnation">
-          <a href="#">Load more</a>
+          {% for p in page_obj.paginator.page_range %}
+            {% if page_obj.number == p %}
+               <hi class ='selected'  href ='?page ={{ p }}' >{{p}}</hi>
+            {% else %}
+                <a  href ='?page={{ p }}'>{{p}}</a>
+            {% endif %}
+          {% endfor %}
         </div>
 {% endblock %}

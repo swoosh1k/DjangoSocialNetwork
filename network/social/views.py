@@ -21,7 +21,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from .models import *
 from .tokens import account_activation_token
 from django.shortcuts import get_object_or_404
-
+from django.core.paginator import Paginator
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 
@@ -45,12 +45,14 @@ def index(request):
         else:
             teuqest = Tequest.first()
             request_user_list = teuqest.requests.all()
-
         user = request.user
         posts = Post.objects.all()
         you_might_know = User.objects.exclude(id__in = user_followings)
+        paginator = Paginator(posts, 3)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
         context = {"posts": posts, 'user': user, 'user_followings': user_followings,
-                   'request_user_list': request_user_list, 'you_might_know': you_might_know}
+                   'request_user_list': request_user_list, 'you_might_know': you_might_know, 'page_obj': page_obj}
         return render(request, 'social/index.html', context=context)
 
 
@@ -306,8 +308,11 @@ def Likes(request):
     follower = Follower.objects.get(user = user)
     user_followings = follower.followings.all()
     you_might_know = User.objects.exclude(id__in = user_followings)
+    paginator = Paginator(posts, 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {"posts": posts, 'user': user, 'user_followings': user_followings,
-               'you_might_know': you_might_know}
+               'you_might_know': you_might_know, 'page_obj': page_obj}
 
     return render(request, 'social/index.html', context = context)
 
@@ -319,8 +324,12 @@ def Bookmarks(request):
     follower = Follower.objects.get(user = user)
     user_followings = follower.followings.all()
     you_might_know = User.objects.exclude(id__in = user_followings)
+    paginator = Paginator(posts, 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    current_user_id = request.user.id
     context = {"posts": posts, 'user': user, 'user_followings': user_followings,
-               'you_might_know': you_might_know}
+               'you_might_know': you_might_know, 'page_obj': page_obj, 'current_user_id': current_user_id}
 
     return render(request, 'social/index.html', context = context)
 
@@ -347,4 +356,4 @@ def edit_profile(request, user_id):
 
     return render(request, 'social/edit_profile.html', {'form': form, 'user': user})
 
-# просто комментарий
+
