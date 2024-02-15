@@ -292,6 +292,8 @@ ul {
 }
 .user-content img {
   border-radius: 20px;
+  width: 580px;
+  height: 350px;
 }
 .user-content {
   font-family: "Roboto";
@@ -610,6 +612,19 @@ ul {
   margin: 1rem 0;
   text-align: center;
 }
+
+
+.pagnation .selected {
+  color: #fff;
+  background: grey;
+  padding: 0.3rem 1rem;
+  border-radius: 55px;
+  font-size: 1rem;
+
+
+}
+
+
 .pagnation a {
   color: #fff;
   background:  #228B22;
@@ -620,6 +635,7 @@ ul {
 .pagnation a:hover {
   background:  #228B22;
 }
+
 
 
 

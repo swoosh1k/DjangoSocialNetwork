@@ -18,11 +18,11 @@
         <ul>
 
 
-          <li class="nav-items current-page"><a href="{% url 'index' %}"><i class="fas fa-home"></i> Home</a></li>
-          <li class="nav-items"><a href="{% url 'saves' %}"><i class="far fa-bookmark"></i> Bookmarks</a></li>
-          <li class="nav-items"><a href="{% url 'likes' %}"><i class="fa-solid fa-heart"></i>Likes</a></li>
-          <li class="nav-items"><a href="{% url 'user_profile' user.id %}"><i class="far fa-user"></i> Profile</a></li>
-          <li class="nav-items"><a id="openModalBtn"><i class="fa-solid fa-note-sticky"></i>New Post</a></li>
+          {% if request.path == '/' %}<li class="nav-items current-page">{% else %}<li class="nav-items ">{% endif %}<a href="{% url 'index'  %}"><i class="fas fa-home"></i> Home </a></li>
+          {% if request.path == '/saves/' %}<li class="nav-items current-page">{% else %}<li class="nav-items ">{% endif %}<a href="{% url 'saves' %}"><i class="far fa-bookmark"></i> Bookmarks</a></li>
+          {% if request.path == '/likes/' %}<li class="nav-items current-page">{% else %}<li class="nav-items ">{% endif %}<a href="{% url 'likes' %}"><i class="fa-solid fa-heart"></i>Likes</a></li>
+          {% if request.path == '/profile/{{user.id}}/' %}<li class="nav-items current-page">{% else %}<li class="nav-items ">{% endif %}<a href="{% url 'user_profile' user.id %}"><i class="far fa-user"></i>Profile</a></li>
+          <li class="nav-items "><a id="openModalBtn"><i class="fa-solid fa-note-sticky"></i>New Post</a></li>
           <li class="nav-items"><a href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
 
 
@@ -34,7 +34,7 @@
 
 
       <div class="profile-box">
-        {% if user.profile_pic %}
+        {% if request.user.profile_pic %}
         <img src="{{request.user.profile_pic.url}}" alt="profile">
         {% endif %}
         <div class="profile-link">
@@ -442,5 +442,11 @@ document.addEventListener('DOMContentLoaded', function() {
     displayImg.src = URL.createObjectURL(imgObject)})
 
 </script>
+
+
+
+
+
+
 </body>
 </html>
