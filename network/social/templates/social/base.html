@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
    <link rel="stylesheet" href="{% static 'css/all.css' %}">
   <script src="https://kit.fontawesome.com/6aae901a73.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/htmx.org@1.9.5" integrity="sha384-xcuj3WpfgjlKF+FXhSQFQ0ZNr39ln+hwjN3npfM9VBnUskLolQAcN80McRIVOPuO" crossorigin="anonymous"></script>
+
 
 </head>
 <body>
@@ -55,8 +57,12 @@
     <div class="right-flex-container flex-item">
       <div class="search-box">
         <i class="fas fa-search"></i>
-        <input type="text" placeholder="Search People">
+          <input type="text" placeholder="Search People" name="q"   hx-get="{% url 'people-search' %}" hx-trigger="keyup changed, q" hx-target='#search-results' hx-indicator=".htmx-indicator">
+        <div id = 'search-results'>
+          {% include "social/search_results.html" %}
+        </div>
       </div>
+
       <!-- You might know -->
 
       <div class="trends">

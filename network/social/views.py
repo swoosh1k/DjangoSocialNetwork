@@ -357,3 +357,11 @@ def edit_profile(request, user_id):
     return render(request, 'social/edit_profile.html', {'form': form, 'user': user})
 
 
+def search_results_view(request):
+    users = User.objects.filter(username__iregex = request.GET.get('q'))
+    if users.exists():
+        users = users
+    else:
+        users = []
+    context = {'users': users}
+    return render(request, 'social/search_results.html', context)
