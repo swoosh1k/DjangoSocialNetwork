@@ -365,3 +365,8 @@ def search_results_view(request):
         users = []
     context = {'users': users}
     return render(request, 'social/search_results.html', context)
+
+
+
+
+

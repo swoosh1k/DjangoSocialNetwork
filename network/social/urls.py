@@ -29,7 +29,8 @@ urlpatterns = [
     path('activate/<uidb64>/<token>', views.activate, name='activate'),
     path('delete_profile/<int:user_id>/', delete_profile, name='delete_profile'),
     path('edit_profile/<int:user_id>/', edit_profile, name='edit_profile'),
-    path('people_search/', search_results_view, name = 'people-search')
+    path('people_search/', search_results_view, name = 'people-search'),
+
 ]
 
 
