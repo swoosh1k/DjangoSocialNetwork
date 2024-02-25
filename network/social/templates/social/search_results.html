@@ -3,7 +3,7 @@
 <li class="nav-list">
 
             <div class="trend-lists" >
-              <img  src="{{user.profile_pic.url}}" alt="user3" ></div>
+              <a href = "{% url 'user_profile' user.id%}"><img  src="{{user.profile_pic.url}}" alt="user3" ></div></a>
               <a href = "{% url 'user_profile' user.id%}"><p class="main-text">{{user.username}}</p></a>
               <h1 class="sub-text">Followers: {{user.followers.all.count}}</h1>
             </div>

@@ -26,11 +26,11 @@
           {% if request.path == '/messages/' %}<li class="nav-items current-page">{% else %}<li class="nav-items ">{% endif %}<a href="{% url 'messages' %}"><i class="fa-solid fa-message"></i>Messages</a></li>
           {% if request.path == '/profile/{{user.id}}/' %}<li class="nav-items current-page">{% else %}<li class="nav-items ">{% endif %}<a href="{% url 'user_profile' request.user.id %}"><i class="far fa-user"></i>Profile</a></li>
           {% if request.path == '/groups/' %}<li class="nav-items current-page">{% else %}<li class="nav-items ">{% endif %}<a href="{% url 'groups' %}"><i class="fa-solid fa-user-group"></i>Groups</a></li>
-          <li class="nav-items "><a style = 'cursor:pointer;'  id="openModalBtn"><i class="fa-solid fa-note-sticky"></i>New Post</a></li>
+          <li class="nav-items "><a id="openModalBtn"><i class="fa-solid fa-note-sticky"></i>New Post</a></li>
           <li class="nav-items"><a href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
 
 
-         
+
         </ul>
       </div>
 
@@ -59,71 +59,67 @@
 
 
     <div class="right-flex-container flex-item">
-      <div class="search-box">
-        <i class="fas fa-search"></i>
-          <input type="text" placeholder="Search People" name="q"   hx-get="{% url 'people-search' %}" hx-trigger="keyup changed, q" hx-target='#search-results' hx-indicator=".htmx-indicator">
-        <div id = 'search-results'>
-          {% include "social/search_results.html" %}
-        </div>
-      </div>
+     <div class="side-bar col-lg-3">
 
-      <!-- You might know -->
+                        <div class="search-bar w3layouts-newsletter">
+                            <h3 class="sear-head editContent">Find Post</h3>
+                            <form action="/search/" method="get">
+                                <input type="search" placeholder="Введите название..." name="q" class="form-control" required="">
+                                <button type="submit">Find</button>
+                            </form>
+                        </div>
+                        <!--preference -->
+                    <form action="/filter/" method="get" name="filter">
 
-      <div class="trends">
-        <ul>
-          <li class="nav-list header">
-            <h2>You might know</h2>
-          {% for user in you_might_know %}
-          {% if user != request.user %}
-          <li class="nav-list">
+                         <div class="left-side my-4">
+                            <h3 class="sear-head editContent">Сначала</h3>
+                            <ul class="w3layouts-box-list">
 
-            <div class="trend-list">
-              <p class="sub-text">Here from: {{user.date_joined}}</p>
-              <p class="main-text">{{user.username}}</p>
-              <p class="sub-text">Followers: {{user.followers.all.count}}</p>
-            </div>
-            <div class="trend-icon">
-            </div>
-             <div class="subscribeq"><a  id = '{{ user.pk }}' data-url = '{% url "subscribe" %}' class = 'subscribebtnq'><span  id = "btn_textt{{user.pk}}">Follow</span></a></div>
-          </li>
-          {% endif %}
-          {% endfor %}
+                                <li class="editContent">
+                                    <input type="checkbox" class="checked" name="genre" value="1">
+                                    <span class="span editContent">Старые</span>
 
-        </ul>
-      </div>
+                                </li><li class="editContent">
+                                    <input type="checkbox" class="checked" name="genre" value="2">
+                                    <span class="span editContent">Новые</span>
 
+                            </li></ul>
+                        </div>
+                        <!-- // preference -->
+                        <!-- discounts -->
+                        <div class="left-side">
+                            <h3 class="sear-head editContent">Год</h3>
+                            <ul class="w3layouts-box-list">
 
-      <div class="right-footer">
-        <div class="footer-links">
-          <a href="#" class="sub-text">Terms</a>
-          <a href="#" class="sub-text">Privacy policy</a>
-          <a href="#" class="sub-text">Ads info</a>
-          <a href="#" class="sub-text">more</a>
-        </div>
-        <div class="footer-copyright">
-          <p class="sub-text"></p>
-        </div>
+                                    <li class="editContent">
+                                        <input type="checkbox" class="checked" name="year" value="1984">
+                                        <span class="span editContent">1984 </span>
+                                    </li>
 
-      </div>
+                                    <li class="editContent">
+                                        <input type="checkbox" class="checked" name="year" value="1991">
+                                        <span class="span editContent">1991 </span>
+                                    </li>
 
-    </div>
+                                    <li class="editContent">
+                                        <input type="checkbox" class="checked" name="year" value="2016">
+                                        <span class="span editContent">2016 </span>
+                                    </li>
 
-  </div>
+                            </ul>
+                        </div>
+                            <button type="submit">Найти</button>
+                    </form>
+                        <!-- //discounts -->
+                        <!-- reviews -->
 
-<!-- Button trigger modal -->
-<div id="myModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>New Post</h2>
-    <p>
-    <form action = '{% url "save_post_with_image" %}' method  = 'POST' enctype="multipart/form-data">
-    {% csrf_token %}
-
-      <div class = 'image'><input  type="file" accept="image" id="img-input" name = 'image' style="visibility:hidden;" ><label for="img-input" ><img src = 'https://avatars.mds.yandex.net/get-mpic/6780724/img_id5398870021742881284.jpeg/orig' class= 'display-img' id="display-img" /></div></label>
-      <div class = 'text'><input type = 'text' placeholder="Your post text" maxlength="300" required name = 'text'></div>
-      <button class = 'btn'  type = 'submit'>Save Post</button>
-    </form>
-    </p>
+                        </div>
+                        <!--<div class="grid-img-right mt-4 text-right bg bg1" >
+                            <span class="money editContent" >Flat 50% Off</span>
+                            <a href="moviesingle.html" class="btn" >Now</a>
+                        </div>-->
+                     </div>
+                </div>
   </div>
 </div>
 

@@ -1,9 +1,10 @@
 .delete-button {
+
     font-weight: 700;
     font-size: 16px; /* Размер шрифта для кнопки удалить */
-    margin-right: 20px; /* Отступ между кнопками */
-    padding: 15px 30px; /* Параметры отступа внутри кнопки */
-
+    margin-right: 100px; /* Отступ между кнопками */
+    padding: 10px 20px; /* Параметры отступа внутри кнопки */
+    margin-top: 200px;
     border-radius: 50px;
     background-color: #228B22;
     color: white;
@@ -16,9 +17,10 @@
 
 
 .back-button {
+    margin-top: 300px;
     font-weight: 700;
     font-size: 16px; /* Размер шрифта для кнопки назад */
-    padding: 15px 30px; /* Параметры отступа внутри кнопки */
+    padding: 10px 20px; /* Параметры отступа внутри кнопки */
     border-radius: 50px;
     background-color: #228B22;
     color: white;

@@ -88,33 +88,21 @@ function newMessage(message, sent_by_id, thread_id, time, image, send_to_image) 
               </div>
               <div class="msg_cotainer">
                  ${message}
-              <span class="msg_time">8:40 AM, Today</span>
+              <span class="msg_time">${time}</span>
               </div>
            </div>
         `
 	}
     let message_body = $('.messages-wrapper[chat-id="' + chat_id + '"] .msg_card_body')
 	message_body.append($(message_element))
-	message_body.animate({
-	    scrollTop: $(document).height()
-	}, 100);
-	input_message.val(null);
+
 }
 
-send_message_form.on('submit', function(e){
-    e.preventDefault()
-    let message = input_message.val()
-    let data = {
-        'message': message
-    }
-    data = JSON.stringify(data)
-
-})
 
 
 
 $('.contact-li').on('click', function (){
-    $('.contacts .actiive').removeClass('active')
+    $('.contacts .active').removeClass('active')
     $(this).addClass('active')
 
 

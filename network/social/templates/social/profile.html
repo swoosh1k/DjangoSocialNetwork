@@ -12,6 +12,14 @@
               {% endif %}
 
                 <h1 >{{ user.username }}</h1>
+                {% if user == request.user %}
+                    {% if user not in subrcibe.Users.all %}
+                        <a href="{% url 'buy_subscribe' %}">Купить платную подписку</a>
+                    {% else %}
+                        <h2>Платная подписка</h2>
+                    {% endif %}
+                {% endif %}
+
                 {% if user.profile_pic %}
 
                   <div class="profile-pic-container">
@@ -21,7 +29,6 @@
               {% else %}
               <img src="{% static 'images/no_photo.jpg' %}" alt="Изображение профиля не загружено" class="profile-no-pic">
               {% endif %}
-
             </div>
 
             <div>
@@ -29,21 +36,22 @@
               <h4>Фамилия: <span style="color: #228B22;">{{ user.last_name }}</span></h4>
               <h4>Email: <span style="color: #228B22;">{{ user.email }}</span></h4>
               <p><span style="color: #228B22;">Биография:</span> {{ user.bio }}</p>
-              <p><span style="color: #228B22;">Приватность:</span> {% if user.private %} Приватный аккаунт {% else %} Публичный аккаунт {% endif %}</p>
+              <p><span style="color: #228B22;">Приватность:</span> {% if user.private %} Приватный аккаунт {% else %} Публичный аккаунт{% endif %}</p>
               <p><span style="color: #228B22;">Подписчики:</span> {{ user.follower.count }}</p>
 
-              <p><span style="color: #228B22;">Подписки:</span></p>
+              <p><span style="color: #228B22;">Подписки:</span> {{followings}}</span></p>
               <ul>
-                {% for following in user.follower.first.followings.all %}
-                  <li>{{ following.username }}</li>
-                {% empty %}
-                  <li>Нет подписок</li>
-                {% endfor %}
+
               </ul>
                 <br>
                   <div>
+                    {% if user == request.user %}
                     <a href="{% url 'edit_profile' user.id %}">Изменить профиль</a>
                     <a href="{% url 'delete_profile' user.id %}">Удалить профиль</a>
+                    {% endif %}
+                    {% if not user == request.user %}
+                        <a class = 'send-message' href =  '{% url "thread_start" user.id %}'>Написать сообщение <i class="fa-solid fa-envelope"></i></a>
+                    {% endif %}
                   </div>
               <br>
             </div>
@@ -53,30 +61,51 @@
 
     <div class="post-section">
       <h2>Посты пользователя</h2>
-      {% for post in posts %}
-        <div class="post">
-          <p>{{ post.context_text }}</p>
-          {% if post.context_image %}
-            <img src="{{ post.context_image.url }}" alt="Post Image">
-          {% endif %}
-          <p>Дата создания: {{ post.data_created }}</p>
-          <p>Количество лайков: {{ post.likers.count }}</p>
-          <p>Количество комментариев: {{ post.comments.count }}</p>
+       {% for post in posts %}
+        <tr id="post{{post.pk}}">
+            <td><div class="tweets">
 
-          <div class="comments-section">
-            <h3>Комментарии</h3>
-            {% for comment in post.comments.all %}
-            <div class="comment">
-              <p>{{ comment.comment_content }}</p>
-              <p>Автор: {{ comment.commenter.username }}</p>
-              <p>Дата комментария: {{ comment.comment_time }}</p>
-            </div>
-            {% empty %}
-            <p>Нет комментариев</p>
-          {% endfor %}
+                    {% if post.creater.profile_pic %}<a href = "{% url 'user_profile' post.creater.id %}"><div class="user-pics"><img src="{{post.creater.profile_pic.url}}" alt="user3"></div></a>{% else %}<a href = "{% url 'user_profile' post.creater.id %}"><div class="user-pics"><img src = "{% static 'images/no_photo.jpg' %}"></div></a>{% endif %}
+                    <div class="user-content-box">
+                    <div class="user-names">
+                        <a href = "{% url 'user_profile' post.creater.id %}"><hi class="full-name">{{post.creater.first_name}}</hi></a>
+                        <p class="user-name">{{post.creater.username}}</p>
+                        <p class="time">{{post.data_created}}</p>
+
+                    </div>
+
+
+
+
+                <div class="user-content" id = "user-content">
+                    <p>{{post.context_text}}</p>
+                    {% if  post.context_image %}
+                    <img src="{{post.context_image.url}}" width = '900px'  alt="content1">
+                    {% endif %}
+                </div>
+                    <div class="content-icons">
+                        <a class = 'comment-toggle-btn'><i class="far fa-comment blue">{{post.comments.all.count}}</i></a>
+                        <form class="comment-form"  style="display: none;" action =  '{% url "add_comment" post.id %}' method = 'POST'>
+                            {% csrf_token %}
+                            <div class="comments-container">
+                                {% for comment in post.comments.all %}
+                                    <div class="comment">{{ comment.comment_content }}</div>
+                                {% endfor %}
+                            </div>
+                            <textarea name="comment" placeholder="Напишите комментарий" required ></textarea>
+                            <button type="submit">Отправить</button>
+                        </form>
+                        <a id = "{{post.id}}" class = 'savepostbtn' data-url = '{% url "save_post" %}'>{% if not user in post.savers.all %}<i class="fa-regular fa-bookmark"  style="color: #FFD43B;"></i>{% else %}<i class="fa-solid fa-bookmark" style="color: #FFD43B;"></i>{% endif %}</a>
+                        <a id = '{{ post.pk }}' data-url  = '{% url "add_like" %}' class ='likebtn'><i  {% if not user in post.likers.all %} class = 'fa-regular fa-heart' style = "color: #ff0000;" {% else %} class = 'fa-solid fa-heart ' style = "color: #ff0000;" {% endif %}></i> <span   id = "like_count{{post.pk}}"  >{{post.total_likes}}</span></a>
+                        {% if post.creater == request.user %}
+                        <a  onClick="deletePost({{post.pk}})"><i class="fa-solid fa-trash-can"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
         </div>
+        </td>
+    </tr>
 
-      </div>
       {% empty %}
         <p>Пользователь еще не опубликовал постов</p>
       {% endfor %}
