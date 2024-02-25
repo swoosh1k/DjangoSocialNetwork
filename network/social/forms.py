@@ -63,4 +63,3 @@ class UserForm(forms.ModelForm):
             instance.save()
 
         return instance
-# просто комментарий

@@ -31,10 +31,14 @@ class ChatConsumer(AsyncConsumer):
         send_to_id  = received_data.get('send_to')
         thread_id = received_data.get('thread_id')
         image = self.scope['user'].profile_pic.url
+
         print(image)
         send_to_user = await self.get_user_object(sent_by_id)
         send_to_image = send_to_user.profile_pic.url
         print(send_to_image)
+
+
+
         if not msg:
             print('Error:: empty message')
             return False

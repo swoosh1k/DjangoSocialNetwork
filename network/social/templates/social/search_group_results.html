@@ -1,0 +1,13 @@
+{% for group in groups %}
+
+<li class="nav-list">
+
+            <div class="trend-lists" >
+              <img  src="{{group.group_image.url}}" alt="group_img" ></div>
+              <a href = "{% url 'group' group.id %}"><p class="main-text">{{group.title}}</p></a>
+              <h1 class="sub-text">Members: {{group.users.all.count}}</h1>
+            </div>
+            <div class="trend-icon">
+            </div>
+</li>
+{% endfor %}

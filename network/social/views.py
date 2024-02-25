@@ -4,6 +4,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 from django.db import IntegrityError
+from django.db.models import Q, F
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
@@ -17,13 +18,57 @@ import json
 from .forms import *
 from django.views.generic import CreateView, UpdateView, DetailView
 from django.views.decorators.csrf import ensure_csrf_cookie
-
+from chatapplication.models import Thread
 from .models import *
 from .tokens import account_activation_token
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
 from django.urls import reverse
 from django.http import HttpResponseRedirect
+from yookassa import Configuration, Payment
+from yookassa.domain.notification import WebhookNotification
+@csrf_exempt
+def yookassa_webhook(request):
+    if request.method == 'POST':
+        request_body = json.loads(request.body.decode('utf-8'))
+        if request_body['event'] == 'payment.succeeded':
+            payment_id = request_body.get('object').get('id')
+            payment = PaymentStatus.objects.get(payment_id = payment_id)
+            payment.is_payed = True
+            payment.save()
+            user = payment.User
+            subscribe = Subscribe.objects.first()
+            subscribe.Users.add(user)
+            subscribe.save()
+            return JsonResponse({'message': 'Webhook обработан успешно'})
+    return JsonResponse({'error': 'Метод не поддерживается'}, status=405)
+
+def create_payment(request):
+    Configuration.account_id = '339195'
+    Configuration.secret_key = 'test_dUzwnfixs14-QUs-JRaS0mXiNbJh_Q9793_BJCjEWdc'
+
+    amount = 50
+    description = 'Оплата подписки'
+
+
+    payment = Payment.create({
+        "amount": {
+            "value": amount,
+            "currency": "RUB"
+        },
+        "confirmation": {
+            "type": "redirect",
+            "return_url": "http://127.0.0.1:8000/"
+        },
+        "capture": True,
+        "description": description
+    })
+    PaymentStatus.objects.create(User = request.user, payment_id = payment.id, is_payed = False)
+
+    payment_url = payment.confirmation.confirmation_url
+
+    return HttpResponseRedirect(payment_url)
+
 
 def index(request):
     if not request.user.is_authenticated:
@@ -52,8 +97,8 @@ def index(request):
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         context = {"posts": posts, 'user': user, 'user_followings': user_followings,
-                   'request_user_list': request_user_list, 'you_might_know': you_might_know, 'page_obj': page_obj}
-        return render(request, 'social/index.html', context=context)
+                   'request_user_list': request_user_list, 'you_might_know': you_might_know, 'page_obj': page_obj,  'where': 'Home'}
+        return render(request, 'social/index.html', context=context ,)
 
 
 
@@ -132,16 +177,12 @@ class UserProfile(DetailView):
     def get_context_data(self,*, object_list = None,  **kwargs):
         context= super().get_context_data(**kwargs)
         context['title'] = f'Profile {self.object}'
+        context['followings'] = Follower.objects.get(user = self.object.id).followings.count()
+        context['posts'] = Post.objects.filter(creater_id =self.object.id).order_by('data_created')
+        context['subrcibe'] = Subscribe.objects.first()
         return context
       
     
-
-def Subscribe(request, pk):
-    user = request.user
-    user_get = User.objects.get(id = pk)
-    follower = Follower.objects.get(user = user)
-    follower.followings.add(user_get)
-    return HttpResponseRedirect(request.META["HTTP_REFERER"])
 
 
 
@@ -177,7 +218,7 @@ def AddLike(request):
 
 
 
-def Subscribe(request):
+def Subscribe_on_user(request):
     if request.POST.get('action') == 'post':
         flag = None
         creater_id = int(request.POST.get('creater_id'))
@@ -294,9 +335,23 @@ def Add_comment(request, pk):
 
 
 def Save_post_with_image(request):
-    image = request.FILES['image']
-    Post.objects.create(context_image =  image, creater = request.user, context_text = request.POST.get('text'))
-    return redirect('index')
+    subscribe = Subscribe.objects.first()
+    posts = Post.objects.filter(creater_id = request.user.id)
+    if posts.count() >= 3 and request.user not in subscribe.Users.all():
+        return redirect('buy_subscribe')
+    else:
+        image = request.FILES['image']
+        Post.objects.create(context_image =  image, creater = request.user, context_text = request.POST.get('text'))
+        return redirect('index')
+
+
+def Buy_Subscribe(request):
+    if request.user not in Subscribe.objects.first().Users.all():
+        user = request.user
+        context =  {'user': user,  'title': 'Buy Subscribe '}
+        return render(request, 'social/buysubscribe.html',  context = context)
+    else:
+        return redirect('index')
 
 
 
@@ -312,7 +367,7 @@ def Likes(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {"posts": posts, 'user': user, 'user_followings': user_followings,
-               'you_might_know': you_might_know, 'page_obj': page_obj}
+               'you_might_know': you_might_know, 'page_obj': page_obj, 'where': 'Likes'}
 
     return render(request, 'social/index.html', context = context)
 
@@ -329,7 +384,7 @@ def Bookmarks(request):
     page_obj = paginator.get_page(page_number)
     current_user_id = request.user.id
     context = {"posts": posts, 'user': user, 'user_followings': user_followings,
-               'you_might_know': you_might_know, 'page_obj': page_obj, 'current_user_id': current_user_id}
+               'you_might_know': you_might_know, 'page_obj': page_obj, 'current_user_id': current_user_id, 'where': 'Bookmarks'}
 
     return render(request, 'social/index.html', context = context)
 
@@ -367,6 +422,47 @@ def search_results_view(request):
     return render(request, 'social/search_results.html', context)
 
 
+def Group_search(request):
+    groups = Group.objects.filter(title__iregex = request.GET.get('q'))
+    if groups.exists():
+        groups = groups
+    else:
+        groups = []
+    context = {'groups': groups}
+    return render(request,'social/search_group_results.html', context = context)
+
+
+
+def thread_start(request, pk):
+    thread = Thread.objects.filter(Q(first_person = request.user, second_person = User.objects.get(id = pk)) | Q(first_person =  User.objects.get(id = pk), second_person = request.user ))
+    if thread.exists():
+        return redirect('messages')
+    else:
+        Thread.objects.create(first_person = request.user, second_person = User.objects.get(id = pk))
+        return redirect('messages')
+
+
+
+
+
+
+def Groups(request):
+    groups = Group.objects.all()
+    context = {'groups': groups}
+    return render(request, 'social/groups.html', context = context)
+
+
+
+
+class Group_detail(DetailView):
+    model = Group
+    context_object_name = 'group'
+    template_name = 'social/group_detail.html'
+
+    def get_context_data(self,*, object_list = None,  **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Group_detail'
+        return context
 
 
 
