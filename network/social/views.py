@@ -27,6 +27,8 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 from yookassa import Configuration, Payment
 from yookassa.domain.notification import WebhookNotification
+
+
 @csrf_exempt
 def yookassa_webhook(request):
     if request.method == 'POST':
