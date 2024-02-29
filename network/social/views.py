@@ -31,7 +31,6 @@ from .tasks import send_email_task
 
 
 
-
 @csrf_exempt
 def yookassa_webhook(request):
     if request.method == 'POST':

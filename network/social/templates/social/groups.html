@@ -1,26 +1,28 @@
 {% extends 'social/base.html' %}
-
-
+{% load static %}
 {% block main %}
 
-<div class="search-box">
-        <i class="fas fa-search" aria-hidden="true"></i>
-          <input type="text" placeholder="Поиск группы" name="q" hx-get="/group_search/" hx-trigger="keyup changed, q" hx-target="#search-results" hx-indicator=".htmx-indicator">
-        <div id="search-results">
-        </div>
-</div>
-{% for group in groups %}
+<link rel="stylesheet" href="{% static 'css/groups.css' %}">
 
-    <li class="nav-list-group">
-            <div class="trend-list">
-              <p class="sub-text">Время создания группы: {{group.data_created}}</p>
-                <a href = "{% url 'group' group.id%}"><p class="main-text">{{group.title}}</p></a>
-              <p class="sub-text">Members: {{group.users.all.count}}</p>
+<div class="search-box">
+    <i class="fas fa-search" aria-hidden="true"></i>
+    <input type="text" placeholder="Поиск группы" name="q" hx-get="/group_search/" hx-trigger="keyup changed, q" hx-target="#search-results" hx-indicator=".htmx-indicator">
+    <div id="search-results"></div>
+</div>
+
+<div class="group-list">
+    {% for group in groups %}
+        <a href="{% url 'group' group.pk %}">
+            <div class="group-item" style="background-image: url('{{ group.group_image.url }}');">
+                <div class="group-content">
+                    <p class="group-title">{{ group.title }}</p>
+                    <p class="sub-text">Members: {{ group.users.count }}</p>
+                    <p class="group-description">{{ group.bio }}</p>
+                    <p class="sub-text">Время создания группы: {{ group.data_created }}</p>
+                </div>
             </div>
-            <div class = 'img-box-group-1'><a href = '{% url "group" group.pk %}'><img  src = '{{group.group_image.url}}'  border-radius='10px' width="50px" height="50px"></a></div>
-            <div class="trend-icon">
-            </div>
-    </li>
-{% endfor %}
+        </a>
+    {% endfor %}
+</div>
 
 {% endblock %}
