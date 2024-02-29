@@ -16,16 +16,17 @@
 <!--<input type = 'password' placeholder = 'Password' name='password'>-->
 
 <body>
-{% if messages %}
-    {% for msg in messages %}
+
+    <div class = 'login'>
+    {% if messages %}
+        {% for msg in messages %}
         <div class="alert alert-success" role="alert">
             <h4 class="alert-heading">Well done!</h4>
             <p>{{msg}}</p>
             <hr>
         </div>
-    {% endfor %}
-{% endif %}
-    <div class = 'login'>
+        {% endfor %}
+    {% endif %}
         <form action = '{% url "login" %}' method = 'post'>
             {% csrf_token %}
             <h1>Login</h1>

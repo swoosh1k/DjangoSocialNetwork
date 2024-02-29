@@ -14,7 +14,6 @@ urlpatterns = [
     path('subscribe/', Subscribe_on_user, name = "subscribe"),
     path('unsubscribe/<int:pk>/', UnSubscribe, name = 'unsubscribe'),
     path('addlike/', AddLike, name = 'add_like'),
-    path('remove_like/<int:pk>/', Remove_like, name  = 'remove_like'),
     path('send_request/<int:pk>/', SendRequest, name = 'send_request'),
     path('profile/<int:pk>/', UserProfile.as_view(), name = 'user_profile'),
     path('confirm_request/<int:pk>/', ConfirmRequest, name = 'request_confirm'),
@@ -37,6 +36,9 @@ urlpatterns = [
     path('buy-subscribe/', Buy_Subscribe, name = 'buy_subscribe'),
     path('pay/', create_payment, name = 'pay'),
     path('payment/notification/', yookassa_webhook, name='yookassa_webhook'),
+    path('subscribe_on_news/', subscribe_on_news, name = 'subscribe_on_news'),
+    path('confirm_subscribe_on_news/', confirm_subscribe_on_news, name = 'confirm_subscribe_on_news'),
+    path('unsubscribe_on_news/', unsubscribe_on_news, name = 'unsubscribe_on_news')
 
 ]
 
