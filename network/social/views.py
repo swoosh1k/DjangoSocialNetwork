@@ -27,6 +27,8 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 from yookassa import Configuration, Payment
 from yookassa.domain.notification import WebhookNotification
+from .tasks import send_email_task
+
 
 
 @csrf_exempt
@@ -77,7 +79,6 @@ def index(request):
         return redirect('login')
     else:
         followers = Follower.objects.filter(user = request.user)
-        Tequest = Request.objects.filter(user = request.user)
         if not followers.exists():
             Follower.objects.create(user = request.user)
             follower = followers.first()
@@ -85,13 +86,6 @@ def index(request):
         else:
             follower = followers.first()
             user_followings = follower.followings.all()
-        if not Tequest.exists():
-            Request.objects.create(user = request.user)
-            teuqest = Tequest.first()
-            request_user_list = teuqest.requests.all()
-        else:
-            teuqest = Tequest.first()
-            request_user_list = teuqest.requests.all()
         user = request.user
         posts = Post.objects.all()
         you_might_know = User.objects.exclude(id__in = user_followings)
@@ -99,7 +93,7 @@ def index(request):
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         context = {"posts": posts, 'user': user, 'user_followings': user_followings,
-                   'request_user_list': request_user_list, 'you_might_know': you_might_know, 'page_obj': page_obj,  'where': 'Home'}
+                    'you_might_know': you_might_know, 'page_obj': page_obj,  'where': 'Home'}
         return render(request, 'social/index.html', context=context ,)
 
 
@@ -180,6 +174,7 @@ class UserProfile(DetailView):
         context= super().get_context_data(**kwargs)
         context['title'] = f'Profile {self.object}'
         context['followings'] = Follower.objects.get(user = self.object.id).followings.count()
+        context['followings_all'] = Follower.objects.get(user = self.object.id).followings.all()
         context['posts'] = Post.objects.filter(creater_id =self.object.id).order_by('data_created')
         context['subrcibe'] = Subscribe.objects.first()
         return context
@@ -250,11 +245,6 @@ def Subscribe_on_user(request):
 
 
 
-def Remove_like(request, pk):
-    post = Post.objects.get(id = pk)
-    post.likers.remove(request.user)
-    return HttpResponseRedirect(request.META["HTTP_REFERER"])
-
 
 
 
@@ -293,7 +283,6 @@ def Followings(request):
 def DeletePost(request):
     pk = request.GET.get('pk')
     post = Post.objects.get(id = pk)
-    print(post)
     post.delete()
     return JsonResponse({'deleted': True})
 
@@ -467,4 +456,28 @@ class Group_detail(DetailView):
         return context
 
 
+
+def subscribe_on_news(request):
+    news = News.objects.first().users.all()
+    context = {'title': 'News Subscriebe', 'news': news}
+    return render(request, 'social/FollowOnNews.html', context = context)
+
+
+
+
+def confirm_subscribe_on_news(request):
+    user = request.user
+    news = News.objects.first()
+    news.users.add(request.user)
+    news.save()
+    messages.success(request,'Спасибо за подписку на новости!')
+    return redirect('index')
+
+
+
+def unsubscribe_on_news(request):
+    news = News.objects.first()
+    news.users.remove(request.user)
+    messages.success(request,'Вы отписались от новостей')
+    return redirect('index')
 

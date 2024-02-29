@@ -13,7 +13,7 @@ body {
     justify-content: center;
     align-items: center;
     mim-length: 100vh;
-    background: url('GeenSocialTree.jpg') no-repeat;
+    background: url('gory.jpg') no-repeat;
     background-size: cover;
     content: center;
 
@@ -22,8 +22,9 @@ body {
 
 
 .login {
+
     width: 420px;
-    background: transparent;
+    background: grey;
     border: 2px solid rgba(255, 255, 255, .2);
     color: #fff;
     border-radius: 10px;
@@ -40,6 +41,7 @@ body {
 }
 
 .login .input-box {
+    cursor: pointer;
     position: relative;
     width: 100%;
     height: 50px;
@@ -50,6 +52,7 @@ body {
 
 .input-box input
 {
+    cursor: pointer;
     width: 100%;
     height: 100%;
     background: transparent;

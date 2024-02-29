@@ -72,7 +72,7 @@
       <div class="trends">
         <ul>
           <li class="nav-list header">
-            <h2>You might know</h2>
+            <h2>You might know</h2><a href =  '{% url "subscribe_on_news" %}'><i class="fa-regular fa-newspaper" style = 'color:black;'> News</i></a>
           {% for user in you_might_know %}
           {% if user != request.user %}
           <li class="nav-list">
@@ -99,6 +99,7 @@
           <a href="#" class="sub-text">Privacy policy</a>
           <a href="#" class="sub-text">Ads info</a>
           <a href="#" class="sub-text">more</a>
+
         </div>
         <div class="footer-copyright">
           <p class="sub-text"></p>
@@ -170,6 +171,7 @@
             });
         });
 </script>
+
 
 
 
