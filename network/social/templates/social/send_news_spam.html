@@ -1,0 +1,10 @@
+{% autoescape off %}
+Hi {{ user.username }},
+У ваших друзей новые посты! Заходите в приложение и иследуйте
+http://127.0.0.1:8000/
+{% for post in posts %}
+    Описание: {{post.context_text}}
+    Дата создания: {{post.data_created}}
+    Создатель: {{post.creater.username}}
+{% endfor %}
+{% endautoescape %}
