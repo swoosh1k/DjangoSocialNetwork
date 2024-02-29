@@ -1,0 +1,24 @@
+{% extends 'social/base.html' %}
+
+{% load static %}
+
+
+{% block main %}
+
+
+<div class="buttons-container">
+  <img src="{% static 'images/news.jpg' %}" alt="STOP" width="200" height = '150px'>
+  {% if user not in news %}
+    <p>Подпишитесь на рассылку! Получайте каждый день свежые посты от пользователей, на которых вы подписаны.</p>
+    <a href = '{% url "confirm_subscribe_on_news" %}' class="delete-button back-button">Подписаться</a>
+    <a href="{% url 'index' %}" class="back-button">Назад</a>
+  {% else %}
+    <p>Вы уже подписаны на рассылку</p>
+    <a href = '{% url "unsubscribe_on_news" %}' class="delete-button back-button">Отписаться</a>
+    <a href="{% url 'index' %}" class="back-button">Назад</a>
+  {% endif %}
+</div>
+
+<link rel="stylesheet" href="{% static 'css/delete_profile.css' %}">
+
+{% endblock %}
