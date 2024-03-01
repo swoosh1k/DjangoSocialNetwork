@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'social',
+    'rest_framework',
+    'RestApi',
     'chatapplication',
     'django_celery_beat',
     'django_celery_results',

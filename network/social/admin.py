@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from .models import Post, Follower, Comment, User, Request, Group, Subscribe, PaymentStatus, News, Group_post
+
+
 class PostAdmin(admin.ModelAdmin):
     list_display = ['creater', 'data_created', 'context_text', 'comment_count']
     list_filter = ['data_created']
@@ -40,6 +42,12 @@ class RequestAdmin(admin.ModelAdmin):
     filter_horizontal = ['requests']
 
 
+
+class GroupPostAdmin(admin.ModelAdmin):
+    list_display = ['context', 'creater', 'data_created']
+
+
+
 admin.site.register(News)
 admin.site.register(PaymentStatus)
 admin.site.register(Subscribe)
@@ -49,3 +57,4 @@ admin.site.register(Follower, FollowerAdmin)
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(User, UserAdmin)
 admin.site.register(Request, RequestAdmin)
+admin.site.register(Group_post, GroupPostAdmin)
