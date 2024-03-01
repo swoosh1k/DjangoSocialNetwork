@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 
 
 from social.models import Post, User
-from .serializers import getSerializer, UserSerializer, PostUpdateSerializer
+from .serializers import getSerializer, PostUpdateSerializer
 
 
 class getView(APIView):
@@ -12,11 +12,6 @@ class getView(APIView):
         serializer = getSerializer(posts, many=True)
         return Response(serializer.data)
 
-class UserView(APIView):
-    def get(self, request):
-        users = User.objects.all()
-        serializer = UserSerializer(users, many=True)
-        return Response(serializer.data)
 
 class PostUpdateView(APIView):
     def put(self, request, pk):
