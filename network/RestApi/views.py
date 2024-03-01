@@ -3,13 +3,13 @@ from rest_framework.views import APIView
 
 
 from social.models import Post, User
-from .serializers import PostSerializer, UserSerializer
+from .serializers import getSerializer, UserSerializer, PostUpdateSerializer
 
 
-class PostView(APIView):
+class getView(APIView):
     def get(self, request):
         posts = Post.objects.all()
-        serializer = PostSerializer(posts, many=True)
+        serializer = getSerializer(posts, many=True)
         return Response(serializer.data)
 
 class UserView(APIView):
@@ -17,3 +17,16 @@ class UserView(APIView):
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
+
+class PostUpdateView(APIView):
+    def put(self, request, pk):
+        try:
+            post = Post.objects.get(pk=pk)
+        except Post.DoesNotExist:
+            return Response({'error': 'Post not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = PostUpdateSerializer(post, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
