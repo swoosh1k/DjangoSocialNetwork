@@ -3,13 +3,15 @@
 
 {% block main %}
   <h1>Изменить профиль</h1>
-  <form method="post">
+  <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
 
-      <button type="submit" class="edit-button">Сохранить изменения</button>
-      <a href="{% url 'user_profile' user.id %}" class="back-button">Назад</a>
+
+
+    <button type="submit" class="edit-button">Сохранить изменения</button>
+    <a href="{% url 'user_profile' user.id %}" class="back-button">Назад</a>
   </form>
 
-<link rel="stylesheet" href="{% static 'css/edit_profile.css' %}">
+  <link rel="stylesheet" href="{% static 'css/edit_profile.css' %}">
 {% endblock %}

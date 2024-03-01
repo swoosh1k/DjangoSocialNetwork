@@ -11,10 +11,9 @@ urlpatterns = [
     path('login/', UserLogin.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name = 'logout'),
     path('register/', register, name = 'register'),
-    path('subscribe/', Subscribe, name = "subscribe"),
+    path('subscribe/', Subscribe_on_user, name = "subscribe"),
     path('unsubscribe/<int:pk>/', UnSubscribe, name = 'unsubscribe'),
     path('addlike/', AddLike, name = 'add_like'),
-    path('remove_like/<int:pk>/', Remove_like, name  = 'remove_like'),
     path('send_request/<int:pk>/', SendRequest, name = 'send_request'),
     path('profile/<int:pk>/', UserProfile.as_view(), name = 'user_profile'),
     path('confirm_request/<int:pk>/', ConfirmRequest, name = 'request_confirm'),
@@ -27,9 +26,19 @@ urlpatterns = [
     path('likes/', Likes, name =  'likes'),
     path('saves/', Bookmarks, name = 'saves'),
     path('activate/<uidb64>/<token>', views.activate, name='activate'),
-
     path('delete_profile/<int:user_id>/', delete_profile, name='delete_profile'),
     path('edit_profile/<int:user_id>/', edit_profile, name='edit_profile'),
+    path('people_search/', search_results_view, name = 'people-search'),
+    path('thread_start/<int:pk>/', thread_start, name = 'thread_start'),
+    path('groups/', Groups, name = 'groups'),
+    path('group_search/', Group_search, name  = 'group_search'),
+    path('group/<int:pk>/', Group_detail.as_view(), name = 'group'),
+    path('buy-subscribe/', Buy_Subscribe, name = 'buy_subscribe'),
+    path('pay/', create_payment, name = 'pay'),
+    path('payment/notification/', yookassa_webhook, name='yookassa_webhook'),
+    path('subscribe_on_news/', subscribe_on_news, name = 'subscribe_on_news'),
+    path('confirm_subscribe_on_news/', confirm_subscribe_on_news, name = 'confirm_subscribe_on_news'),
+    path('unsubscribe_on_news/', unsubscribe_on_news, name = 'unsubscribe_on_news')
 
 ]
 

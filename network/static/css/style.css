@@ -258,6 +258,24 @@ ul {
 
 }
 
+.modal-content .btn {
+  margin-top: 10px;
+  width: 100px;
+  border: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.5rem 0.8rem;
+  background:#228B22;
+  color: #fff;
+  border-radius: 25px;
+  margin-right: 1rem;
+}
+.modal-content .btn:hover {
+  background: ;
+  cursor: pointer;
+
+}
+
 .btn:focus {
   outline: none;
 }
@@ -292,6 +310,8 @@ ul {
 }
 .user-content img {
   border-radius: 20px;
+  width: 580px;
+  height: 350px;
 }
 .user-content {
   font-family: "Roboto";
@@ -393,10 +413,26 @@ ul {
 .nav-list {
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-between;
+  justify-content: space-around;
+  border-bottom: 1px solid rgb(230, 236, 240);
+}
+
+
+
+
+
+
+.nav-list-group {
+  margin-top: 10px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
 
   border-bottom: 1px solid rgb(230, 236, 240);
 }
+
+
+
 .nav-list:hover {
   background: rgba(0, 0, 0, 0.03);
   cursor: pointer;
@@ -610,6 +646,19 @@ ul {
   margin: 1rem 0;
   text-align: center;
 }
+
+
+.pagnation .selected {
+  color: #fff;
+  background: grey;
+  padding: 0.3rem 1rem;
+  border-radius: 55px;
+  font-size: 1rem;
+
+
+}
+
+
 .pagnation a {
   color: #fff;
   background:  #228B22;
@@ -620,6 +669,7 @@ ul {
 .pagnation a:hover {
   background:  #228B22;
 }
+
 
 
 
@@ -739,13 +789,11 @@ ul {
 
 
 }
-
-
-
-
-
-
-
+.nav-list .trend-lists img {
+    border-radius: 30%;
+    width: 40px;
+    height: 40px;
+}
 
 
 

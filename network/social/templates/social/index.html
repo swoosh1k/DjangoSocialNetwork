@@ -1,12 +1,22 @@
 {% extends 'social/base.html' %}
-
+{% load static %}
 
 {% block main %}
 <script src="https://kit.fontawesome.com/6aae901a73.js" crossorigin="anonymous"></script>
 
+<body>
+{% if messages %}
+    {% for msg in messages %}
+            <p>{{msg}}</p>
+    {% endfor %}
+{% endif %}
+
+
+
+
 
 <div class="home">
-        <h1>Home</h1>
+        <h1>{{where}}</h1>
         <i class="fas fa-magic"></i>
       </div>
 
@@ -16,7 +26,9 @@
           <div class="form-group-1">
             {% if user.profile_pic %}
             <img src="{{user.profile_pic.url}}" alt="profile-pics">
-             {% endif %}
+            {% else %}
+            <img src =  '{% static "images/no_photo.jpg" %}'>
+            {% endif %}
               <input type="text" placeholder="What's happening? Min length 30" name = 'text' minlength=" 30" required>
           </div>
           <div class="form-group-2">
@@ -29,11 +41,12 @@
       </div>
  <table id="postTable" class="table table-striped">
       <!-- User Content -->
-     {% for post in posts %}
+
+     {% for post in page_obj %}
         <tr id="post{{post.pk}}">
             <td><div class="tweets">
 
-                    {% if user.profile_pic %}<a href = "{% url 'user_profile' post.creater.id %}"><div class="user-pics"><img src="{{post.creater.profile_pic.url}}" alt="user3"></div></a>{% endif %}
+                    {% if post.creater.profile_pic %}<a href = "{% url 'user_profile' post.creater.id %}"><div class="user-pics"><img src="{{post.creater.profile_pic.url}}" alt="user3"></div></a>{% else %}<a href = "{% url 'user_profile' post.creater.id %}"><div class="user-pics"><img src = "{% static 'images/no_photo.jpg' %}"></div></a>{% endif %}
                     <div class="user-content-box">
                     <div class="user-names">
                         <a href = "{% url 'user_profile' post.creater.id %}"><hi class="full-name">{{post.creater.first_name}}</hi></a>
@@ -48,7 +61,7 @@
                 <div class="user-content" id = "user-content">
                     <p>{{post.context_text}}</p>
                     {% if  post.context_image %}
-                    <img src="{{post.context_image.url}}" alt="content1">
+                    <img src="{{post.context_image.url}}" width = '900px'  alt="content1">
                     {% endif %}
                 </div>
                     <div class="content-icons">
@@ -76,6 +89,12 @@
     {% endfor %}
 </table>
         <div class="pagnation">
-          <a href="#">Load more</a>
+          {% for p in page_obj.paginator.page_range %}
+            {% if page_obj.number == p %}
+               <hi class ='selected'  href ='?page ={{ p }}' >{{p}}</hi>
+            {% else %}
+                <a  href ='?page={{ p }}'>{{p}}</a>
+            {% endif %}
+          {% endfor %}
         </div>
 {% endblock %}

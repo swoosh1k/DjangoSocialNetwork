@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Главная страница</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+   <link rel="stylesheet" href="{% static 'css/all.css' %}">
+  <script src="https://kit.fontawesome.com/6aae901a73.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/htmx.org@1.9.5" integrity="sha384-xcuj3WpfgjlKF+FXhSQFQ0ZNr39ln+hwjN3npfM9VBnUskLolQAcN80McRIVOPuO" crossorigin="anonymous"></script>
+
+
+</head>
+<body>
+
+  <div class="main-flex-container">
+    <div class="left-flex-container flex-item">
+      <div class="nav-links">
+        <ul>
+
+
+          {% if request.path == '/' %}<li class="nav-items current-page">{% else %}<li class="nav-items ">{% endif %}<a href="{% url 'index'  %}"><i class="fas fa-home"></i> Home </a></li>
+          {% if request.path == '/saves/' %}<li class="nav-items current-page">{% else %}<li class="nav-items ">{% endif %}<a href="{% url 'saves' %}"><i class="far fa-bookmark"></i> Bookmarks</a></li>
+          {% if request.path == '/likes/' %}<li class="nav-items current-page">{% else %}<li class="nav-items ">{% endif %}<a href="{% url 'likes' %}"><i class="fa-solid fa-heart"></i>Likes</a></li>
+          {% if request.path == '/messages/' %}<li class="nav-items current-page">{% else %}<li class="nav-items ">{% endif %}<a href="{% url 'messages' %}"><i class="fa-solid fa-message"></i>Messages</a></li>
+          {% if request.path == '/profile/{{user.id}}/' %}<li class="nav-items current-page">{% else %}<li class="nav-items ">{% endif %}<a href="{% url 'user_profile' request.user.id %}"><i class="far fa-user"></i>Profile</a></li>
+          {% if request.path == '/groups/' %}<li class="nav-items current-page">{% else %}<li class="nav-items ">{% endif %}<a href="{% url 'groups' %}"><i class="fa-solid fa-user-group"></i>Groups</a></li>
+          <li class="nav-items "><a id="openModalBtn"><i class="fa-solid fa-note-sticky"></i>New Post</a></li>
+          <li class="nav-items"><a href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
+
+
+
+        </ul>
+      </div>
+
+
+
+
+      <div class="profile-box">
+        {% if request.user.profile_pic %}
+        <a href = "{% url 'user_profile'  request.user.id %}"><img src="{{request.user.profile_pic.url}}" alt="profile"></a>
+        {% else %}
+        <a href = "{% url 'user_profile'  request.user.id %}"><img src="{% static 'images/no_photo.jpg' %}" alt="profile"></a>
+        {% endif %}
+        <div class="profile-link">
+          <p class="full-name">{{request.user.first_name}}</p>
+          <p class="user-name">{{request.user.username}}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="center-flex-container flex-item">
+      {% block main %}
+      {% endblock main %}
+
+    </div>
+
+
+
+    <div class="right-flex-container flex-item">
+     <div class="side-bar col-lg-3">
+
+                        <div class="search-bar w3layouts-newsletter">
+                            <h3 class="sear-head editContent">Find Post</h3>
+                            <form action="/search/" method="get">
+                                <input type="search" placeholder="Введите название..." name="q" class="form-control" required="">
+                                <button type="submit">Find</button>
+                            </form>
+                        </div>
+                        <!--preference -->
+                    <form action="/filter/" method="get" name="filter">
+
+                         <div class="left-side my-4">
+                            <h3 class="sear-head editContent">Сначала</h3>
+                            <ul class="w3layouts-box-list">
+
+                                <li class="editContent">
+                                    <input type="checkbox" class="checked" name="genre" value="1">
+                                    <span class="span editContent">Старые</span>
+
+                                </li><li class="editContent">
+                                    <input type="checkbox" class="checked" name="genre" value="2">
+                                    <span class="span editContent">Новые</span>
+
+                            </li></ul>
+                        </div>
+                        <!-- // preference -->
+                        <!-- discounts -->
+                        <div class="left-side">
+                            <h3 class="sear-head editContent">Год</h3>
+                            <ul class="w3layouts-box-list">
+
+                                    <li class="editContent">
+                                        <input type="checkbox" class="checked" name="year" value="1984">
+                                        <span class="span editContent">1984 </span>
+                                    </li>
+
+                                    <li class="editContent">
+                                        <input type="checkbox" class="checked" name="year" value="1991">
+                                        <span class="span editContent">1991 </span>
+                                    </li>
+
+                                    <li class="editContent">
+                                        <input type="checkbox" class="checked" name="year" value="2016">
+                                        <span class="span editContent">2016 </span>
+                                    </li>
+
+                            </ul>
+                        </div>
+                            <button type="submit">Найти</button>
+                    </form>
+                        <!-- //discounts -->
+                        <!-- reviews -->
+
+                        </div>
+                        <!--<div class="grid-img-right mt-4 text-right bg bg1" >
+                            <span class="money editContent" >Flat 50% Off</span>
+                            <a href="moviesingle.html" class="btn" >Now</a>
+                        </div>-->
+                     </div>
+                </div>
+  </div>
+</div>
+
+  <!-- jQuery library -->
+    <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+<!-- Like Post Ajax -->
+<script>
+
+        $(document).ready(function () {
+            $(".likebtn").click(function (event) {
+             var _this = $(this);
+                event.preventDefault()
+                var post_id = $(this).attr('id');
+                console.log(post_id)
+                $.ajax({
+                    url: $(this).data('url'),
+                    type: 'POST',
+                    data: {
+                        'post_id': post_id,
+                        'csrfmiddlewaretoken': "{{ csrf_token }}",
+                        'action': 'post'
+                    },
+                    success: function (response) {
+
+                        $('#like_count' + post_id).text(response['total_likes']);
+                      console.log(response)
+                        if (response['check'] == 1) {
+                              _this.find('i').removeClass('fa-regular fa-heart');
+                              _this.find('i').addClass('fa-solid fa-heart');
+
+                        }
+                         else if(response['check'] == 0){
+                           _this.find('i').removeClass('fa-solid fa-heart');
+                           _this.find('i').addClass('fa-regular fa-heart');
+
+                        }
+                    },
+                    error: function (rs, e) {
+                        console.log(rs.response)
+                    }
+                });
+            });
+        });
+</script>
+
+
+
+
+<script>
+<!-- Follow user ajax -->
+        $(document).ready(function () {
+            $(".subscribebtnq").click(function (event) {
+             var _this = $(this);
+                event.preventDefault()
+                var creater_id = $(this).attr('id');
+                console.log(creater_id)
+                $.ajax({
+                    url: $(this).data('url'),
+                    type: 'POST',
+                    data: {
+                        'creater_id': creater_id,
+                        'csrfmiddlewaretoken': "{{ csrf_token }}",
+                        'action': 'post'
+                    },
+                    success: function (response) {
+                               $('#btn_textt' + creater_id).text(response['info']);
+                      console.log(response)
+
+                    },
+                    error: function (rs, e) {
+                        console.log(rs.response)
+                    }
+                });
+            });
+        });
+</script>
+
+
+
+
+<script>
+function deletePost(pk) {
+  var action = confirm("Are you sure you want to delete this post?");
+  if (action != false) {
+    $.ajax({
+        url: '{% url "delete_post" %}',
+        data: {
+            'pk': pk ,
+        },
+        dataType: 'json',
+        success: function (data) {
+            $('#postTable #post' + pk).remove();
+        }
+    });
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<script>
+        $(document).ready(function () {
+            $(".savepostbtn").click(function (event) {
+             var _this = $(this);
+                event.preventDefault()
+                var pk = $(this).attr('id');
+                console.log(pk)
+                $.ajax({
+                    url: $(this).data('url'),
+                    type: 'POST',
+                    data: {
+                        'pk': pk,
+                        'csrfmiddlewaretoken': "{{ csrf_token }}",
+                        'action': 'post'
+                    },
+                    success: function (data) {
+                      console.log(data)
+                        if (data['flag'] == 1) {
+                              _this.find('i').removeClass('fa-regular fa-bookmark');
+                              _this.find('i').addClass('fa-solid fa-bookmark');
+
+                        }
+                         else if(data['flag'] == 0){
+                           _this.find('i').removeClass('fa-solid fa-bookmark');
+                           _this.find('i').addClass('fa-regular fa-bookmark');
+
+                        }
+                    },
+                    error: function (rs, e) {
+                        console.log(rs.response)
+                    }
+                });
+            });
+        });
+
+</script>
+
+
+
+
+<style>
+.comment-form  {
+  margin-left: 20px;
+  width: 100%;
+
+}
+.comment-form textarea {
+  border-color:  #228B22;
+  border: 2px solid  ;
+  width: 100%;
+  border-radius: 8px;
+  height: 60px;
+}
+
+.comment-form textarea::placeholder {
+  font-weight: bold;
+  font-size: 15px;
+  font-color: rgb(29,161,242);
+}
+
+.comment-form button {
+    font-weight: bold;
+    color: white;
+    background: #228B22;
+    padding: 0.1rem 0.09rem;
+    border: 1px solid #228B22;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+
+.comments-container {
+    border-radius: 8px;
+    border: 2px solid ;
+    width: 100%;
+    border-color: black'
+    margin-bottom: 30px; /* Добавляем отступ снизу контейнеру комментариев */
+}
+
+
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Находим все кнопки комментировать
+    var commentToggleButtons = document.querySelectorAll('.comment-toggle-btn');
+
+    commentToggleButtons.forEach(function(button) {
+        // Добавляем обработчик события на каждую кнопку
+        button.addEventListener('click', function() {
+            // Находим форму комментария для текущего поста
+            var commentForm = this.nextElementSibling;
+
+            // Переключаем видимость формы комментария с плавным эффектом
+            if (commentForm.style.display === 'none') {
+                fadeIn(commentForm);
+                // Скрываем кнопки лайк и сохранить
+                this.parentElement.querySelector('.likebtn').style.display = 'none';
+                this.parentElement.querySelector('.savepostbtn').style.display = 'none';
+            } else {
+                fadeOut(commentForm);
+                // Показываем кнопки лайк и сохранить
+                this.parentElement.querySelector('.likebtn').style.display = 'inline-block';
+                this.parentElement.querySelector('.savepostbtn').style.display = 'inline-block';
+            }
+        });
+    });
+
+    // Функция для плавного появления элемента
+    function fadeIn(element) {
+        var opacity = 0;
+        var timer = setInterval(function() {
+            if (opacity >= 1) {
+                clearInterval(timer);
+            }
+            element.style.opacity = opacity;
+            opacity += 0.1;
+        }, 50);
+        element.style.display = 'block';
+    }
+
+    // Функция для плавного исчезновения элемента
+    function fadeOut(element) {
+        var opacity = 0;
+        var timer = setInterval(function() {
+            if (opacity <= 0) {
+                clearInterval(timer);
+                element.style.display = 'none';
+            }
+            element.style.opacity = opacity;
+            opacity -= 0.1;
+        }, 50);
+    }
+});
+</script>
+
+
+
+<style>
+  /* Стили для модального окна */
+  .modal {
+    display: none; /* По умолчанию скрыто */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Добавляет прокрутку, если контент выходит за пределы окна */
+    background-color: rgba(0,0,0,0.4); /* Затемненный фон */
+  }
+
+
+
+
+
+  /* Контент модального окна */
+  .modal-content {
+    background-color: white;
+    margin: 15% auto; /* 15% от верхнего и нижнего края экрана, автоматически отступ от других сторон */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%; /* Ширина контента */
+  }
+
+  /* Закрывающая кнопка */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<!-- Кнопка для открытия модального окна -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Получаем ссылки на элементы модального окна
+  var modal = document.getElementById('myModal');
+  var openModalBtn = document.getElementById('openModalBtn');
+  var closeModalBtn = document.getElementsByClassName('close')[0];
+
+  // Функция открытия модального окна
+  openModalBtn.onclick = function() {
+    modal.style.display = 'block'; // Показываем модальное окно
+  }
+
+  // Функция закрытия модального окна
+  closeModalBtn.onclick = function() {
+    modal.style.display = 'none'; // Скрываем модальное окно
+  }
+
+  // Закрытие модального окна при клике вне его области
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = 'none'; // Скрываем модальное окно
+    }
+  }
+});
+</script>
+
+
+
+<script>
+  const imgInput = document.querySelector("#img-input")
+  const displayImg = document.querySelector("#display-img")
+  imgInput.addEventListener('change',
+  (event)=>{
+    const imgObject = event.target.files[0]
+    displayImg.src = URL.createObjectURL(imgObject)})
+
+</script>
+
+
+
+
+
+
+</body>
+</html>

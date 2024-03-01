@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
    <link rel="stylesheet" href="{% static 'css/all.css' %}">
   <script src="https://kit.fontawesome.com/6aae901a73.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/htmx.org@1.9.5" integrity="sha384-xcuj3WpfgjlKF+FXhSQFQ0ZNr39ln+hwjN3npfM9VBnUskLolQAcN80McRIVOPuO" crossorigin="anonymous"></script>
+
 
 </head>
 <body>
@@ -18,11 +20,13 @@
         <ul>
 
 
-          <li class="nav-items current-page"><a href="{% url 'index' %}"><i class="fas fa-home"></i> Home</a></li>
-          <li class="nav-items"><a href="{% url 'saves' %}"><i class="far fa-bookmark"></i> Bookmarks</a></li>
-          <li class="nav-items"><a href="{% url 'likes' %}"><i class="fa-solid fa-heart"></i>Likes</a></li>
-          <li class="nav-items"><a href="{% url 'user_profile' user.id %}"><i class="far fa-user"></i> Profile</a></li>
-          <li class="nav-items"><a id="openModalBtn"><i class="fa-solid fa-note-sticky"></i>New Post</a></li>
+          {% if request.path == '/' %}<li class="nav-items current-page">{% else %}<li class="nav-items ">{% endif %}<a href="{% url 'index'  %}"><i class="fas fa-home"></i> Home </a></li>
+          {% if request.path == '/saves/' %}<li class="nav-items current-page">{% else %}<li class="nav-items ">{% endif %}<a href="{% url 'saves' %}"><i class="far fa-bookmark"></i> Bookmarks</a></li>
+          {% if request.path == '/likes/' %}<li class="nav-items current-page">{% else %}<li class="nav-items ">{% endif %}<a href="{% url 'likes' %}"><i class="fa-solid fa-heart"></i>Likes</a></li>
+          {% if request.path == '/messages/' %}<li class="nav-items current-page">{% else %}<li class="nav-items ">{% endif %}<a href="{% url 'messages' %}"><i class="fa-solid fa-message"></i>Messages</a></li>
+          {% if request.path == '/profile/{{user.id}}/' %}<li class="nav-items current-page">{% else %}<li class="nav-items ">{% endif %}<a href="{% url 'user_profile' request.user.id %}"><i class="far fa-user"></i>Profile</a></li>
+          {% if request.path == '/groups/' %}<li class="nav-items current-page">{% else %}<li class="nav-items ">{% endif %}<a href="{% url 'groups' %}"><i class="fa-solid fa-user-group"></i>Groups</a></li>
+          <li class="nav-items "><a style = 'cursor:pointer;'  id="openModalBtn"><i class="fa-solid fa-note-sticky"></i>New Post</a></li>
           <li class="nav-items"><a href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
 
 
@@ -34,8 +38,10 @@
 
 
       <div class="profile-box">
-        {% if user.profile_pic %}
-        <img src="{{request.user.profile_pic.url}}" alt="profile">
+        {% if request.user.profile_pic %}
+        <a href = "{% url 'user_profile'  request.user.id %}"><img src="{{request.user.profile_pic.url}}" alt="profile"></a>
+        {% else %}
+        <a href = "{% url 'user_profile'  request.user.id %}"><img src="{% static 'images/no_photo.jpg' %}" alt="profile"></a>
         {% endif %}
         <div class="profile-link">
           <p class="full-name">{{request.user.first_name}}</p>
@@ -55,14 +61,18 @@
     <div class="right-flex-container flex-item">
       <div class="search-box">
         <i class="fas fa-search"></i>
-        <input type="text" placeholder="Search People">
+          <input type="text" placeholder="Search People" name="q"   hx-get="{% url 'people-search' %}" hx-trigger="keyup changed, q" hx-target='#search-results' hx-indicator=".htmx-indicator">
+        <div id = 'search-results'>
+          {% include "social/search_results.html" %}
+        </div>
       </div>
+
       <!-- You might know -->
 
       <div class="trends">
         <ul>
           <li class="nav-list header">
-            <h2>You might know</h2>
+            <h2>You might know</h2><a href =  '{% url "subscribe_on_news" %}'><i class="fa-regular fa-newspaper" style = 'color:black;'> News</i></a>
           {% for user in you_might_know %}
           {% if user != request.user %}
           <li class="nav-list">
@@ -89,6 +99,7 @@
           <a href="#" class="sub-text">Privacy policy</a>
           <a href="#" class="sub-text">Ads info</a>
           <a href="#" class="sub-text">more</a>
+
         </div>
         <div class="footer-copyright">
           <p class="sub-text"></p>
@@ -104,13 +115,14 @@
 <div id="myModal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
-    <h2>Новый пост</h2>
+    <h2>New Post</h2>
     <p>
     <form action = '{% url "save_post_with_image" %}' method  = 'POST' enctype="multipart/form-data">
     {% csrf_token %}
-      <div class = 'image'><input type="file" accept="image" id="img-input" name = 'image' ><img class= 'display-img' id="display-img" /></div>
-      <div class = 'text'><input type = 'text' placeholder="Введите текст вашего поста" maxlength="300" required name = 'text'></div>
-      <button type = 'submit'>Save Post</button>
+
+      <div class = 'image'><input  type="file" accept="image" id="img-input" name = 'image' style="visibility:hidden;" ><label for="img-input" ><img src = 'https://avatars.mds.yandex.net/get-mpic/6780724/img_id5398870021742881284.jpeg/orig' class= 'display-img' id="display-img" /></div></label>
+      <div class = 'text'><input type = 'text' placeholder="Your post text" maxlength="300" required name = 'text'></div>
+      <button class = 'btn'  type = 'submit'>Save Post</button>
     </form>
     </p>
   </div>
@@ -159,6 +171,7 @@
             });
         });
 </script>
+
 
 
 
@@ -442,5 +455,11 @@ document.addEventListener('DOMContentLoaded', function() {
     displayImg.src = URL.createObjectURL(imgObject)})
 
 </script>
+
+
+
+
+
+
 </body>
 </html>

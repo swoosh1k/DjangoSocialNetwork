@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from social.models import Post
+from social.models import Post, User
 
 # from .models import api
 
@@ -11,3 +11,8 @@ class PostSerializer(serializers.ModelSerializer):
 
 
 
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = '__all__'
