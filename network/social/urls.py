@@ -8,15 +8,13 @@ from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('', index, name = 'index'),
-    path('login/', UserLogin.as_view(), name='login'),
+    path('social/login/', UserLogin.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name = 'logout'),
     path('register/', register, name = 'register'),
-    path('subscribe/', Subscribe_on_user, name = "subscribe"),
+    path('subscribe/', Subscribe_on_user, name = 'subscribe'),
     path('unsubscribe/<int:pk>/', UnSubscribe, name = 'unsubscribe'),
     path('addlike/', AddLike, name = 'add_like'),
-    path('send_request/<int:pk>/', SendRequest, name = 'send_request'),
     path('profile/<int:pk>/', UserProfile.as_view(), name = 'user_profile'),
-    path('confirm_request/<int:pk>/', ConfirmRequest, name = 'request_confirm'),
     path('followings/', Followings, name = 'followings'),
     path('post_create_text/',Post_create_contex , name = 'post_context_create'),
     path('delete_post/', DeletePost, name = 'delete_post'),
@@ -38,7 +36,8 @@ urlpatterns = [
     path('payment/notification/', yookassa_webhook, name='yookassa_webhook'),
     path('subscribe_on_news/', subscribe_on_news, name = 'subscribe_on_news'),
     path('confirm_subscribe_on_news/', confirm_subscribe_on_news, name = 'confirm_subscribe_on_news'),
-    path('unsubscribe_on_news/', unsubscribe_on_news, name = 'unsubscribe_on_news')
+    path('unsubscribe_on_news/', unsubscribe_on_news, name = 'unsubscribe_on_news'),
+    path('delete_profile_as_moderator/<int:pk>/', delete_profile_moderator, name = 'delete_profile_moderator')
 
 ]
 

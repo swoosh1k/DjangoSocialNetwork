@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
@@ -12,6 +13,7 @@ from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
 import json
@@ -20,6 +22,7 @@ from django.views.generic import CreateView, UpdateView, DetailView
 from django.views.decorators.csrf import ensure_csrf_cookie
 from chatapplication.models import Thread
 from .models import *
+from .permissions import moderator_required, user_is_request_user
 from .tokens import account_activation_token
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
@@ -44,15 +47,14 @@ def yookassa_webhook(request):
             subscribe = Subscribe.objects.first()
             subscribe.Users.add(user)
             subscribe.save()
-            return JsonResponse({'message': 'Webhook обработан успешно'})
-    return JsonResponse({'error': 'Метод не поддерживается'}, status=405)
-
+            return JsonResponse({'message': 'Webhook successfully worked out'})
+    return JsonResponse({'error': 'Method isn"t allowed'}, status=405)
 def create_payment(request):
     Configuration.account_id = '339195'
     Configuration.secret_key = 'test_dUzwnfixs14-QUs-JRaS0mXiNbJh_Q9793_BJCjEWdc'
 
     amount = 50
-    description = 'Оплата подписки'
+    description = 'Buy Subscribe'
 
 
     payment = Payment.create({
@@ -92,10 +94,9 @@ def index(request):
         paginator = Paginator(posts, 3)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
-        context = {"posts": posts, 'user': user, 'user_followings': user_followings,
+        context = {'posts': posts, 'user': user, 'user_followings': user_followings,
                     'you_might_know': you_might_know, 'page_obj': page_obj,  'where': 'Home'}
         return render(request, 'social/index.html', context=context ,)
-
 
 
 
@@ -165,35 +166,38 @@ class UserLogin(LoginView):
 
 
 
-class UserProfile(DetailView):
+class UserProfile(DetailView, LoginRequiredMixin):
     model = User
     context_object_name = 'user'
     template_name = 'social/profile.html'
     form_class = UserChange
+
     def get_context_data(self,*, object_list = None,  **kwargs):
         context= super().get_context_data(**kwargs)
         context['title'] = f'Profile {self.object}'
         context['followings'] = Follower.objects.get(user = self.object.id).followings.count()
         context['followings_all'] = Follower.objects.get(user = self.object.id).followings.all()
         context['posts'] = Post.objects.filter(creater_id =self.object.id).order_by('data_created')
-        context['subrcibe'] = Subscribe.objects.first()
+        context['subscribe'] = Subscribe.objects.first()
+        context['moderator'] = self.request.user.groups.filter(name = 'Moderators').exists()
         return context
-      
-    
 
 
 
 
+
+
+@login_required
 def UnSubscribe(request, pk):
     user = request.user
     user_get = User.objects.get(id = pk)
     follower = Follower.objects.get(user= user)
     follower.followings.remove(user_get)
-    return HttpResponseRedirect(request.META["HTTP_REFERER"])
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
 
-
+@login_required
 def AddLike(request):
     if request.POST.get('action') == 'post':
         checker = None
@@ -209,12 +213,12 @@ def AddLike(request):
             post.save()
             checker = 1
         return JsonResponse({'total_likes': post.total_likes, 'check': checker,})
-    return HttpResponse('Error acces ')
+    return HttpResponse('Error access ')
 
 
 
 
-
+@login_required
 def Subscribe_on_user(request):
     if request.POST.get('action') == 'post':
         flag = None
@@ -235,7 +239,7 @@ def Subscribe_on_user(request):
             info = 'Unfollow'
 
         return JsonResponse({"info": info,})
-    return HttpResponse('Error acces ')
+    return HttpResponse('Error access ')
 
 
 
@@ -248,38 +252,9 @@ def Subscribe_on_user(request):
 
 
 
-def SendRequest(request, pk):
-    user = request.user
-    user_request_to = User.objects.get(id = pk)
-    Tequest = Request.objects.get(user = user)
-    Tequest.requests.add(user_request_to)
-    return HttpResponseRedirect(request.META["HTTP_REFERER"])
 
 
-
-
-def ConfirmRequest(request, pk):
-    user_from = User.objects.get(id = pk)
-    Tequest = Request.objects.get(user = user_from)
-    Tequest.requests.remove(request.user)
-    follow = Follower.objects.get(user = user_from)
-    follow.followings.add(request.user)
-    return HttpResponseRedirect(request.META["HTTP_REFERER"])
-
-
-
-
-def Followings(request):
-    if request.user:
-        follower = Follower.objects.get(user = request.user)
-    users_followings = follower.followings.all()
-    posts = Post.objects.filter(creater__id__in = users_followings)
-    context = {'posts': posts}
-    return render(request, 'social/index.html', context = context)
-
-
-
-
+@login_required
 def DeletePost(request):
     pk = request.GET.get('pk')
     post = Post.objects.get(id = pk)
@@ -287,8 +262,7 @@ def DeletePost(request):
     return JsonResponse({'deleted': True})
 
 
-
-
+@login_required
 def Save_post(request):
     flag = None
     user = request.user
@@ -308,7 +282,7 @@ def Save_post(request):
 
 
 
-
+@login_required
 def Post_create_contex(request):
     Post.objects.create(creater = request.user, context_text = request.POST.get('text'))
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
@@ -316,15 +290,14 @@ def Post_create_contex(request):
 
 
 
-
-
+@login_required
 def Add_comment(request, pk):
     Comment.objects.create(post = Post.objects.get(id = pk), commenter = request.user,comment_content = request.POST.get('comment'))
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
 
-
+@login_required
 def Save_post_with_image(request):
     subscribe = Subscribe.objects.first()
     posts = Post.objects.filter(creater_id = request.user.id)
@@ -335,7 +308,7 @@ def Save_post_with_image(request):
         Post.objects.create(context_image =  image, creater = request.user, context_text = request.POST.get('text'))
         return redirect('index')
 
-
+@login_required
 def Buy_Subscribe(request):
     if request.user not in Subscribe.objects.first().Users.all():
         user = request.user
@@ -347,7 +320,7 @@ def Buy_Subscribe(request):
 
 
 
-
+@login_required
 def Likes(request):
     posts = request.user.likes.all()
     user = request.user
@@ -357,13 +330,28 @@ def Likes(request):
     paginator = Paginator(posts, 3)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    context = {"posts": posts, 'user': user, 'user_followings': user_followings,
+    context = {'posts': posts, 'user': user, 'user_followings': user_followings,
                'you_might_know': you_might_know, 'page_obj': page_obj, 'where': 'Likes'}
 
     return render(request, 'social/index.html', context = context)
 
 
+@login_required
+def Followings(request):
+    user = request.user
+    follower = Follower.objects.get(user = request.user)
+    users_followings = follower.followings.all()
+    you_might_know = User.objects.exclude(id__in = users_followings)
+    posts = Post.objects.filter(creater__id__in = users_followings)
+    paginator = Paginator(posts, 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {'posts': posts, 'user': user, 'user_followings': users_followings,
+            'you_might_know': you_might_know, 'page_obj': page_obj, 'where': 'Followings'}
 
+    return render(request, 'social/index.html', context=context)
+
+@login_required
 def Bookmarks(request):
     posts = request.user.savers.all()
     user = request.user
@@ -374,21 +362,23 @@ def Bookmarks(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     current_user_id = request.user.id
-    context = {"posts": posts, 'user': user, 'user_followings': user_followings,
+    context = {'posts': posts, 'user': user, 'user_followings': user_followings,
                'you_might_know': you_might_know, 'page_obj': page_obj, 'current_user_id': current_user_id, 'where': 'Bookmarks'}
 
     return render(request, 'social/index.html', context = context)
 
-
+@login_required
+@user_is_request_user
 def delete_profile(request, user_id):
     user = get_object_or_404(User, id=user_id)
-
     if request.method == 'POST':
         user.delete()
         return redirect('index')
-
     return render(request, 'social/delete_profile.html', {'user': user})
 
+
+
+@login_required
 def edit_profile(request, user_id):
     user = get_object_or_404(User, id=user_id)
 
@@ -402,7 +392,7 @@ def edit_profile(request, user_id):
 
     return render(request, 'social/edit_profile.html', {'form': form, 'user': user})
 
-
+@login_required
 def search_results_view(request):
     users = User.objects.filter(username__iregex = request.GET.get('q'))
     if users.exists():
@@ -412,7 +402,7 @@ def search_results_view(request):
     context = {'users': users}
     return render(request, 'social/search_results.html', context)
 
-
+@login_required
 def Group_search(request):
     groups = Group.objects.filter(title__iregex = request.GET.get('q'))
     if groups.exists():
@@ -423,7 +413,7 @@ def Group_search(request):
     return render(request,'social/search_group_results.html', context = context)
 
 
-
+@login_required
 def thread_start(request, pk):
     thread = Thread.objects.filter(Q(first_person = request.user, second_person = User.objects.get(id = pk)) | Q(first_person =  User.objects.get(id = pk), second_person = request.user ))
     if thread.exists():
@@ -436,7 +426,7 @@ def thread_start(request, pk):
 
 
 
-
+@login_required
 def Groups(request):
     groups = Group.objects.all()
     context = {'groups': groups}
@@ -445,7 +435,7 @@ def Groups(request):
 
 
 
-class Group_detail(DetailView):
+class Group_detail(DetailView, LoginRequiredMixin):
     model = Group
     context_object_name = 'group'
     template_name = 'social/group_detail.html'
@@ -456,7 +446,7 @@ class Group_detail(DetailView):
         return context
 
 
-
+@login_required
 def subscribe_on_news(request):
     news = News.objects.first().users.all()
     context = {'title': 'News Subscriebe', 'news': news}
@@ -464,7 +454,7 @@ def subscribe_on_news(request):
 
 
 
-
+@login_required
 def confirm_subscribe_on_news(request):
     user = request.user
     news = News.objects.first()
@@ -474,10 +464,18 @@ def confirm_subscribe_on_news(request):
     return redirect('index')
 
 
-
+@login_required
 def unsubscribe_on_news(request):
     news = News.objects.first()
     news.users.remove(request.user)
     messages.success(request,'Вы отписались от новостей')
     return redirect('index')
 
+
+
+@moderator_required
+def delete_profile_moderator(request, pk):
+    user = get_object_or_404(User, id = pk)
+    user.delete()
+    messages.success(request,'You are deleted user profile')
+    return redirect('index')
