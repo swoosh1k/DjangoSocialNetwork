@@ -1,5 +1,5 @@
 from django.urls import path
-
+from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from .views import *
@@ -8,6 +8,7 @@ from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('', index, name = 'index'),
+    path('adminq/', admin.site.urls, name='admin'),
     path('social/login/', UserLogin.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name = 'logout'),
     path('register/', register, name = 'register'),
@@ -28,7 +29,7 @@ urlpatterns = [
     path('edit_profile/<int:user_id>/', edit_profile, name='edit_profile'),
     path('people_search/', search_results_view, name = 'people-search'),
     path('thread_start/<int:pk>/', thread_start, name = 'thread_start'),
-    path('groups/', Groups, name = 'groups'),
+    path('groups/', Groups_all, name = 'groups'),
     path('group_search/', Group_search, name  = 'group_search'),
     path('group/<int:pk>/', Group_detail.as_view(), name = 'group'),
     path('buy-subscribe/', Buy_Subscribe, name = 'buy_subscribe'),
@@ -37,8 +38,8 @@ urlpatterns = [
     path('subscribe_on_news/', subscribe_on_news, name = 'subscribe_on_news'),
     path('confirm_subscribe_on_news/', confirm_subscribe_on_news, name = 'confirm_subscribe_on_news'),
     path('unsubscribe_on_news/', unsubscribe_on_news, name = 'unsubscribe_on_news'),
-    path('delete_profile_as_moderator/<int:pk>/', delete_profile_moderator, name = 'delete_profile_moderator')
-
+    path('delete_profile_as_moderator/<int:pk>/', delete_profile_moderator, name = 'delete_profile_moderator'),
+    path('add_moderator/', add_moderator, name = 'add_moderator')
 ]
 
 

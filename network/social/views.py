@@ -3,10 +3,11 @@ from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.contrib.sites.shortcuts import get_current_site
+from django.core.exceptions import PermissionDenied
 from django.core.mail import EmailMessage
 from django.db import IntegrityError
 from django.db.models import Q, F
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse, reverse_lazy
@@ -17,12 +18,14 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
 import json
+from django.contrib.auth.models import  Group as django_groups
+
 from .forms import *
 from django.views.generic import CreateView, UpdateView, DetailView
 from django.views.decorators.csrf import ensure_csrf_cookie
 from chatapplication.models import Thread
 from .models import *
-from .permissions import moderator_required, user_is_request_user
+from .permissions import moderator_required, user_is_request_user, admin_only
 from .tokens import account_activation_token
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
@@ -76,6 +79,7 @@ def create_payment(request):
     return HttpResponseRedirect(payment_url)
 
 
+
 def index(request):
     if not request.user.is_authenticated:
         return redirect('login')
@@ -94,8 +98,9 @@ def index(request):
         paginator = Paginator(posts, 3)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
+        moderators = User.objects.filter(groups__in = [1])
         context = {'posts': posts, 'user': user, 'user_followings': user_followings,
-                    'you_might_know': you_might_know, 'page_obj': page_obj,  'where': 'Home'}
+                    'you_might_know': you_might_know, 'page_obj': page_obj,  'where': 'Home', 'users_all': User.objects.exclude(username = 'admin'), 'moderators': moderators}
         return render(request, 'social/index.html', context=context ,)
 
 
@@ -427,7 +432,7 @@ def thread_start(request, pk):
 
 
 @login_required
-def Groups(request):
+def Groups_all(request):
     groups = Group.objects.all()
     context = {'groups': groups}
     return render(request, 'social/groups.html', context = context)
@@ -479,3 +484,53 @@ def delete_profile_moderator(request, pk):
     user.delete()
     messages.success(request,'You are deleted user profile')
     return redirect('index')
+
+
+
+def custom_admin_view(request):
+    if not request.user.is_superuser and not request.user.groups.filter(name='Moderators').exists():
+        raise PermissionDenied('You do not have permission to enter this page')
+    else:
+        return redirect(
+            'admin:index')
+
+@admin_only
+def add_moderator(request):
+    if request.method == 'POST':
+        button = request.POST.get('button')
+        if button == 'button_add':
+            user_list = request.POST.getlist('moderator')
+            if user_list:
+                for user in user_list:
+                    user = get_object_or_404(User, id = user)
+                    group  = get_object_or_404(django_groups, name = 'Moderators')
+                    user.groups.add(group)
+                    user.is_staff = True
+                    user.save()
+                messages.success(request, 'You added new Moderators successfully!')
+                return redirect('index')
+            else:
+                messages.success(request, 'empty chosen, try again')
+                return redirect('index')
+        else:
+            user_list = request.POST.getlist('moderator')
+            if user_list:
+                for user in user_list:
+                    user = get_object_or_404(User, id=user)
+                    group = get_object_or_404(django_groups, name='Moderators')
+                    user.groups.remove(group)
+                    user.is_staff = False
+                    user.save()
+                messages.success(request, 'You deleted Moderators successfully!')
+                return redirect('index')
+            else:
+                messages.success(request, 'empty chosen, try again')
+                return redirect('index')
+    else:
+        messages.success(request, 'You have not choose anything, go back')
+        return redirect('index')
+
+
+
+
+
