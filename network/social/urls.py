@@ -5,6 +5,8 @@ from django.conf.urls.static import static
 from .views import *
 from . import views
 from django.contrib.auth.views import LogoutView
+from .views import create_group
+
 
 urlpatterns = [
     path('', index, name = 'index'),
@@ -35,11 +37,19 @@ urlpatterns = [
     path('buy-subscribe/', Buy_Subscribe, name = 'buy_subscribe'),
     path('pay/', create_payment, name = 'pay'),
     path('payment/notification/', yookassa_webhook, name='yookassa_webhook'),
+
+    path('save_group_post/<int:pk>/', save_group_post, name = 'save_group_post'),
+    path('create_group/', create_group, name='create_group'),
+    path('delete_group/<int:group_id>/', delete_group, name='delete_group'),
+
+
+
     path('subscribe_on_news/', subscribe_on_news, name = 'subscribe_on_news'),
     path('confirm_subscribe_on_news/', confirm_subscribe_on_news, name = 'confirm_subscribe_on_news'),
     path('unsubscribe_on_news/', unsubscribe_on_news, name = 'unsubscribe_on_news'),
     path('delete_profile_as_moderator/<int:pk>/', delete_profile_moderator, name = 'delete_profile_moderator'),
     path('add_moderator/', add_moderator, name = 'add_moderator')
+
 ]
 
 

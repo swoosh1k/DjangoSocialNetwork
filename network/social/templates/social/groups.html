@@ -9,7 +9,7 @@
     <input type="text" placeholder="Поиск группы" name="q" hx-get="/group_search/" hx-trigger="keyup changed, q" hx-target="#search-results" hx-indicator=".htmx-indicator">
     <div id="search-results"></div>
 </div>
-
+<br>
 <div class="group-list">
     {% for group in groups %}
         <a href="{% url 'group' group.pk %}">
@@ -17,12 +17,25 @@
                 <div class="group-content">
                     <p class="group-title">{{ group.title }}</p>
                     <p class="sub-text">Members: {{ group.users.count }}</p>
-                    <p class="group-description">{{ group.bio }}</p>
+
+
+                    <p class="group-description" style=" max-height: 30px; overflow: hidden; word-wrap: break-word; line-height: 1.2;">
+                        {{ group.bio }}
+                    </p>
+                    <br>
+                    {% if group.bio|length > 1 %}
+                        <a href="{% url 'group' group.id %}?bio={{ group.bio }}" style="color: white; text-decoration: none; position: relative; font-size: 16px;">'Further'...</a>
+                    {% endif %}
+
                     <p class="sub-text">Время создания группы: {{ group.data_created }}</p>
                 </div>
             </div>
         </a>
     {% endfor %}
 </div>
+
+<a href="{% url 'create_group' %}">Add Group</a>
+
+
 
 {% endblock %}
