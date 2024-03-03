@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,6 +28,11 @@
           {% if request.path == '/profile/{{user.id}}/' %}<li class="nav-items current-page">{% else %}<li class="nav-items ">{% endif %}<a href="{% url 'user_profile' request.user.id %}"><i class="far fa-user"></i>Profile</a></li>
           {% if request.path == '/groups/' %}<li class="nav-items current-page">{% else %}<li class="nav-items ">{% endif %}<a href="{% url 'groups' %}"><i class="fa-solid fa-user-group"></i>Groups</a></li>
           <li class="nav-items "><a style = 'cursor:pointer;'  id="openModalBtn"><i class="fa-solid fa-note-sticky"></i>New Post</a></li>
+          {% if request.user.is_superuser %}
+            {% if request.path == '/' %}
+                <li class="nav-items "><a style = 'cursor:pointer;' id="openModalBtn2"><i class="fa-solid fa-bars-progress"></i>appointment of a moderator</a></li>
+            {% endif %}
+          {% endif %}
           <li class="nav-items"><a href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
 
 
@@ -129,13 +134,57 @@
   </div>
 </div>
 
+
+<style>
+.checkbox-input {
+  width: 20px;
+  height: 30px;
+  cursor: pointer;
+}
+</style>
+</body>
+
+<div id="myModal2" class="modal2">
+  <div class="modal-content2">
+    <span class="close2">&times;</span>
+    <h2>Choose Moderator</h2>
+    <p>
+    <form action = '{% url "add_moderator" %}' method  = 'POST'>
+    {% csrf_token %}
+      {% for user in users_all %}
+            <li class="nav-list" style = 'display:flow; cursor: default;'>
+            <input type="checkbox" name="moderator"  value="{{ user.id }}" class="checkbox-input">
+            <div class="trend-lists">
+             <img src="{{user.profile_pic.url}}" alt="user3">{% if user in moderators %}<span style = 'color: red; font-size: 20px;'>Moderator</span>{% endif %}</a></div>
+              <a href="{% url 'user_profile' user.id %}"><p class="main-text">{{user.username}}</p></a>
+            <div class="trend-icon">
+            </div>
+
+            </li>
+      {% endfor %}
+      <button class = 'btn'  name = 'button' type = 'submit' value = 'button_add'>Add Moderators</button>
+      <button class = 'btn'  name= 'button' type = 'submit' value = 'button_delete'>Delete  Moderators</button>
+    </form>
+    </p>
+  </div>
+</div>
+
+
+
+
+
   <!-- jQuery library -->
     <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
     <!-- Latest compiled JavaScript -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
 <!-- Like Post Ajax -->
-<script>
 
+
+
+
+
+
+<script>
         $(document).ready(function () {
             $(".likebtn").click(function (event) {
              var _this = $(this);
@@ -414,6 +463,10 @@ document.addEventListener('DOMContentLoaded', function() {
     cursor: pointer;
   }
 </style>
+
+
+
+
 </head>
 <body>
 
@@ -447,6 +500,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+
+
+
+
 <script>
   const imgInput = document.querySelector("#img-input")
   const displayImg = document.querySelector("#display-img")
@@ -454,11 +511,79 @@ document.addEventListener('DOMContentLoaded', function() {
   (event)=>{
     const imgObject = event.target.files[0]
     displayImg.src = URL.createObjectURL(imgObject)})
-
 </script>
 
 
+<style>
+  /* Стили для модального окна */
+  .modal2 {
+    display: none; /* По умолчанию скрыто */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Добавляет прокрутку, если контент выходит за пределы окна */
+    background-color: rgba(0,0,0,0.4); /* Затемненный фон */
+  }
 
+
+
+
+
+  /* Контент модального окна */
+  .modal-content2 {
+    background-color: white;
+    margin: 15% auto; /* 15% от верхнего и нижнего края экрана, автоматически отступ от других сторон */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%; /* Ширина контента */
+  }
+
+  /* Закрывающая кнопка */
+  .close2 {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close2:hover,
+  .close2:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Получаем ссылки на элементы модального окна
+  var modal2 = document.getElementById('myModal2');
+  var openModalBtn2 = document.getElementById('openModalBtn2');
+  var closeModalBtn2 = document.getElementsByClassName('close2')[0];
+
+  // Функция открытия модального окна
+  openModalBtn2.onclick = function() {
+    modal2.style.display = 'block'; // Показываем модальное окно
+  }
+
+  // Функция закрытия модального окна
+  closeModalBtn2.onclick = function() {
+    modal2.style.display = 'none'; // Скрываем модальное окно
+  }
+
+  // Закрытие модального окна при клике вне его области
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal2.style.display = 'none'; // Скрываем модальное окно
+    }
+  }
+});
+</script>
 
 
 

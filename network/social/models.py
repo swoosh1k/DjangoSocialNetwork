@@ -130,7 +130,7 @@ class Group(models.Model):
 
     class Meta:
         verbose_name = 'Group'
-        verbose_name_plural = 'Groups'
+        verbose_name_plural = 'Group'
         ordering = ['data_created',]
 
 
