@@ -4,6 +4,16 @@
 {% block main %}
 <script src="https://kit.fontawesome.com/6aae901a73.js" crossorigin="anonymous"></script>
 
+<body>
+{% if messages %}
+    {% for msg in messages %}
+            <p>{{msg}}</p>
+    {% endfor %}
+{% endif %}
+
+
+
+
 
 <div class="home">
         <h1>{{where}}</h1>

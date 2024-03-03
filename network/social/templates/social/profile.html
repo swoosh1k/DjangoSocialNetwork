@@ -2,18 +2,20 @@
 {% load static %}
 
 {% block main %}
+
   <div class="profile-container">
     <div class="profile-info">
-      {% if user.cover %}
-        <div class="cover-container" style="background-image: url('{{ user.cover.url }}');">
-          {% else %}
+            {% if user.cover %}
+            <div class="cover-container" style="background-image: url('{{ user.cover.url }}');">
+            {% else %}
             <div class="cover-container" style="background-image: url('{% static 'images/no-covers.jpg' %}');">
-
-              {% endif %}
-
+            {% endif %}
+            {% if request.user.is_authenticated and moderator  %}
+                <a href="{% url 'delete_profile_moderator' user.pk %}">Delete Profile as moderator</a>
+            {% endif %}
                 <h1 >{{ user.username }}</h1>
                 {% if user == request.user %}
-                    {% if user not in subrcibe.Users.all %}
+                    {% if user not in subscribe.Users.all %}
                         <a href="{% url 'buy_subscribe' %}">Купить платную подписку</a>
                     {% else %}
                         <h2>Платная подписка</h2>
@@ -26,9 +28,9 @@
                     <img src="{{ user.profile_pic.url }}" alt="Profile Picture" class="profile-pic">
                   </div>
 
-              {% else %}
-              <img src="{% static 'images/no_photo.jpg' %}" alt="Изображение профиля не загружено" class="profile-no-pic">
-              {% endif %}
+                {% else %}
+                <img src="{% static 'images/no_photo.jpg' %}" alt="Изображение профиля не загружено" class="profile-no-pic">
+                {% endif %}
             </div>
 
             <div>
@@ -49,6 +51,7 @@
                     <a href="{% url 'edit_profile' user.id %}">Изменить профиль</a>
                     <a href="{% url 'delete_profile' user.id %}">Удалить профиль</a>
                     {% endif %}
+
                     {% if not user == request.user %}
                         <a class = 'send-message' href =  '{% url "thread_start" user.id %}'>Написать сообщение <i class="fa-solid fa-envelope"></i></a>
                     {% endif %}

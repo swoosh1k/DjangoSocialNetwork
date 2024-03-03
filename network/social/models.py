@@ -130,11 +130,22 @@ class Group(models.Model):
 
     class Meta:
         verbose_name = 'Group'
-        verbose_name_plural = 'Groups'
+        verbose_name_plural = 'Group'
         ordering = ['data_created',]
 
 
 
+
+
+class News(models.Model):
+    title = models.CharField(max_length=150)
+    users = models.ManyToManyField(User, null = True, blank = True)
+
+    def __str__(self):
+        return f'News {self.title}'
+    class Meta:
+        verbose_name = 'News'
+        verbose_name_plural = 'News'
 
 
 
