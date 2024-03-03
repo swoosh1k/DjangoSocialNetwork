@@ -1,40 +1,36 @@
 {% extends 'social/base2.html' %}
-{% load static %}
+
+
 
 {% block main %}
 
-    <h1>{{ group.title }}</h1>
+<h1><div class="home">
+        <h1>{{group.title}}</h1>
 
-    <div class="tweets group-item;">
-        <a href = "{% url 'user_profile'  request.user.id %}">
-            {% if user.profile_pic %}
-            <div class="user-pics">
-                <img src="{{ user.profile_pic.url }}" alt="Profile Picture" class="profile-pic">
-            </div>
-                {% else %}
-                  <img src="{% static 'images/no_photo.jpg' %}" alt="Изображение профиля не загружено" class="profile-no-pic">
-                {% endif %}
-        </a>
+      </div></h1>
+{% for post in posts %}
+<div class="tweets">
+                    <a href="/profile/1/"><div class="user-pics"><img src="/media/profile_pic/05-crew-cut_gAXpXp4.jpg" alt="user3"></div></a>
+                    <div class="user-content-box">
+                    <div class="user-names">
+                        <a href="/profile/1/"><hi class="full-name"></hi></a>
+                        <p class="user-name">{{post.creater}}</p>
+                        <p class="time">{{post.data_created}}</p>
 
-        <div class="user-content-box">
-            <div class="user-names">
-                <a href="/profile/1/"><hi class="full-name"></hi></a>
-                    <a href="{% url 'user_profile' user.id %}">
-                        <p class="user-name">{{ user.username }}</p>
-                    </a>
-                <p class="time">{{ group.data_created }}</p>
-            </div>
-            <div class="user-content" id="user-content">
-                <img src="{{ group.group_image.url }}" width="700px" height="400px" alt="Group Post Image">
-                <p>{{ group.bio }}</p>
-            </div>
+                    </div>
 
-                <button id="open-post-modal">Добавить пост</button>
+                <div class="user-content" id="user-content">
+                    <p>{{post.context}}</p>
+                    <img src="{{post.image.url}}" width="700px" height = '400px' alt="content1">
 
-
-
-
+                </div>
+                </div>
         </div>
+{% endfor %}
+<button id="open-post-modal">Add Post to group</button>
+
+
+
 
 
 <div id="post-modal" class="modal">
@@ -43,7 +39,7 @@
     <h2>New Post Group</h2>
 
     <p>
-      <form action="{% url 'save_post_with_image' %}" method="POST" enctype="multipart/form-data">
+      <form action="{% url 'save_group_post' group.id %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="image">
           <input type="file" accept="image" id="img-input" name="image" style="visibility:hidden;">
@@ -61,22 +57,12 @@
 </div>
 
 
-      {% for post in group.group_post.all %}
-    <div class="post">
-        <p>{{ post.context }}</p>
-        {% if post.image %}
-            <img src="{{ post.image.url }}" alt="Post Image">
-        {% endif %}
-        <p>Posted by: {{ post.creater.username }}</p>
-        <p>Posted at: {{ post.data_created }}</p>
-    </div>
-{% endfor %}
-
-
-
-
-
-    <script>
+<a href="{% url 'groups' %}" class="back-button">Back</a>
+    <form action="{% url 'delete_group' group.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Delete Group</button>
+      </form>
+ <script>
       const openButton = document.getElementById('open-post-modal');
       const modal = document.getElementById('post-modal');
       const closeButton = document.querySelector('.close');
@@ -135,6 +121,15 @@
 
 
 
-    </div>
-
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
