@@ -4,7 +4,7 @@
 {% block main %}
 <div class="buttons-container">
   <img src="{% static 'images/stop.jpg' %}" alt="STOP" width="200">
-  <p>{{ user.first_name }}, Вы уверены, что хотите удалить свой аккаунт"{{ user.username }}"?. Действие необратимо.</p>
+  <p>{{ user.first_name }}, Вы уверены, что хотите удалить свой аккаунт"{{ user.username }}"?. Через 14 дней он удалится. </p>
   <form method="post" action="{% url 'delete_profile' user.id %}">
     {% csrf_token %}
     <button type="submit" class="delete-button back-button">Удалить</button>
