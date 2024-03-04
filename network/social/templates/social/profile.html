@@ -11,14 +11,16 @@
             <div class="cover-container" style="background-image: url('{% static 'images/no-covers.jpg' %}');">
             {% endif %}
             {% if request.user.is_authenticated and moderator  %}
+                {% if not user.is_superuser and not user_checked_moderator %}
                 <a href="{% url 'delete_profile_moderator' user.pk %}">Delete Profile as moderator</a>
+                {% endif %}
             {% endif %}
                 <h1 >{{ user.username }}</h1>
                 {% if user == request.user %}
                     {% if user not in subscribe.Users.all %}
-                        <a href="{% url 'buy_subscribe' %}">Купить платную подписку</a>
+                        <a href="{% url 'buy_subscribe' %}">Buy a paid subscription</a>
                     {% else %}
-                        <h2>Платная подписка</h2>
+                        <h2>Paid subscription</h2>
                     {% endif %}
                 {% endif %}
 
@@ -34,26 +36,30 @@
             </div>
 
             <div>
-              <h4>Имя: <span style="color: #228B22;">{{ user.first_name }}</span></h4>
-              <h4>Фамилия: <span style="color: #228B22;">{{ user.last_name }}</span></h4>
+              <h4>Name: <span style="color: #228B22;">{{ user.first_name }}</span></h4>
+              <h4>Surname: <span style="color: #228B22;">{{ user.last_name }}</span></h4>
               <h4>Email: <span style="color: #228B22;">{{ user.email }}</span></h4>
-              <p><span style="color: #228B22;">Биография:</span> {{ user.bio }}</p>
-              <p><span style="color: #228B22;">Приватность:</span> {% if user.private %} Приватный аккаунт {% else %} Публичный аккаунт{% endif %}</p>
-              <p><span style="color: #228B22;">Подписчики:</span> {{ user.follower.count }}</p>
+              <p><span style="color: #228B22;">Biography:</span> {{ user.bio }}</p>
+              <p><span style="color: #228B22;">Private:</span> {% if user.private %} Private account {% else %} Public Account{% endif %}</p>
+              <p><span style="color: #228B22;">Followers:</span> {{ user.follower.count }}</p>
 
-              <p><span style="color: #228B22;">Подписки:</span> {{followings}}</span></p>
+              <p><span style="color: #228B22;">Followings:</span> {{followings}}</span></p>
               <ul>
 
               </ul>
                 <br>
                   <div>
                     {% if user == request.user %}
-                    <a href="{% url 'edit_profile' user.id %}">Изменить профиль</a>
-                    <a href="{% url 'delete_profile' user.id %}">Удалить профиль</a>
+                    <a href="{% url 'edit_profile' user.id %}">Change Profile</a>
+                      {% if not user.deleted %}
+                    <a href="{% url 'delete_profile' user.id %}">Delete Profile</a>
+                      {% else %}
+                        <h1>Until profile delete  {{user.days_until_delete}} days </h1>
+                       {% endif %}
                     {% endif %}
 
                     {% if not user == request.user %}
-                        <a class = 'send-message' href =  '{% url "thread_start" user.id %}'>Написать сообщение <i class="fa-solid fa-envelope"></i></a>
+                        <a class = 'send-message' href =  '{% url "thread_start" user.id %}'>Send message<i class="fa-solid fa-envelope"></i></a>
                     {% endif %}
                   </div>
               <br>
@@ -63,7 +69,7 @@
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 
     <div class="post-section">
-      <h2>Посты пользователя</h2>
+      <h2>User posts</h2>
        {% for post in posts %}
         <tr id="post{{post.pk}}">
             <td><div class="tweets">
@@ -96,7 +102,7 @@
                                 {% endfor %}
                             </div>
                             <textarea name="comment" placeholder="Напишите комментарий" required ></textarea>
-                            <button type="submit">Отправить</button>
+                            <button type="submit">Send</button>
                         </form>
                         <a id = "{{post.id}}" class = 'savepostbtn' data-url = '{% url "save_post" %}'>{% if not user in post.savers.all %}<i class="fa-regular fa-bookmark"  style="color: #FFD43B;"></i>{% else %}<i class="fa-solid fa-bookmark" style="color: #FFD43B;"></i>{% endif %}</a>
                         <a id = '{{ post.pk }}' data-url  = '{% url "add_like" %}' class ='likebtn'><i  {% if not user in post.likers.all %} class = 'fa-regular fa-heart' style = "color: #ff0000;" {% else %} class = 'fa-solid fa-heart ' style = "color: #ff0000;" {% endif %}></i> <span   id = "like_count{{post.pk}}"  >{{post.total_likes}}</span></a>
@@ -110,7 +116,7 @@
     </tr>
 
       {% empty %}
-        <p>Пользователь еще не опубликовал постов</p>
+        <p>User doesn't have any posts</p>
       {% endfor %}
   </div>
 
