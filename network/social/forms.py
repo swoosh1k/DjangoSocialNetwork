@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
-from .models import User
+from .models import User, Group
 
 
 
@@ -63,3 +63,9 @@ class UserForm(forms.ModelForm):
             instance.save()
 
         return instance
+
+
+class GroupForm(forms.ModelForm):
+    class Meta:
+        model = Group
+        fields = ['title', 'bio', 'group_image']
