@@ -10,6 +10,8 @@ class User(AbstractUser):
     profile_pic = models.ImageField(upload_to='profile_pic/', default='static/images/no_photo.jpg', null = True )
     cover = models.ImageField(upload_to = 'covers/', blank = True)
     private = models.BooleanField(default=False, blank=True)
+    deleted = models.BooleanField(default = False)
+    days_until_delete = models.SmallIntegerField(default =14)
 
     def __str__(self):
         return self.username

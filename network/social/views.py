@@ -184,6 +184,7 @@ class UserProfile(DetailView, LoginRequiredMixin):
         context['followings_all'] = Follower.objects.get(user = self.object.id).followings.all()
         context['posts'] = Post.objects.filter(creater_id =self.object.id).order_by('data_created')
         context['subscribe'] = Subscribe.objects.first()
+        context['user_checked_moderator'] = self.object.groups.filter(name = 'Moderators').exists()
         context['moderator'] = self.request.user.groups.filter(name = 'Moderators').exists()
         return context
 
@@ -243,18 +244,8 @@ def Subscribe_on_user(request):
         else:
             info = 'Unfollow'
 
-        return JsonResponse({"info": info,})
+        return JsonResponse({'info': info,})
     return HttpResponse('Error access ')
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -377,7 +368,8 @@ def Bookmarks(request):
 def delete_profile(request, user_id):
     user = get_object_or_404(User, id=user_id)
     if request.method == 'POST':
-        user.delete()
+        user.deleted = True
+        user.save()
         return redirect('index')
     return render(request, 'social/delete_profile.html', {'user': user})
 
