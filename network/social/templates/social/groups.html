@@ -4,38 +4,39 @@
 
 <link rel="stylesheet" href="{% static 'css/groups.css' %}">
 
-<div class="search-box">
-    <i class="fas fa-search" aria-hidden="true"></i>
-    <input type="text" placeholder="Поиск группы" name="q" hx-get="/group_search/" hx-trigger="keyup changed, q" hx-target="#search-results" hx-indicator=".htmx-indicator">
-    <div id="search-results"></div>
-</div>
-<br>
-<div class="group-list">
-    {% for group in groups %}
-        <a href="{% url 'group' group.pk %}">
-            <div class="group-item" style="background-image: url('{{ group.group_image.url }}');">
-                <div class="group-content">
-                    <p class="group-title">{{ group.title }}</p>
-                    <p class="sub-text">Members: {{ group.users.count }}</p>
+    <div class="search-box">
+        <i class="fas fa-search" aria-hidden="true"></i>
+        <input type="text" placeholder="Поиск группы" name="q" hx-get="/group_search/" hx-trigger="keyup changed, q" hx-target="#search-results" hx-indicator=".htmx-indicator">
+        <div id="search-results"></div>
+    </div>
+    <br>
+    <div class="group-list">
+        {% for group in groups %}
+            <a href="{% url 'group' group.pk %}">
+                <div class="group-item" style="background-image: url('{{ group.group_image.url }}');">
+                    <div class="group-content">
+                        <p class="group-title">{{ group.title }}</p>
+                        <p class="sub-text">Members: {{ group.users.count }}</p>
 
 
-                    <p class="group-description" style=" max-height: 30px; overflow: hidden; word-wrap: break-word; line-height: 1.2;">
-                        {{ group.bio }}
-                    </p>
-                    <br>
-                    {% if group.bio|length > 1 %}
-                        <a href="{% url 'group' group.id %}?bio={{ group.bio }}" style="color: white; text-decoration: none; position: relative; font-size: 16px;">'Further'...</a>
-                    {% endif %}
+                        <p class="group-description" style=" max-height: 30px; overflow: hidden; word-wrap: break-word; line-height: 1.2;">
+                            {{ group.bio }}
+                        </p>
+                        <br>
+                        {% if group.bio|length > 1 %}
+                            <a href="{% url 'group' group.id %}?bio={{ group.bio }}" style="color: white; text-decoration: none; position: relative; font-size: 16px;">'Further'...</a>
+                        {% endif %}
 
-                    <p class="sub-text">Время создания группы: {{ group.data_created }}</p>
+                        <p class="sub-text">Время создания группы: {{ group.data_created }}</p>
+                    </div>
                 </div>
-            </div>
-        </a>
-    {% endfor %}
-</div>
+            </a>
+        {% endfor %}
+    </div>
 
-<a href="{% url 'create_group' %}">Add Group</a>
-
+    <div class="profile-info a">
+    <a href="{% url 'create_group' %}" style="display: block; text-align: center; width: 100%;">Add Group</a>
+    </div>
 
 
 {% endblock %}

@@ -16,7 +16,7 @@
                 <h1 >{{ user.username }}</h1>
                 {% if user == request.user %}
                     {% if user not in subscribe.Users.all %}
-                        <a href="{% url 'buy_subscribe' %}">Купить платную подписку</a>
+                        <a href="{% url 'buy_subscribe' %}">Buy a paid subscription</a>
                     {% else %}
                         <h2>Платная подписка</h2>
                     {% endif %}
@@ -37,23 +37,23 @@
               <h4>Имя: <span style="color: #228B22;">{{ user.first_name }}</span></h4>
               <h4>Фамилия: <span style="color: #228B22;">{{ user.last_name }}</span></h4>
               <h4>Email: <span style="color: #228B22;">{{ user.email }}</span></h4>
-              <p><span style="color: #228B22;">Биография:</span> {{ user.bio }}</p>
-              <p><span style="color: #228B22;">Приватность:</span> {% if user.private %} Приватный аккаунт {% else %} Публичный аккаунт{% endif %}</p>
-              <p><span style="color: #228B22;">Подписчики:</span> {{ user.follower.count }}</p>
+              <p><span style="color: #228B22;">Biography:</span> {{ user.bio }}</p>
+              <p><span style="color: #228B22;">Privacy:</span> {% if user.private %} Private account {% else %} Публичный аккаунт{% endif %}</p>
+              <p><span style="color: #228B22;">Follower:</span> {{ user.follower.count }}</p>
 
-              <p><span style="color: #228B22;">Подписки:</span> {{followings}}</span></p>
+              <p><span style="color: #228B22;">Followings:</span> {{followings}}</span></p>
               <ul>
 
               </ul>
                 <br>
                   <div>
                     {% if user == request.user %}
-                    <a href="{% url 'edit_profile' user.id %}">Изменить профиль</a>
-                    <a href="{% url 'delete_profile' user.id %}">Удалить профиль</a>
+                    <a href="{% url 'edit_profile' user.id %}">Change the profile</a>
+                    <a href="{% url 'delete_profile' user.id %}">Delete a profile</a>
                     {% endif %}
 
                     {% if not user == request.user %}
-                        <a class = 'send-message' href =  '{% url "thread_start" user.id %}'>Написать сообщение <i class="fa-solid fa-envelope"></i></a>
+                        <a class = 'send-message' href =  '{% url "thread_start" user.id %}'>Write a message <i class="fa-solid fa-envelope"></i></a>
                     {% endif %}
                   </div>
               <br>

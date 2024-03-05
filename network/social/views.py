@@ -575,4 +575,4 @@ def delete_group(request, group_id):
         return redirect('index')
 
     return render(request, 'social/delete_group.html', {'group': group})
-# lk
+
