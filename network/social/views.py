@@ -538,17 +538,15 @@ def save_group_post(request, pk):
 def create_group(request):
     user = request.user
 
-    # Пытаемся получить группу, созданную пользователем
     try:
         group = Group.objects.get(user_created=user)
     except Group.DoesNotExist:
         group = None
 
-    # Если группа существует, перенаправляем на страницу "You have a group"
     if group is not None:
         return redirect('group', pk=group.id)
     else:
-        # Если группы нет, перенаправляем на страницу "New create group" с формой
+
         if request.method == 'POST':
             form = GroupForm(request.POST, request.FILES)
             if form.is_valid():
@@ -560,16 +558,6 @@ def create_group(request):
             form = GroupForm()
         return render(request, 'social/create_group.html', {'form': form})
 
-def you_have_group(request):
-    user = request.user
-
-    # Пытаемся получить группу, созданную пользователем
-    try:
-        group = Group.objects.get(user_created=user)
-    except Group.DoesNotExist:
-        group = None
-
-    return render(request, 'social/you_have_group.html', {'group': group})
 
 def delete_group(request, group_id):
     group = get_object_or_404(Group, id=group_id)
@@ -579,3 +567,4 @@ def delete_group(request, group_id):
         return redirect('index')
 
     return render(request, 'social/delete_group.html', {'group': group})
+

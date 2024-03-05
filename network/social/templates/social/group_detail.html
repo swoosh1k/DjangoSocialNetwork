@@ -1,36 +1,42 @@
 {% extends 'social/base2.html' %}
-
-
-
+{% load static %}
 {% block main %}
 
-<h1><div class="home">
-        <h1>{{group.title}}</h1>
+<link rel="stylesheet" href="{% static 'css/group_detail.css' %}">
 
-      </div></h1>
-{% for post in posts %}
-<div class="tweets">
-                    <a href="/profile/1/"><div class="user-pics"><img src="/media/profile_pic/05-crew-cut_gAXpXp4.jpg" alt="user3"></div></a>
-                    <div class="user-content-box">
-                    <div class="user-names">
-                        <a href="/profile/1/"><hi class="full-name"></hi></a>
-                        <p class="user-name">{{post.creater}}</p>
-                        <p class="time">{{post.data_created}}</p>
+    <h1><div class="home">
+            <h1>{{group.title}}</h1>
+        </div>
+    </h1>
+    {% for post in posts %}
+    <div class="tweets">
 
-                    </div>
+        {% if request.user.profile_pic %}
+        <a href = "{% url 'user_profile'  request.user.id %}" class="user-pics"><img src="{{request.user.profile_pic.url}}" alt="profile"></a>
+        {% else %}
+        <a href = "{% url 'user_profile'  request.user.id %}" class="user-pics"><img src="{% static 'images/no_photo.jpg' %}" alt="profile"></a>
+        {% endif %}
+            <div class="user-content-box">
+                <div class="user-names">
+                    <a href="/profile/1/"><hi class="full-name"></hi></a>
+                    <p class="user-name">{{post.creater}}</p>
+                    <p class="time">{{post.data_created}}</p>
+                </div>
 
                 <div class="user-content" id="user-content">
-                    <p>{{post.context}}</p>
-                    <img src="{{post.image.url}}" width="700px" height = '400px' alt="content1">
-
+                    <h3>{{post.context}}</h3>
+                    <a href="#" class="delete-post-button">
+                        <img src="{{ post.image.url }}" width="700px" height="400px" alt="content1">
+                    </a>
                 </div>
-                </div>
-        </div>
-{% endfor %}
-<button id="open-post-modal">Add Post to group</button>
+            </div>
+    </div>
+    {% endfor %}
 
-
-
+<br>
+<div style="text-align: center;">
+    <button class="edit-button" id="open-post-modal" style="display: block; width: 100%;">Add Post to group</button>
+</div>
 
 
 <div id="post-modal" class="modal">
@@ -57,10 +63,10 @@
 </div>
 
 
-<a href="{% url 'groups' %}" class="back-button">Back</a>
+<a href="{% url 'groups' %}" class="back-button" style="display: block; text-align: center; width: 100%;">Back</a>
     <form action="{% url 'delete_group' group.id %}" method="post">
         {% csrf_token %}
-        <button type="submit">Delete Group</button>
+<button class="edit-button" type="submit" style="display: block; width: 100%;">Delete Group</button>
       </form>
  <script>
       const openButton = document.getElementById('open-post-modal');
@@ -120,7 +126,63 @@
     </style>
 
 
+<!-- HTML код для модального окна -->
+<div id="delete-post-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Delete Post</h2>
+        <p>Are you sure you want to delete this post?</p>
+        <button class="edit-button delete-post" data-post-id="{{ post.id }}">Delete Post</button>
+    </div>
+</div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const image = document.querySelector('.delete-post-button');
+        const modal = document.getElementById('delete-post-modal');
+        const closeButton = modal.querySelector('.close');
+        const deleteButton = modal.querySelector('.delete-post');
+
+        image.addEventListener('click', function(event) {
+            modal.style.display = 'block';
+        });
+
+        closeButton.addEventListener('click', function(event) {
+            modal.style.display = 'none';
+        });
+
+        deleteButton.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            const postId = this.getAttribute('data-post-id');
+
+            // Отправка AJAX запроса на сервер для удаления поста
+            fetch(`/delete-post/${postId}`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Post deleted');
+                    modal.style.display = 'none'; // Закрываем модальное окно после удаления
+                    // Можно выполнить дополнительные действия после успешного удаления
+                } else {
+                    console.error('Failed to delete post');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+
+        modal.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    });
+</script>
 {% endblock %}
 
 
