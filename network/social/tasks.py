@@ -5,7 +5,7 @@ from datetime import datetime
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 
-from .models import News, Follower, Post
+from .models import News, Follower, Post, User
 
 '''Task, that shows you last friends posts'''
 @shared_task
@@ -31,4 +31,14 @@ def send_email_task():
         if email.send():
             print(f"Email sent at {datetime.now()} to {user.email}")
 
+'''Task, that counts days until user profile delete '''
+@shared_task
+def days_until_delete_profile():
+    profiles = User.objects.filter(deleted = True)
+    for profile in profiles:
+        profile.days_until_delete -= 1
+        if profile.days_until_delete == 0:
+            profile.delete()
+        else:
+            profile.save()
 

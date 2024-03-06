@@ -207,4 +207,11 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'social.tasks.send_email_task',
         'schedule': crontab(minute='*/3'),
     },
+    'check_days_until_profile_delete': {
+        'task': 'social.tasks.days_until_delete_profile',
+        'schedule': crontab(hour=8, minute=0),
+    },
 }
+
+
+
