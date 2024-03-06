@@ -4,19 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f952081-17da-4545-bb8a-75589e4544a7" name="Changes" comment="Добавил систему платной подписки">
+    <list default="true" id="4f952081-17da-4545-bb8a-75589e4544a7" name="Changes" comment="Удаление профиля через промежуток времени(celery)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/network/chatapplication/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/network/chatapplication/migrations/0002_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/network/db.sqlite3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/network/network/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/network/network/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/network/social/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/network/social/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/network/social/tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/tasks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/network/social/templates/social/buysubscribe.html" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/templates/social/buysubscribe.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/network/social/templates/social/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/templates/social/profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/network/social/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/network/social/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/network/social/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/network/db.sqlite3" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,6 +72,7 @@
     &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;TODO_SCOPE&quot;: &quot;All Places&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
 }</component>
@@ -122,20 +113,12 @@
       <option name="project" value="LOCAL" />
       <updated>1709364342182</updated>
     </task>
-    <task id="LOCAL-00005" summary="Админ панель + назначение модераторов">
-      <created>1709580908397</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1709580908397</updated>
-    </task>
-    <option name="localTasksCounter" value="6" />
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Разграничение прав пользователей" />
     <MESSAGE value="Добавил систему платной подписки" />
-    <MESSAGE value="Админ панель + назначение модераторов" />
-    <option name="LAST_COMMIT_MESSAGE" value="Админ панель + назначение модераторов" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавил систему платной подписки" />
   </component>
 </project>
