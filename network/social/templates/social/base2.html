@@ -7,6 +7,7 @@
   <title>Главная страница</title>
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
    <link rel="stylesheet" href="{% static 'css/all.css' %}">
+    <link rel="stylesheet" href="{% static 'css/filter.css' %}">
   <script src="https://kit.fontawesome.com/6aae901a73.js" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/htmx.org@1.9.5" integrity="sha384-xcuj3WpfgjlKF+FXhSQFQ0ZNr39ln+hwjN3npfM9VBnUskLolQAcN80McRIVOPuO" crossorigin="anonymous"></script>
 
@@ -108,7 +109,7 @@
 
                             </ul>
                         </div>
-                            <button type="submit">Найти</button>
+
                     </form>
                         <!-- //discounts -->
                         <!-- reviews -->
@@ -450,6 +451,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </script>
 
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.forms['filter'];
+        const checkboxes = form.querySelectorAll('input[type="checkbox"]');
+        const submitButton = form.querySelector('button[type="submit"]');
+
+        checkboxes.forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                form.submit();
+            });
+        });
+
+        submitButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            form.submit();
+        });
+    });
+</script>
 
 
 

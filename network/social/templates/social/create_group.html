@@ -2,17 +2,17 @@
 {% load static %}
 
 {% block main %}
-  <h1>create group</h1>
+  <h1>Create group</h1>
 
 
  <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {{ form.as_p }}
   <button type="submit" class="edit-button">Save</button>
-  <a href="{% url 'groups' %}" class="back-button">Назад</a>
+  <a href="{% url 'groups' %}" class="back-button">Back</a>
 </form>
 
   </form>
 
-
+  <link rel="stylesheet" href="{% static 'css/create_group.css' %}">
 {% endblock %}

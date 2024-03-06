@@ -1,0 +1,75 @@
+.group-item {
+    border: 2px solid #228B22;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+.group-item:hover {
+    border-color: #3CB371;
+}
+
+.group-content {
+    padding: 10px;
+}
+
+.group-title,
+.group-description {
+    position: relative;
+    z-index: 1;
+}
+
+.group-title::before,
+.group-description::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(34, 139, 34, 0.5);
+    z-index: -1;
+    border-radius: 10px;
+}
+
+
+.group-title {
+    display: inline-block;
+    position: relative;
+    color: white;
+}
+
+.group-description {
+    display: inline-block;
+    position: relative;
+    color: white;
+    font-weight: normal;
+}
+
+.group-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.profile-info a {
+
+    font-weight: 700;
+    display: inline-block;
+    margin-right: 100px;
+    padding: 8px 15px;
+    border-radius:50px;
+    background-color: #228B22; /* Фон кнопок зеленого цвета */
+    color: white; /* Белый цвет текста */
+    text-decoration: none; /* Убираем подчеркивание */
+}
+
+.profile-info a:hover {
+  color: #fff;
+  background: #228B22;
+}
+

@@ -1,0 +1,52 @@
+.profile-info a {
+
+    font-weight: 700;
+    display: inline-block;
+    margin-right: 100px;
+    padding: 8px 15px;
+    border-radius:50px;
+    background-color: #228B22; /* Фон кнопок зеленого цвета */
+    color: white; /* Белый цвет текста */
+    text-decoration: none; /* Убираем подчеркивание */
+    margin-right: 15px; /* Отступ между кнопками */
+}
+
+.profile-info a:hover {
+  color: #fff;
+  background: #228B22;
+}
+
+/* Стили для кнопок "Сохранить изменения", "Назад" и "Выберите файл" */
+.edit-button,
+.back-button,
+input[type="file"]::-webkit-file-upload-button {
+    font-weight: 700;
+    font-size: 18px; /* Размер шрифта для кнопок */
+    padding: 10px 30px; /* Параметры отступа внутри кнопок */
+    border-radius: 50px;
+    background-color: #228B22;
+    color: white;
+    margin-bottom: 15px; /* Отступ между полями */
+    text-decoration: none;
+    border: none; /* Убираем границу у кнопок */
+    cursor: pointer;
+    display: inline-block; /* Для кнопки выбора файла */
+    margin-right: 15px; /* Отступ между кнопками */
+    display: inline-block; /* Добавляем свойство display для корректного отображения кнопок в одной строке */
+    text-align: center;
+
+}
+
+/* Стили при наведении на кнопки "Сохранить изменения", "Назад" и "Выберите файл" */
+.edit-button:hover,
+.back-button:hover,
+input[type="file"]::-webkit-file-upload-button:hover {
+    background-color: #3CB371; /* Цвет кнопок при наведении */
+
+}
+
+.edit-button,
+.back-button {
+
+    margin-right:101px;
+}
