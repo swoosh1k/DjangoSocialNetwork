@@ -79,7 +79,7 @@ def create_payment(request):
     return HttpResponseRedirect(payment_url)
 
 
-
+@login_required
 def index(request):
     if not request.user.is_authenticated:
         return redirect('login')
@@ -182,7 +182,7 @@ class UserProfile(DetailView, LoginRequiredMixin):
         context['title'] = f'Profile {self.object}'
         context['followings'] = Follower.objects.get(user = self.object.id).followings.count()
         context['followings_all'] = Follower.objects.get(user = self.object.id).followings.all()
-        context['posts'] = Post.objects.filter(creater_id =self.object.id).order_by('data_created')
+        context['posts'] = Post.objects.filter(creater_id =self.object.id).order_by('-data_created')
         context['subscribe'] = Subscribe.objects.first()
         context['user_checked_moderator'] = self.object.groups.filter(name = 'Moderators').exists()
         context['moderator'] = self.request.user.groups.filter(name = 'Moderators').exists()
@@ -526,15 +526,16 @@ def add_moderator(request):
 
 
 
-
+@login_required()
 def save_group_post(request, pk):
     group = Group.objects.get(id = pk)
-    group_postik = Group_post.objects.create(creater = request.user, context = request.POST.get('text'), image = request.FILES['image'])
+    group_postik = Group_post.objects.create(creater = request.user, context = request.POST.get('text'), image = request.FILES['image'] or None)
     group.group_post.add(group_postik)
     group.save()
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
+@login_required
 def create_group(request):
     user = request.user
 
@@ -558,13 +559,50 @@ def create_group(request):
             form = GroupForm()
         return render(request, 'social/create_group.html', {'form': form})
 
-
+@login_required
 def delete_group(request, group_id):
     group = get_object_or_404(Group, id=group_id)
+    if group.user_created == request.user:
+        if request.method == 'POST':
+            group.delete()
+            return redirect('index')
+        return render(request, 'social/delete_group.html', {'group': group})
+    else:
+        raise PermissionDenied('You are not this user and you could not do this')
+@login_required
+def filter_group_post(request, pk):
+    group  = get_object_or_404(Group, id = pk)
+    posts = group.group_post.all()
+    type = request.GET.get('type')
+    startyear = request.GET.get('startyear')
+    endyear = request.GET.get('endyear')
+    if not startyear:
+        startyear = 2020
+    if not endyear:
+        endyear = 2030
+    posts = group.group_post.filter(data_created__year__in = [year for year in range(int(startyear), int(endyear))])
+    if type == 'new':
+        posts = posts.order_by('-data_created')
+    else:
+        posts = posts.order_by('data_created')
+    context = {'posts': posts, 'group': group, 'title': 'Group detail'}
+    return render(request, 'social/group_detail.html', context = context)
 
-    if request.method == 'POST':
-        group.delete()
-        return redirect('index')
 
-    return render(request, 'social/delete_group.html', {'group': group})
+@login_required
+def find_group_post(request, pk):
+    group = get_object_or_404(Group, id = pk)
+    posts = group.group_post.filter(context__iregex = request.GET.get('q'))
+    if not posts.exists():
+        posts = []
+    context = {'posts': posts, 'group': group, 'title': 'Group detail'}
+    return render(request, 'social/group_detail.html', context = context)
 
+
+def delete_post_group(request):
+    group_post = get_object_or_404(Group_post, id = request.POST.get('post_id'))
+    if group_post.creater == request.user:
+        group_post.delete()
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+    else:
+        raise PermissionDenied('You are not this user and you could not do this')

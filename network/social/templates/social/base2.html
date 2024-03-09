@@ -27,7 +27,6 @@
           {% if request.path == '/messages/' %}<li class="nav-items current-page">{% else %}<li class="nav-items ">{% endif %}<a href="{% url 'messages' %}"><i class="fa-solid fa-message"></i>Messages</a></li>
           {% if request.path == '/profile/{{user.id}}/' %}<li class="nav-items current-page">{% else %}<li class="nav-items ">{% endif %}<a href="{% url 'user_profile' request.user.id %}"><i class="far fa-user"></i>Profile</a></li>
           {% if request.path == '/groups/' %}<li class="nav-items current-page">{% else %}<li class="nav-items ">{% endif %}<a href="{% url 'groups' %}"><i class="fa-solid fa-user-group"></i>Groups</a></li>
-          <li class="nav-items "><a id="openModalBtn"><i class="fa-solid fa-note-sticky"></i>New Post</a></li>
           <li class="nav-items"><a href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
 
 
@@ -60,66 +59,8 @@
 
 
     <div class="right-flex-container flex-item">
-     <div class="side-bar col-lg-3">
-
-                        <div class="search-bar w3layouts-newsletter">
-                            <h3 class="sear-head editContent">Find Post</h3>
-                            <form action="/search/" method="get">
-                                <input type="search" placeholder="Введите название..." name="q" class="form-control" required="">
-                                <button type="submit">Find</button>
-                            </form>
-                        </div>
-                        <!--preference -->
-                    <form action="/filter/" method="get" name="filter">
-
-                         <div class="left-side my-4">
-                            <h3 class="sear-head editContent">Сначала</h3>
-                            <ul class="w3layouts-box-list">
-
-                                <li class="editContent">
-                                    <input type="checkbox" class="checked" name="genre" value="1">
-                                    <span class="span editContent">Старые</span>
-
-                                </li><li class="editContent">
-                                    <input type="checkbox" class="checked" name="genre" value="2">
-                                    <span class="span editContent">Новые</span>
-
-                            </li></ul>
-                        </div>
-                        <!-- // preference -->
-                        <!-- discounts -->
-                        <div class="left-side">
-                            <h3 class="sear-head editContent">Год</h3>
-                            <ul class="w3layouts-box-list">
-
-                                    <li class="editContent">
-                                        <input type="checkbox" class="checked" name="year" value="1984">
-                                        <span class="span editContent">1984 </span>
-                                    </li>
-
-                                    <li class="editContent">
-                                        <input type="checkbox" class="checked" name="year" value="1991">
-                                        <span class="span editContent">1991 </span>
-                                    </li>
-
-                                    <li class="editContent">
-                                        <input type="checkbox" class="checked" name="year" value="2016">
-                                        <span class="span editContent">2016 </span>
-                                    </li>
-
-                            </ul>
-                        </div>
-
-                    </form>
-                        <!-- //discounts -->
-                        <!-- reviews -->
-
-                        </div>
-                        <!--<div class="grid-img-right mt-4 text-right bg bg1" >
-                            <span class="money editContent" >Flat 50% Off</span>
-                            <a href="moviesingle.html" class="btn" >Now</a>
-                        </div>-->
-                     </div>
+     {% block right %}
+     {% endblock right %}
                 </div>
   </div>
 </div>
