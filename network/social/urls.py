@@ -44,7 +44,10 @@ urlpatterns = [
     path('confirm_subscribe_on_news/', confirm_subscribe_on_news, name = 'confirm_subscribe_on_news'),
     path('unsubscribe_on_news/', unsubscribe_on_news, name = 'unsubscribe_on_news'),
     path('delete_profile_as_moderator/<int:pk>/', delete_profile_moderator, name = 'delete_profile_moderator'),
-    path('add_moderator/', add_moderator, name = 'add_moderator')
+    path('add_moderator/', add_moderator, name = 'add_moderator'),
+    path('filter_group_post/<int:pk>/', filter_group_post ,name = 'filter_group_post'),
+    path('find_group_post/<int:pk>/', find_group_post,  name = 'find_group_post'),
+    path('delete_post_group/', delete_post_group, name = 'delete_post_group')
 
 ]
 

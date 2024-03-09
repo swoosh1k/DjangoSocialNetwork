@@ -1,7 +1,6 @@
 {% extends 'social/base2.html' %}
 {% load static %}
 {% block main %}
-
 <link rel="stylesheet" href="{% static 'css/group_detail.css' %}">
 
     <h1><div class="home">
@@ -25,25 +24,40 @@
 
                 <div class="user-content" id="user-content">
                     <h3>{{post.context}}</h3>
-                    <a href="#" class="delete-post-button">
+                    {% if post.creater == request.user %}
+                        <img class="post-image" src="{{ post.image.url }}" width="700px" height="400px" alt="content1" data-post-id="{{ post.id }}">
+                        <div id="myModal" class="modal">
+                            <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <img id="modal-image" src="" alt="content1">
+                                <form id="delete-post-form" method="POST" action="{% url 'delete_post_group' %}">
+                                {% csrf_token %}
+                                <input type="hidden" id="post-id-input" name="post_id" value="">
+                                <button  class = 'submitfilter' style = 'background: red; padding: 10px; cursor: pointer;' type="submit">Delete Post</button>
+                                </form>
+                            </div>
+                        </div>
+                    {% else %}
                         <img src="{{ post.image.url }}" width="700px" height="400px" alt="content1">
-                    </a>
+                    {% endif %}
                 </div>
             </div>
     </div>
+
+
     {% endfor %}
+
 
 <br>
 <div style="text-align: center;">
-    <button class="edit-button" id="open-post-modal" style="display: block; width: 100%;">Add Post to group</button>
+    <button class="edit-button" id="add1-post-modal" style="display: block; width: 100%;">Add Post to group</button>
 </div>
 
 
-<div id="post-modal" class="modal">
+<div id="post-modal4" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
     <h2>New Post Group</h2>
-
     <p>
       <form action="{% url 'save_group_post' group.id %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
@@ -64,29 +78,65 @@
 
 
 <a href="{% url 'groups' %}" class="back-button" style="display: block; text-align: center; width: 100%;">Back</a>
+{% if request.user == group.user_created %}
     <form action="{% url 'delete_group' group.id %}" method="post">
         {% csrf_token %}
 <button class="edit-button" type="submit" style="display: block; width: 100%;">Delete Group</button>
       </form>
+{% endif %}
+
+
+
+
+
+
+
+<script>
+var modal = document.getElementById("myModal");
+var postImages = document.getElementsByClassName("post-image");
+var modalImg = document.getElementById("modal-image");
+var deleteForm = document.getElementById("delete-post-form");
+var postIdInput = document.getElementById("post-id-input");
+var span = document.getElementsByClassName("close")[0];
+
+for (var i = 0; i < postImages.length; i++) {
+  postImages[i].onclick = function(){
+    modal.style.display = "block";
+    modalImg.src = this.src;
+    postIdInput.value = this.getAttribute("data-post-id");
+  }
+}
+
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+
  <script>
-      const openButton = document.getElementById('open-post-modal');
-      const modal = document.getElementById('post-modal');
-      const closeButton = document.querySelector('.close');
+      var  openButton2 = document.getElementById('add1-post-modal');
+      var modal2 = document.getElementById('post-modal4');
+      var closeButton2 = document.querySelector('.close');
 
-      openButton.addEventListener('click', () => {
-        modal.style.display = 'block';
+      openButton2.addEventListener('click', () => {
+        modal2.style.display = 'block';
       });
 
-      closeButton.addEventListener('click', () => {
-        modal.style.display = 'none';
+      closeButton2.addEventListener('click', () => {
+        modal2.style.display = 'none';
       });
 
-      modal.addEventListener('click', (event) => {
-        if (event.target === modal) {
-          modal.style.display = 'none';
+      modal2.addEventListener('click', (event) => {
+        if (event.target === modal2) {
+          modal2.style.display = 'none';
         }
       });
-    </script>
+</script>
 
     <style>
       .modal {
@@ -124,66 +174,116 @@
         cursor: pointer;
       }
     </style>
-
-
-<!-- HTML код для модального окна -->
-<div id="delete-post-modal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Delete Post</h2>
-        <p>Are you sure you want to delete this post?</p>
-        <button class="edit-button delete-post" data-post-id="{{ post.id }}">Delete Post</button>
-    </div>
-</div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const image = document.querySelector('.delete-post-button');
-        const modal = document.getElementById('delete-post-modal');
-        const closeButton = modal.querySelector('.close');
-        const deleteButton = modal.querySelector('.delete-post');
-
-        image.addEventListener('click', function(event) {
-            modal.style.display = 'block';
-        });
-
-        closeButton.addEventListener('click', function(event) {
-            modal.style.display = 'none';
-        });
-
-        deleteButton.addEventListener('click', function(event) {
-            event.preventDefault();
-
-            const postId = this.getAttribute('data-post-id');
-
-            // Отправка AJAX запроса на сервер для удаления поста
-            fetch(`/delete-post/${postId}`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}',
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => {
-                if (response.ok) {
-                    console.log('Post deleted');
-                    modal.style.display = 'none'; // Закрываем модальное окно после удаления
-                    // Можно выполнить дополнительные действия после успешного удаления
-                } else {
-                    console.error('Failed to delete post');
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        });
-
-        modal.addEventListener('click', function(event) {
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
-    });
-</script>
 {% endblock %}
+{% block right %}
+<style>
+    .slider-container {
+        margin: 50px auto;
+        width: 50%;
+        text-align: center;
+    }
+    .output {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    .range-label {
+        margin: 0 10px;
+    }
+    .range-input {
+        flex: 1;
+        margin: 0 10px;
+    }
+</style>
+
+
+<div class="side-bar col-lg-3">
+                        <div class="search-bar w3layouts-newsletter">
+                            <h3 class="sear-head editContent">Find Post</h3>
+                            <form action="{% url 'find_group_post' group.id %}" method="get">
+                                <input type="search" placeholder="Введите название..." name="q">
+                                <button type="submit">Find</button>
+                            </form>
+                        </div>
+                        <!--preference -->
+                    <form action="{% url  'filter_group_post' group.pk %}" method="get">
+
+                         <div class="left-side my-4">
+                            <h3 class="sear-head editContent">At first</h3>
+                            <ul class="w3layouts-box-list">
+                                <li class="editContent">
+                                    <input type="checkbox" class="checked" name="type" value="new">
+                                    <span class="span editContent">The new</span>
+
+                                </li><li class="editContent">
+                                    <input type="checkbox" class="checked" name="type" value="old">
+                                    <span class="span editContent">The old</span>
+
+                            </li></ul>
+                        </div>
+                        <!-- // preference -->
+                        <!-- discounts -->
+                        <div class="left-side">
+                            <h3 class="sear-head editContent">Year</h3>
+                            <ul class="w3layouts-box-list">
+                                    <li class="editContent">
+                                          <div class="range-container">
+                                                <label class="range-label" for="startYear">From</label>
+                                                <input type="range" id="startYear" class="range-input" min="2020" max="2030" value="2020" step="1" name = 'startyear'>
+                                                <output class="output" id="selectedStartYear">2020</output>
+                                          </div>
+                                          <div class="range-container">
+                                                <label class="range-label" for="endYear">To</label>
+                                                <input type="range" id="endYear" class="range-input" min="2020" max="2030" value="2030" step="1" style = 'margin-left: 37px;' name = 'endyear'>
+                                                <output class="output" id="selectedEndYear">2030</output>
+                                          </div>
+                                    </li>
+                            </ul>
+                        </div>
+                    <button class = 'submitfilter' type = 'submit'>Submit</button>
+                    </form>
+                        <!-- //discounts -->
+                        <!-- reviews -->
+
+                        </div>
+                        <!--<div class="grid-img-right mt-4 text-right bg bg1" >
+                            <span class="money editContent" >Flat 50% Off</span>
+                            <a href="moviesingle.html" class="btn" >Now</a>
+                        </div>-->
+                     </div>
+<script>
+    const startYearInput = document.getElementById('startYear');
+    const endYearInput = document.getElementById('endYear');
+    const selectedStartYear = document.getElementById('selectedStartYear');
+    const selectedEndYear = document.getElementById('selectedEndYear');
+
+    startYearInput.addEventListener('input', updateStartYear);
+    endYearInput.addEventListener('input', updateEndYear);
+
+    function updateStartYear() {
+        selectedStartYear.textContent = startYearInput.value;
+        // Ensure end year is always greater than or equal to start year
+        if (parseInt(endYearInput.value) < parseInt(startYearInput.value)) {
+            endYearInput.value = startYearInput.value;
+            updateEndYear();
+        }
+    }
+
+    function updateEndYear() {
+        selectedEndYear.textContent = endYearInput.value;
+        // Ensure end year is always greater than or equal to start year
+        if (parseInt(endYearInput.value) < parseInt(startYearInput.value)) {
+            startYearInput.value = endYearInput.value;
+            updateStartYear();
+        }
+    }
+</script>
+
+
+
+
+
+{% endblock %}
+
 
 
 
